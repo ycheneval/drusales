@@ -1,0 +1,169 @@
+// GLOBAL AND HUB SLIDESHOW ON LANDING PAGES
+
+.weforum-slideshow
+  .view-content
+    position: relative
+
+.weforum-slideshow-pager
+  text-align: center
+  background-color: $white
+  @extend %padding-top
+  height: 40px
+  @extend  %section-border-bottom
+  @extend  %section-border-top
+  span
+    cursor: pointer
+    @extend %inline-block
+
+  .pager-button
+    +replace-text-with-dimensions("slideshow-counter.png")
+    height: 24px
+    margin: 0 4px
+    .ie7 &
+      background-image: none
+      text-indent: 0
+      overflow: visible
+    &.active,
+    &:hover
+      +replace-text-with-dimensions("slideshow-counter-active.png")
+      height: 24px
+      .ie7 &
+        background-image: none
+        text-indent: 0
+        overflow: visible
+  .item-prev
+    +replace-text-with-dimensions("slideshow-arrow-back.png")
+    [dir="rtl"] &
+      +replace-text-with-dimensions("slideshow-arrow-forward.png")
+    .ie7 &
+      background-image: none
+      text-indent: 0
+      overflow: visible
+    &:hover
+      +replace-text-with-dimensions("slideshow-arrow-back-hover.png")
+      [dir="rtl"] &
+        +replace-text-with-dimensions("slideshow-arrow-forward-hover.png")
+      .ie7 &
+        background-image: none
+        text-indent: 0
+        overflow: visible
+
+  .item-next
+    +replace-text-with-dimensions("slideshow-arrow-forward.png")
+    [dir="rtl"] &
+      +replace-text-with-dimensions("slideshow-arrow-back.png")
+    .ie7 &
+      background-image: none
+      text-indent: 0
+      overflow: visible
+    &:hover
+      +replace-text-with-dimensions("slideshow-arrow-forward-hover.png")
+      [dir="rtl"] &
+        +replace-text-with-dimensions("slideshow-arrow-back-hover.png")
+      .ie7 &
+        background-image: none
+        text-indent: 0
+        overflow: visible
+
+// Regular slideshow slide
+// position
+.weforum-slideshow-item
+  @extend %relative
+  .slider-wrapper
+    @extend %absolute
+    top: 0
+    height: 100%
+    width: 400px
+    min-width: percentage(400px / 700px)
+    max-width: 100%
+    padding: 0 20px
+    overflow: hidden
+  .bottom-wrapper
+    @extend %absolute
+    bottom: 0
+    padding-right: 20px
+    padding-bottom: 10px
+    .ie7 &
+      bottom: 70px
+  .top-wrapper
+    top: 0
+    padding-right: 20px
+    padding-top: 20px
+
+// module
+.weforum-slideshow-item
+  color: $white
+  .slider-wrapper
+    background-color: $white
+    filter: alpha(opacity=50)
+    background-color: rgba($white, 0.5)
+  .title
+    a
+      border-bottom: none
+      color: $white
+      font-size: 40px
+      line-height: 1
+      &:visited,
+      &:hover
+        color: $white
+  .teaser
+    color: $white
+    font-size: 18px
+
+// Feature title styling
+.weforum-slideshow-pane
+  h2
+    left: 10px
+    padding: 0
+    position: relative
+    top: 33px
+    width: 0
+    z-index: 1
+    [dir="rtl"] &
+      left: -6px
+
+// Featured shaper slideshow slide
+// Overlay details
+
+.shaper-teaser
+  font-size: 16px
+  line-height: 1.3
+  margin-bottom: 20px
+  position: relative
+  z-index: 3
+  p:first-of-type
+    margin: 0
+    &:before
+      content: "“"
+  p:last-of-type
+    &:after
+      content: "”"
+
+.shaper-title
+  line-height: 1.2
+  position: relative
+  z-index: 3
+  a
+    color: $white
+    font-size: 18px
+    @extend %weight-500
+    border-bottom: none
+
+.shaper-hub
+  color: $white
+  line-height: 1
+  position: relative
+  z-index: 3
+  a
+    color: $white
+    border-bottom: none
+    @extend %weight-300
+
+.slider-wrapper.News,
+.slider-wrapper.Project
+  .top-wrapper
+    display: none
+
+.slider-wrapper.Shaper
+  .bottom-wrapper
+    display: none

@@ -1,0 +1,66 @@
+// Pager styling
+
+.item-list ul.pager
+  @extend %section-border-top
+  @extend %section-border-bottom
+  @extend %weight-300
+  margin: 0
+  padding: 10px 0 10px 0
+  li
+    display: inline-block
+    height: 30px
+    margin: 0
+    padding: 0
+    text-transform: lowercase
+    vertical-align: top
+    .ie7 &
+      display: inline
+    a
+      @extend %border-bottom-none
+      @extend %grey
+      &:hover
+        @extend %aqua-blue
+
+  .pager-previous
+    width: 88px
+    a
+      border-bottom: none
+      &:before
+        content: image_url("slideshow-arrow-back.png")
+        padding-right: 3px
+        position: relative
+        top: 7px
+        [dir="rtl"] &
+          content: image_url("slideshow-arrow-forward.png")
+      &:hover
+        &:before
+          content: image_url("slideshow-arrow-back-hover.png")
+          [dir="rtl"] &
+            content: image_url("slideshow-arrow-forward-hover.png")
+
+  .pager-next
+    width: 73px
+    a
+      border-bottom: none
+      &:after
+        content: image_url("slideshow-arrow-forward.png")
+        padding-left: 3px
+        position: relative
+        top: 7px
+        [dir="rtl"] &
+          content: image_url("slideshow-arrow-back.png")
+      &:hover
+        &:after
+          content: image_url("slideshow-arrow-forward-hover.png")
+          [dir="rtl"] &
+            content: image_url("slideshow-arrow-back-hover.png")
+
+  .pager-current
+    @extend %weight-100
+    line-height: 2.2
+    margin: 0 40px
+    width: 100px
+    &:before
+      content: "page "
+    .ie8 &
+      width: 101px

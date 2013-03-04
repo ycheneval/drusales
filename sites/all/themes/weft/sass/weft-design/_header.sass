@@ -1,0 +1,128 @@
+// HEADER CONTENT STYLES
+
+#header
+  @extend %float-left
+  [dir="rtl"] &
+    @extend %float-right
+
+// Logo
+#logo
+  @extend %border-bottom-none
+  @extend %float-left
+  padding-top: 10px
+  padding-bottom: 10px
+  padding-right: 20px
+  [dir="rtl"] &
+    @extend %float-right
+  .ie8 &,
+  .ie7 &
+    border-bottom: none
+
+#logo
+  +breakpoint(765px)
+    width: grid-span(1, 1, $header-columns, $header-gutter)
+    padding: 0.5em 0
+  +breakpoint($bp-narrow)
+    margin: 0 auto
+    float: none
+    clear: both
+    display: block
+    width: 50%
+#header
+  +breakpoint(765px)
+    +grid-span(1, 2, $header-columns, $header-gutter, 0)
+    .mission-statement
+      margin-top: 0.5em
+  +breakpoint($bp-narrow)
+    float: none
+    width: auto
+    margin: 0 0.5em
+
+// Mission statement
+.mission-statement
+  line-height: 20px
+  margin-top: 38px
+  max-width: 520px
+  @extend %text-uppercase
+  .ie8 &
+    max-width: 770px
+
+.mission-title
+  @extend %weight-500
+
+.mission-umbrella
+  @extend %size-14
+  @extend %weight-300
+  .title
+    @extend %weight-500
+
+// LARGE H1 HEADERS WITH GRADIENTS THE ARE THE PAGE TITLES
+
+// General styles used by both the global and regular hubs
+h1#page-title
+  border: 1px $lightgrey solid
+  font-size: 74px
+  @extend %weight-500
+  letter-spacing: -2px
+  line-height: 1
+  min-height: 90px
+  padding: 4px
+  text-transform: none
+  +breakpoint($bp-menu-hide)
+    font-size: 54px
+    min-height: 66px
+    padding-bottom: 6px !important
+  .ie8 &
+    margin-top: -24px
+
+
+
+// Specific DEFAULT HUB title header
+h1#page-title
+  background-color: $royal-blue
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#002b5b', endColorstr='#2989d8',GradientType=0 )
+  +background-image(linear-gradient(top, $navy-blue 15%, $royal-blue 85%))
+  border:
+    top: 4px solid $royal-blue
+    right: 4px solid $royal-blue
+    left: 4px solid $royal-blue
+  color: $white
+  @extend %padding-left
+  a,
+  a:visited
+    color: $white
+
+// Specific GLOBAL HUB title header
+h1#page-title
+  .global-hub &
+    background-color: $white
+    color: $royal-blue
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dddddd', endColorstr='#ffffff',GradientType=0 )
+    +background-image(linear-gradient(top, $lightgrey 15%, $white 85%))
+    @extend %section-border-top
+    border:
+      right: 0
+      left: 0
+    padding: 6px 0 0 6px
+    position: relative
+    z-index: 1
+    &:before
+      content: ""
+      border:
+        top: 3px solid $white
+        right: 3px solid $white
+        left: 3px solid $white
+      top: 0
+      right: 0
+      bottom: 0
+      left: 0
+      position: absolute
+      z-index: -1
+    a
+      color: $royal-blue
+      &:visited
+        color: $royal-blue
+
+// Styling for the front page
+.front h1#page-title span.first-word
+  @extend %navy-blue

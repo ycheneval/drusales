@@ -1,0 +1,4312 @@
+@charset "UTF-8";
+/* The Coding Designer's Survival Kit
+ * A framework for designing websites in the browser.
+ *
+ * Much love to:
+ * Sass, Compass, HTML5 Boilerplate, Modernizr, Formalize, and more
+ *
+ * Available at http://thecodingdesigner.com
+ * twitter: http://twitter.com/canarymason */
+/* -------------------------------------------------------------------------------------
+ * -------------------------------------------------------------------------------------- */
+/* This CSS was authored using Sass & Compass
+ * Download the source files here:
+ * https://github.com/canarymason/The-Coding-Designers-Survival-Kit
+ * Learn more about Sass & Compass at http://compass-style.org/ */
+/* normalize.css 2012-03-11T12:53 UTC - http://github.com/necolas/normalize.css */
+/* =============================================================================
+   HTML5 display definitions
+   ========================================================================== */
+/*
+ * Corrects block display not defined in IE6/7/8/9 & FF3
+ */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+nav,
+section,
+summary {
+  display: block;
+}
+
+/*
+ * Corrects inline-block display not defined in IE6/7/8/9 & FF3
+ */
+audio,
+canvas,
+video {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
+
+/*
+ * Prevents modern browsers from displaying 'audio' without controls
+ * Remove excess height in iOS5 devices
+ */
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+/*
+ * Addresses styling for 'hidden' attribute not present in IE7/8/9, FF3, S4
+ * Known issue: no IE6 support
+ */
+[hidden] {
+  display: none;
+}
+
+/* =============================================================================
+   Base
+   ========================================================================== */
+/*
+ * 1. Corrects text resizing oddly in IE6/7 when body font-size is set using em units
+ *    http://clagnut.com/blog/348/#c790
+ * 2. Prevents iOS text size adjust after orientation change, without disabling user zoom
+ *    www.456bereastreet.com/archive/201012/controlling_text_size_in_safari_for_ios_without_disabling_user_zoom/
+ */
+html {
+  font-size: 100%;
+  /* 1 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */
+  -ms-text-size-adjust: 100%;
+  /* 2 */
+}
+
+/*
+ * Addresses font-family inconsistency between 'textarea' and other form elements.
+ */
+html,
+button,
+input,
+select,
+textarea {
+  font-family: sans-serif;
+}
+
+/*
+ * Addresses margins handled incorrectly in IE6/7
+ */
+body {
+  margin: 0;
+}
+
+/* =============================================================================
+   Links
+   ========================================================================== */
+/*
+ * Addresses outline displayed oddly in Chrome
+ */
+a:focus {
+  outline: thin dotted;
+}
+
+/*
+ * Improves readability when focused and also mouse hovered in all browsers
+ * people.opera.com/patrickl/experiments/keyboard/test
+ */
+a:hover,
+a:active {
+  outline: 0;
+}
+
+/* =============================================================================
+   Typography
+   ========================================================================== */
+/*
+ * Addresses font sizes and margins set differently in IE6/7
+ * Addresses font sizes within 'section' and 'article' in FF4+, Chrome, S5
+ */
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+h2 {
+  font-size: 1.5em;
+  margin: 0.83em 0;
+}
+
+h3 {
+  font-size: 1.17em;
+  margin: 1em 0;
+}
+
+h4 {
+  font-size: 1em;
+  margin: 1.33em 0;
+}
+
+h5 {
+  font-size: 0.83em;
+  margin: 1.67em 0;
+}
+
+h6 {
+  font-size: 0.75em;
+  margin: 2.33em 0;
+}
+
+/*
+ * Addresses styling not present in IE7/8/9, S5, Chrome
+ */
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+
+/*
+ * Addresses style set to 'bolder' in FF3+, S4/5, Chrome
+*/
+b,
+strong {
+  font-weight: bold;
+}
+
+blockquote {
+  margin: 1em 40px;
+}
+
+/*
+ * Addresses styling not present in S5, Chrome
+ */
+dfn {
+  font-style: italic;
+}
+
+/*
+ * Addresses styling not present in IE6/7/8/9
+ */
+mark {
+  background: #ff0;
+  color: #000;
+}
+
+/*
+ * Addresses margins set differently in IE6/7
+ */
+p,
+pre {
+  margin: 1em 0;
+}
+
+/*
+ * Corrects font family set oddly in IE6, S4/5, Chrome
+ * en.wikipedia.org/wiki/User:Davidgothberg/Test59
+ */
+pre,
+code,
+kbd,
+samp {
+  font-family: monospace, serif;
+  _font-family: 'courier new', monospace;
+  font-size: 1em;
+}
+
+/*
+ * Improves readability of pre-formatted text in all browsers
+ */
+pre {
+  white-space: pre;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/*
+ * 1. Addresses CSS quotes not supported in IE6/7
+ * 2. Addresses quote property not supported in S4
+ */
+/* 1 */
+q {
+  quotes: none;
+}
+
+/* 2 */
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+
+small {
+  font-size: 75%;
+}
+
+/*
+ * Prevents sub and sup affecting line-height in all browsers
+ * gist.github.com/413930
+ */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+/* =============================================================================
+   Lists
+   ========================================================================== */
+/*
+ * Addresses margins set differently in IE6/7
+ */
+dl,
+menu,
+ol,
+ul {
+  margin: 1em 0;
+}
+
+dd {
+  margin: 0 0 0 40px;
+}
+
+/*
+ * Addresses paddings set differently in IE6/7
+ */
+menu,
+ol,
+ul {
+  padding: 0 0 0 40px;
+}
+
+/*
+ * Corrects list images handled incorrectly in IE7
+ */
+nav ul,
+nav ol {
+  list-style: none;
+  list-style-image: none;
+}
+
+/* =============================================================================
+   Embedded content
+   ========================================================================== */
+/*
+ * 1. Removes border when inside 'a' element in IE6/7/8/9, FF3
+ * 2. Improves image quality when scaled in IE7
+ *    code.flickr.com/blog/2008/11/12/on-ui-quality-the-little-things-client-side-image-resizing/
+ */
+img {
+  border: 0;
+  /* 1 */
+  -ms-interpolation-mode: bicubic;
+  /* 2 */
+}
+
+/*
+ * Corrects overflow displayed oddly in IE9
+ */
+svg:not(:root) {
+  overflow: hidden;
+}
+
+/* =============================================================================
+   Figures
+   ========================================================================== */
+/*
+ * Addresses margin not present in IE6/7/8/9, S5, O11
+ */
+figure {
+  margin: 0;
+}
+
+/* =============================================================================
+   Forms
+   ========================================================================== */
+/*
+ * Corrects margin displayed oddly in IE6/7
+ */
+form {
+  margin: 0;
+}
+
+/*
+ * Define consistent border, margin, and padding
+ */
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+
+/*
+ * 1. Corrects color not being inherited in IE6/7/8/9
+ * 2. Corrects text not wrapping in FF3
+ * 3. Corrects alignment displayed oddly in IE6/7
+ */
+legend {
+  border: 0;
+  /* 1 */
+  padding: 0;
+  white-space: normal;
+  /* 2 */
+  *margin-left: -7px;
+  /* 3 */
+}
+
+/*
+ * 1. Corrects font size not being inherited in all browsers
+ * 2. Addresses margins set differently in IE6/7, FF3+, S5, Chrome
+ * 3. Improves appearance and consistency in all browsers
+ */
+button,
+input,
+select,
+textarea {
+  font-size: 100%;
+  /* 1 */
+  margin: 0;
+  /* 2 */
+  vertical-align: baseline;
+  /* 3 */
+  *vertical-align: middle;
+  /* 3 */
+}
+
+/*
+ * Addresses FF3/4 setting line-height on 'input' using !important in the UA stylesheet
+ */
+button,
+input {
+  line-height: normal;
+  /* 1 */
+}
+
+/*
+ * 1. Improves usability and consistency of cursor style between image-type 'input' and others
+ * 2. Corrects inability to style clickable 'input' types in iOS
+ * 3. Removes inner spacing in IE7 without affecting normal text inputs
+ *    Known issue: inner spacing remains in IE6
+ */
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  cursor: pointer;
+  /* 1 */
+  -webkit-appearance: button;
+  /* 2 */
+  *overflow: visible;
+  /* 3 */
+}
+
+/*
+ * Re-set default cursor for disabled elements
+ */
+button[disabled],
+input[disabled] {
+  cursor: default;
+}
+
+/*
+ * 1. Addresses box sizing set to content-box in IE8/9
+ * 2. Removes excess padding in IE8/9
+ * 3. Removes excess padding in IE7
+      Known issue: excess padding remains in IE6
+ */
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box;
+  /* 1 */
+  padding: 0;
+  /* 2 */
+  *height: 13px;
+  /* 3 */
+  *width: 13px;
+  /* 3 */
+}
+
+/*
+ * 1. Addresses appearance set to searchfield in S5, Chrome
+ * 2. Addresses box-sizing set to border-box in S5, Chrome (include -moz to future-proof)
+ */
+input[type="search"] {
+  -webkit-appearance: textfield;
+  /* 1 */
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  /* 2 */
+  box-sizing: content-box;
+}
+
+/*
+ * Removes inner padding and search cancel button in S5, Chrome on OS X
+ */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+/*
+ * Removes inner padding and border in FF3+
+ * www.sitepen.com/blog/2008/05/14/the-devils-in-the-details-fixing-dojos-toolbar-buttons/
+ */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/*
+ * 1. Removes default vertical scrollbar in IE6/7/8/9
+ * 2. Improves readability and alignment in all browsers
+ */
+textarea {
+  overflow: auto;
+  /* 1 */
+  vertical-align: top;
+  /* 2 */
+}
+
+/* =============================================================================
+   Tables
+   ========================================================================== */
+/*
+ * Remove most spacing between table cells
+ */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+img, input[type=email], input[type=url], input[type=tel], input[type=text], input[type=date], input[type=datetime], input[type=datetime-local], input[type=month], input[type=week], input[type=time], input[type=number], input[type=range], input[type=search], input[type=color], textarea, input:not([type="radio"]), table {
+  max-width: 100%;
+}
+
+address, cite, q, dfn, i {
+  font-style: italic;
+}
+
+dfn, b {
+  font-weight: bold;
+}
+
+.weforum.sidebar .hub-curator-welcome .hub-welcome {
+  font-family: handsean, cursive;
+}
+
+pre, code, kbd, tt {
+  font-family: Consolas, Menlo, "Courier New", monospace, monospace;
+  _font-family: Consolas, Menlo, "Courier New", monospace, monospace;
+}
+
+h1, .weforum.main .weforum-layout-list .field-name-title .field-item,
+.weforum.main .weforum-layout-list .field-name-title .field-item a, h2, .node-page.view-mode-full .field-name-field-page-title, .stream-display .view-feeds .view-header a,
+.stream-display .view-feeds .view-empty a, .stream-display .view-feeds .views-field-field-tibbr-twitter a,
+.stream-display .view-feeds .views-field-field-tibbr-facebook a, .page-node-651 #webform-component-hub label, h3, h4, .view-number-of-initatives-in-a-hub .views-field-group-audience,
+.view-number-of-initatives-in-a-hub .views-field-group-audience-1, h5, h6 {
+  font-family: "HelveticaNeue45Light", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+/* Only use the fancy ampersand in <h#> tags */
+h1 .amp, h2 .amp, h3 .amp, h4 .amp, h5 .amp, h6 .amp {
+  font-size: 1em;
+  font-family: "HelveticaNeue45Light", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-style: italic;
+}
+
+.hidden, #touch-menu-btn, .touch .pane-hubs-panel-pane-2 {
+  display: none !important;
+  visibility: hidden;
+}
+
+/* import font files using @font-face, if not using a service such as typekit */
+@font-face {
+  font-family: "handsean";
+  src: url('../fonts/handsean.woff') format('woff'), url('../fonts/handsean.ttf') format('truetype'), url('../fonts/handsean.otf') format('opentype');
+}
+
+@font-face {
+  font-family: "HelveticaNeue45Light";
+  src: url('../fonts/ae1656aa-5f8f-4905-aed0-93e667bd6e4a.eot?iefix');
+  src: url('../fonts/ae1656aa-5f8f-4905-aed0-93e667bd6e4a.eot?iefix?#iefix') format('eot'), url('../fonts/530dee22-e3c1-4e9f-bf62-c31d510d9656.woff') format('woff'), url('../fonts/688ab72b-4deb-4e15-a088-89166978d469.ttf') format('truetype'), url('../fonts/7816f72f-f47e-4715-8cd7-960e3723846a.svg#7816f72f-f47e-4715-8cd7-960e3723846a') format('svg');
+}
+
+@font-face {
+  font-family: "HelveticaNeue46Light";
+  src: url('../fonts/a4f9f319-dec9-4afc-8b50-e18cc1b61cb4.eot?iefix');
+  src: url('../fonts/a4f9f319-dec9-4afc-8b50-e18cc1b61cb4.eot?iefix?#iefix') format('eot'), url('../fonts/8e9ee02b-f337-4f13-ad6c-969d6d6536c8.woff') format('woff'), url('../fonts/beddbbc6-203e-4f36-8960-3f5ca22af567.ttf') format('truetype'), url('../fonts/af177436-d9e8-44e8-9c9c-ef2d945f20a3.svg#af177436-d9e8-44e8-9c9c-ef2d945f20a3') format('svg');
+  font-weight: "normal";
+  font-style: "italic";
+}
+
+@font-face {
+  font-family: "HelveticaNeue55Roman";
+  src: url('../fonts/b7693a83-b861-4aa6-85e0-9ecf676bc4d6.eot?iefix');
+  src: url('../fonts/b7693a83-b861-4aa6-85e0-9ecf676bc4d6.eot?iefix?#iefix') format('eot'), url('../fonts/bcf54343-d033-41ee-bbd7-2b77df3fe7ba.woff') format('woff'), url('../fonts/b0ffdcf0-26da-47fd-8485-20e4a40d4b7d.ttf') format('truetype'), url('../fonts/da09f1f1-062a-45af-86e1-2bbdb3dd94f9.svg#da09f1f1-062a-45af-86e1-2bbdb3dd94f9') format('svg');
+}
+
+@font-face {
+  font-family: "HelveticaNeue65Medium";
+  src: url('../fonts/07fe0fec-b63f-4963-8ee1-535528b67fdb.eot?iefix');
+  src: url('../fonts/07fe0fec-b63f-4963-8ee1-535528b67fdb.eot?iefix?#iefix') format('eot'), url('../fonts/60be5c39-863e-40cb-9434-6ebafb62ab2b.woff') format('woff'), url('../fonts/4c6503c9-859b-4d3b-a1d5-2d42e1222415.ttf') format('truetype'), url('../fonts/36c182c6-ef98-4021-9b0d-d63122c2bbf5.svg#36c182c6-ef98-4021-9b0d-d63122c2bbf5') format('svg');
+}
+
+@font-face {
+  font-family: "HelveticaNeue66Medium";
+  src: url('../fonts/71c74bc5-e7c8-48ad-9b03-43f3e6760e4e.eot?iefix');
+  src: url('../fonts/71c74bc5-e7c8-48ad-9b03-43f3e6760e4e.eot?iefix?#iefix') format('eot'), url('../fonts/5f0efe11-b07a-49fc-ab86-7af6152fa368.woff') format('woff'), url('../fonts/fea58e5b-b0a7-43f7-8928-fc0639365852.ttf') format('truetype'), url('../fonts/398e1bb8-f2eb-41d5-b3b6-b9a889b52ee7.svg#398e1bb8-f2eb-41d5-b3b6-b9a889b52ee7') format('svg');
+  font-weight: "normal";
+  font-style: "italic";
+}
+
+@font-face {
+  font-family: "HelveticaNeue75Bold";
+  src: url('../fonts/c07fef9e-a934-42d7-92ad-69205f2b8a00.eot?iefix');
+  src: url('../fonts/c07fef9e-a934-42d7-92ad-69205f2b8a00.eot?iefix?#iefix') format('eot'), url('../fonts/14ff6081-326d-4dae-b778-d7afa66166fc.woff') format('woff'), url('../fonts/8fda1e47-19be-46c7-8d83-8d4fb35572f0.ttf') format('truetype'), url('../fonts/f751c8ae-1057-46d9-8d74-62592e002568.svg#f751c8ae-1057-46d9-8d74-62592e002568') format('svg');
+  font-weight: "bold";
+  font-style: "normal";
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* Body -------------------------------------------------------------- */
+/* Establish baseline rhythm
+ * from compass/typography/_vertical_rhythm */
+html {
+  font-size: 100%;
+  line-height: 1.5em;
+}
+
+body {
+  font-family: "HelveticaNeue45Light", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  color: #555555;
+  background: white;
+}
+body.i18n-ar {
+  font-family: "HelveticaNeueArabic45Light", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+@media screen and (-webkit-device-pixel-ratio: 1) and (device-width: 1024px) and (max-device-height: 600px) and (orientation: landscape), screen and (-webkit-device-pixel-ratio: 1) and (device-width: 600px) and (max-device-height: 1024px) and (orientation: portrait), screen and (-o-device-pixel-ratio: 1) and (device-width: 1024px) and (max-device-height: 600px) and (orientation: landscape), screen and (-o-device-pixel-ratio: 1) and (device-width: 600px) and (max-device-height: 1024px) and (orientation: portrait), screen and (device-pixel-ratio: 1) and (device-width: 1024px) and (max-device-height: 600px) and (orientation: landscape), screen and (device-pixel-ratio: 1) and (device-width: 600px) and (max-device-height: 1024px) and (orientation: portrait) {
+  html {
+    font-size: 19.2px;
+  }
+}
+@media screen and (-webkit-device-pixel-ratio: 1.5) and (device-width: 683px) and (orientation: landscape), screen and (-webkit-device-pixel-ratio: 1.5) and (device-width: 400px) and (orientation: portrait), screen and (-o-device-pixel-ratio: 3 / 2) and (device-width: 683px) and (orientation: landscape), screen and (-o-device-pixel-ratio: 3 / 2) and (device-width: 400px) and (orientation: portrait), screen and (device-pixel-ratio: 1.5) and (device-width: 683px) and (orientation: landscape), screen and (device-pixel-ratio: 1.5) and (device-width: 400px) and (orientation: portrait), screen and (device-pixel-ratio: 3 / 2) and (device-width: 683px) and (orientation: landscape), screen and (device-pixel-ratio: 3 / 2) and (device-width: 400px) and (orientation: portrait) {
+  html {
+    font-size: 12.8px;
+  }
+}
+/* Selected Text -------------------------------------------------------------- */
+/* -moz- must be declared separately */
+::-moz-selection {
+  color: white;
+  background: #00529b;
+  text-shadow: none;
+}
+
+::selection {
+  color: white;
+  background: #00529b;
+  text-shadow: none;
+}
+
+/* Links -------------------------------------------------------------- */
+a {
+  color: #409ed2;
+  text-decoration: none;
+}
+a:visited {
+  color: #409ed2;
+}
+a:hover {
+  color: #002b5b;
+}
+a:active {
+  color: #002b5b;
+}
+p a {
+  border-bottom: none;
+}
+
+em {
+  font-style: italic;
+}
+
+strong {
+  font-weight: bold;
+}
+
+pre {
+  white-space: pre;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  line-height: 1;
+}
+
+/* Lists -------------------------------------------------------------- */
+dl {
+  margin-left: 0;
+}
+
+ol {
+  list-style: decimal;
+}
+
+ul {
+  list-style: disc;
+}
+
+/* Headings -------------------------------------------------------------- */
+h1, .weforum.main .weforum-layout-list .field-name-title .field-item,
+.weforum.main .weforum-layout-list .field-name-title .field-item a, h2, .node-page.view-mode-full .field-name-field-page-title, .stream-display .view-feeds .view-header a,
+.stream-display .view-feeds .view-empty a, .stream-display .view-feeds .views-field-field-tibbr-twitter a,
+.stream-display .view-feeds .views-field-field-tibbr-facebook a, .page-node-651 #webform-component-hub label, h3, h4, .view-number-of-initatives-in-a-hub .views-field-group-audience,
+.view-number-of-initatives-in-a-hub .views-field-group-audience-1, h5, h6 {
+  font-weight: normal;
+  text-rendering: optimizeLegibility;
+  margin: 0;
+}
+h1 a, .weforum.main .weforum-layout-list .field-name-title .field-item a,
+.weforum.main .weforum-layout-list .field-name-title .field-item a a, h2 a, .node-page.view-mode-full .field-name-field-page-title a, .stream-display .view-feeds .view-header a a,
+.stream-display .view-feeds .view-empty a a, .stream-display .view-feeds .views-field-field-tibbr-twitter a a,
+.stream-display .view-feeds .views-field-field-tibbr-facebook a a, .page-node-651 #webform-component-hub label a, h3 a, h4 a, .view-number-of-initatives-in-a-hub .views-field-group-audience a,
+.view-number-of-initatives-in-a-hub .views-field-group-audience-1 a, h5 a, h6 a {
+  text-transform: none;
+}
+h1 a, .weforum.main .weforum-layout-list .field-name-title .field-item a,
+.weforum.main .weforum-layout-list .field-name-title .field-item a a, h2 a, .node-page.view-mode-full .field-name-field-page-title a, .stream-display .view-feeds .view-header a a,
+.stream-display .view-feeds .view-empty a a, .stream-display .view-feeds .views-field-field-tibbr-twitter a a,
+.stream-display .view-feeds .views-field-field-tibbr-facebook a a, .page-node-651 #webform-component-hub label a, h3 a, h4 a, .view-number-of-initatives-in-a-hub .views-field-group-audience a,
+.view-number-of-initatives-in-a-hub .views-field-group-audience-1 a, h5 a, h6 a {
+  border-bottom: none;
+}
+h1 a:hover, .weforum.main .weforum-layout-list .field-name-title .field-item a:hover,
+.weforum.main .weforum-layout-list .field-name-title .field-item a a:hover, h2 a:hover, .node-page.view-mode-full .field-name-field-page-title a:hover, .stream-display .view-feeds .view-header a a:hover,
+.stream-display .view-feeds .view-empty a a:hover, .stream-display .view-feeds .views-field-field-tibbr-twitter a a:hover,
+.stream-display .view-feeds .views-field-field-tibbr-facebook a a:hover, .page-node-651 #webform-component-hub label a:hover, h3 a:hover, h4 a:hover, .view-number-of-initatives-in-a-hub .views-field-group-audience a:hover,
+.view-number-of-initatives-in-a-hub .views-field-group-audience-1 a:hover, h5 a:hover, h6 a:hover {
+  border-bottom: none;
+}
+
+h1, .weforum.main .weforum-layout-list .field-name-title .field-item,
+.weforum.main .weforum-layout-list .field-name-title .field-item a {
+  color: black;
+  font-family: "HelveticaNeue45Light", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-size: 22px;
+  line-height: 24px;
+  text-transform: uppercase;
+}
+
+h2, .node-page.view-mode-full .field-name-field-page-title, .stream-display .view-feeds .view-header a,
+.stream-display .view-feeds .view-empty a, .stream-display .view-feeds .views-field-field-tibbr-twitter a,
+.stream-display .view-feeds .views-field-field-tibbr-facebook a, .page-node-651 #webform-component-hub label {
+  color: #002b5b;
+  font-family: handsean, cursive;
+  font-size: 18px;
+  line-height: 28px;
+  padding: 16px 0;
+}
+
+h3 {
+  color: #002b5b;
+  font-family: handsean, cursive;
+  font-size: 16px;
+  line-height: 28px;
+  padding: 16px 0;
+}
+
+h4, .view-number-of-initatives-in-a-hub .views-field-group-audience,
+.view-number-of-initatives-in-a-hub .views-field-group-audience-1, h5, h6 {
+  color: #002b5b;
+  font-family: handsean, cursive;
+  font-size: 14px;
+  line-height: 24px;
+  padding: 16px 0;
+}
+
+/* Images -------------------------------------------------------------- */
+img {
+  height: auto;
+  vertical-align: bottom;
+}
+img.left {
+  float: left;
+  margin: 12px 25px 12px 0;
+}
+img.right {
+  float: right;
+  margin: 12px 0 12px 25px;
+}
+
+small {
+  font-size: 0.8125em;
+  line-height: 1.84615em;
+}
+
+q {
+  quotes: "“" "”";
+}
+q:before {
+  content: open-quote;
+}
+q:after {
+  content: close-quote;
+}
+
+abbr, acronym {
+  border-bottom: 1px dotted;
+  cursor: help;
+}
+
+sup, sub {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+mark {
+  background: red;
+  background-color: rgba(255, 255, 0, 0.5);
+  text-shadow: none;
+}
+
+.input_tiny {
+  width: 50px;
+}
+
+.input_small {
+  width: 100px;
+}
+
+.input_medium {
+  width: 150px;
+}
+
+.input_large {
+  width: 200px;
+}
+
+.input_xlarge {
+  width: 250px;
+}
+
+.input_xxlarge {
+  width: 300px;
+}
+
+.input_full {
+  width: 100%;
+}
+
+.input_full_wrap {
+  display: block;
+  padding-right: 8px;
+}
+
+::-moz-focus-inner {
+  border: 0;
+}
+
+input[type="search"]::-webkit-search-decoration {
+  display: none;
+}
+
+input,
+button,
+select,
+textarea {
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding;
+  background-clip: padding-box;
+  margin: 0;
+  vertical-align: middle;
+}
+
+button,
+input[type="reset"],
+input[type="submit"],
+input[type="button"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -webkit-border-radius: 11px;
+  -moz-border-radius: 11px;
+  -ms-border-radius: 11px;
+  -o-border-radius: 11px;
+  border-radius: 11px;
+  background: #dddddd url('../images/formalize/button.png') repeat-x;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #dddddd));
+  background-image: -webkit-linear-gradient(#ffffff, #dddddd);
+  background-image: -moz-linear-gradient(#ffffff, #dddddd);
+  background-image: -o-linear-gradient(#ffffff, #dddddd);
+  background-image: -ms-linear-gradient(#ffffff, #dddddd);
+  background-image: linear-gradient(#ffffff, #dddddd);
+  border: 1px solid;
+  border-color: #dddddd #bbbbbb #999999;
+  cursor: pointer;
+  color: #333333;
+  font: 12px/1.2 "Helvetica Neue", Helvetica, Arial, sans-serif;
+  outline: 0;
+  overflow: visible;
+  padding: 3px 10px 4px;
+  text-shadow: white 0 1px 1px;
+  width: auto;
+  *padding-top: 2px;
+  *padding-bottom: 0px;
+}
+
+button {
+  *padding-top: 1px;
+  *padding-bottom: 1px;
+}
+
+button[disabled],
+input[type="reset"][disabled],
+input[type="submit"][disabled],
+input[type="button"][disabled] {
+  color: #888888;
+}
+
+textarea,
+select,
+input[type="date"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="email"],
+input[type="month"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="text"],
+input[type="time"],
+input[type="url"],
+input[type="week"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+  background-color: white;
+  border: 1px solid;
+  border-color: #848484 #c1c1c1 #e1e1e1;
+  color: black;
+  outline: 0;
+  padding: 2px 3px;
+  font-size: 13px;
+  font-family: Arial, sans-serif;
+  height: 1.8em;
+  *padding-top: 2px;
+  *padding-bottom: 1px;
+  *height: auto;
+}
+
+input.placeholder-text,
+textarea.placeholder-text {
+  color: #888888;
+}
+
+::-webkit-input-placeholder {
+  color: #888888;
+}
+
+textarea[disabled],
+select[disabled],
+input[type="date"][disabled],
+input[type="datetime"][disabled],
+input[type="datetime-local"][disabled],
+input[type="email"][disabled],
+input[type="month"][disabled],
+input[type="number"][disabled],
+input[type="password"][disabled],
+input[type="search"][disabled],
+input[type="tel"][disabled],
+input[type="text"][disabled],
+input[type="time"][disabled],
+input[type="url"][disabled],
+input[type="week"][disabled] {
+  background-color: #eeeeee;
+  color: #888888;
+}
+
+button:focus,
+button:active,
+input:focus,
+input:active,
+select:focus,
+select:active,
+textarea:focus,
+textarea:active {
+  -moz-box-shadow: #0066ff 0 0 7px;
+  -webkit-box-shadow: #0066ff 0 0 7px;
+  box-shadow: #0066ff 0 0 7px;
+  z-index: 1;
+}
+
+input[type="radio"]:focus,
+input[type="radio"]:active,
+input[type="checkbox"]:focus,
+input[type="checkbox"]:active {
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.is_webkit select {
+  background-image: url('../images/formalize/select_arrow.gif');
+  background-repeat: no-repeat;
+  background-position: right center;
+  padding-right: 20px;
+}
+
+textarea,
+select[multiple] {
+  height: auto;
+}
+
+select[multiple],
+.is_webkit select[multiple] {
+  background-image: none;
+  padding: 0;
+}
+
+textarea {
+  min-height: 40px;
+  overflow: auto;
+  resize: vertical;
+  width: 100%;
+}
+
+optgroup {
+  color: black;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.ie6_button,
+* html button {
+  background: #dddddd url('../images/formalize/button.png') repeat-x;
+  border: 1px solid;
+  border-color: #dddddd #bbbbbb #999999;
+  cursor: pointer;
+  color: #333333;
+  font: bold 12px/1.2 Arial, sans-serif;
+  padding: 2px 10px 0px;
+  overflow: visible;
+  width: auto;
+}
+
+* html button {
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.ie6_input,
+* html textarea,
+* html select {
+  background: white;
+  border: 1px solid;
+  border-color: #848484 #c1c1c1 #e1e1e1;
+  color: black;
+  padding: 2px 3px 1px;
+  font-size: 13px;
+  font-family: Arial, sans-serif;
+  vertical-align: top;
+}
+
+* html select {
+  margin-top: 1px;
+}
+
+.placeholder_text,
+.ie6_input_disabled,
+.ie6_button_disabled {
+  color: #888888;
+}
+
+.ie6_input_disabled {
+  background: #eeeeee;
+}
+
+/* Forms -------------------------------------------------------------- */
+fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+legend {
+  padding: 0;
+}
+
+label {
+  display: inline;
+  font-family: "HelveticaNeue65Medium", "HelveticaNeue55Roman", "HelveticaNeue45Light", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-size: 16px;
+}
+
+.field .field-label {
+  font-weight: normal;
+  font-family: "HelveticaNeue65Medium", "HelveticaNeue55Roman", "HelveticaNeue45Light", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+input[type=email], input[type=url], input[type=tel], input[type=text], input[type=date], input[type=datetime], input[type=datetime-local], input[type=month], input[type=week], input[type=time], input[type=number], input[type=range], input[type=search], input[type=color] {
+  border-style: solid;
+  border-width: 0.0625em;
+  padding: 0.3125em;
+  border-width: 1px;
+  margin-top: 0;
+  border-color: #555555;
+}
+
+input[type=search] {
+  -webkit-appearance: none;
+}
+input[type=search]::-webkit-search-decoration {
+  display: none;
+}
+
+input[type="radio"], input[type="checkbox"] {
+  margin-left: 0.25em;
+  margin-right: 0.25em;
+}
+
+input[type="file"] {
+  font-size: 12px;
+}
+
+/* Tables -------------------------------------------------------------- */
+/* tables still need 'cellspacing="0"' in the markup */
+ins {
+  text-decoration: none;
+  border-bottom: 1px solid #555555;
+}
+
+del {
+  text-decoration: line-through;
+}
+
+/* SINGULARITY -- http://singularity.gs/ */
+/*
+* Symbolset
+* www.symbolset.com
+* Copyright © 2012 Oak Studios LLC
+*
+* Upload this file to your web server
+* and place this within your <head> tags.
+* <link href="webfonts/ss-standard.css" rel="stylesheet" />
+*/
+@font-face {
+  font-family: "SSStandard";
+  src: url("../fonts/ss-standard.eot");
+  src: url("../fonts/ss-standard.eot?#iefix") format("embedded-opentype"), url("../fonts/ss-standard.woff") format("woff"), url("../fonts/ss-standard.ttf") format("truetype"), url("../fonts/ss-standard.svg#SSStandard") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.ss-icon, [class^="ss-"]:before, [class*=" ss-"]:before,
+.ss-icon.ss-standard, [class^="ss-"].ss-standard:before, [class*=" ss-"].ss-standard:before {
+  font-family: "SSStandard";
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: none;
+  text-rendering: optimizeLegibility;
+  white-space: nowrap;
+  -webkit-font-feature-settings: "liga", "dlig";
+  -moz-font-feature-settings: "liga=1, dlig=1";
+  -moz-font-feature-settings: "liga", "dlig";
+  -ms-font-feature-settings: "liga", "dlig";
+  -o-font-feature-settings: "liga", "dlig";
+  font-feature-settings: "liga", "dlig";
+}
+
+.ss-cursor:before {
+  content: '';
+}
+
+.ss-crosshair:before {
+  content: '⌖';
+}
+
+.ss-search:before {
+  content: '🔎';
+}
+
+.ss-view:before {
+  content: '👀';
+}
+
+.ss-attach:before {
+  content: '📎';
+}
+
+.ss-link:before {
+  content: '🔗';
+}
+
+.ss-move:before {
+  content: '';
+}
+
+.ss-write:before {
+  content: '✎';
+}
+
+.ss-writingdisabled:before {
+  content: '';
+}
+
+.ss-erase:before {
+  content: '✐';
+}
+
+.ss-compose:before {
+  content: '📝';
+}
+
+.ss-lock:before {
+  content: '🔒';
+}
+
+.ss-unlock:before {
+  content: '🔓';
+}
+
+.ss-key:before {
+  content: '🔑';
+}
+
+.ss-backspace:before {
+  content: '⌫';
+}
+
+.ss-ban:before {
+  content: '🚫';
+}
+
+.ss-trash:before {
+  content: '';
+}
+
+.ss-target:before {
+  content: '◎';
+}
+
+.ss-tag:before {
+  content: '';
+}
+
+.ss-bookmark:before {
+  content: '🔖';
+}
+
+.ss-flag:before {
+  content: '⚑';
+}
+
+.ss-like:before {
+  content: '👍';
+}
+
+.ss-dislike:before {
+  content: '👎';
+}
+
+.ss-heart:before {
+  content: '♥';
+}
+
+.ss-halfheart:before {
+  content: '';
+}
+
+.ss-star:before {
+  content: '⋆';
+}
+
+.ss-halfstar:before {
+  content: '';
+}
+
+.ss-sample:before {
+  content: '';
+}
+
+.ss-crop:before {
+  content: '';
+}
+
+.ss-layers:before {
+  content: '';
+}
+
+.ss-phone:before {
+  content: '📞';
+}
+
+.ss-phonedisabled:before {
+  content: '';
+}
+
+.ss-rss:before {
+  content: '';
+}
+
+.ss-facetime:before {
+  content: '';
+}
+
+.ss-reply:before {
+  content: '↩';
+}
+
+.ss-mail:before {
+  content: '✉';
+}
+
+.ss-inbox:before {
+  content: '📥';
+}
+
+.ss-chat:before {
+  content: '💬';
+}
+
+.ss-user:before {
+  content: '👤';
+}
+
+.ss-femaleuser:before {
+  content: '👧';
+}
+
+.ss-users:before {
+  content: '👥';
+}
+
+.ss-cart:before {
+  content: '';
+}
+
+.ss-creditcard:before {
+  content: '💳';
+}
+
+.ss-barchart:before {
+  content: '📊';
+}
+
+.ss-piechart:before {
+  content: '';
+}
+
+.ss-box:before {
+  content: '📦';
+}
+
+.ss-home:before {
+  content: '⌂';
+}
+
+.ss-globe:before {
+  content: '🌎';
+}
+
+.ss-navigate:before {
+  content: '';
+}
+
+.ss-compass:before {
+  content: '';
+}
+
+.ss-signpost:before {
+  content: '';
+}
+
+.ss-location:before {
+  content: '';
+}
+
+.ss-map:before {
+  content: '';
+}
+
+.ss-pin:before {
+  content: '📍';
+}
+
+.ss-database:before {
+  content: '';
+}
+
+.ss-music:before {
+  content: '♫';
+}
+
+.ss-mic:before {
+  content: '🎤';
+}
+
+.ss-volume:before {
+  content: '🔈';
+}
+
+.ss-volumelow:before {
+  content: '🔉';
+}
+
+.ss-volumehigh:before {
+  content: '🔊';
+}
+
+.ss-airplay:before {
+  content: '';
+}
+
+.ss-camera:before {
+  content: '📷';
+}
+
+.ss-picture:before {
+  content: '🌄';
+}
+
+.ss-video:before {
+  content: '📹';
+}
+
+.ss-play:before {
+  content: '▶';
+}
+
+.ss-pause:before {
+  content: '';
+}
+
+.ss-stop:before {
+  content: '■';
+}
+
+.ss-record:before {
+  content: '●';
+}
+
+.ss-rewind:before {
+  content: '⏪';
+}
+
+.ss-fastforward:before {
+  content: '⏩';
+}
+
+.ss-skipback:before {
+  content: '⏮';
+}
+
+.ss-skipforward:before {
+  content: '⏭';
+}
+
+.ss-eject:before {
+  content: '⏏';
+}
+
+.ss-repeat:before {
+  content: '🔁';
+}
+
+.ss-replay:before {
+  content: '↺';
+}
+
+.ss-shuffle:before {
+  content: '🔀';
+}
+
+.ss-notebook:before {
+  content: '📓';
+}
+
+.ss-grid:before {
+  content: '';
+}
+
+.ss-rows:before {
+  content: '';
+}
+
+.ss-columns:before {
+  content: '';
+}
+
+.ss-desktop:before {
+  content: '💻';
+}
+
+.ss-laptop:before {
+  content: '';
+}
+
+.ss-tablet:before {
+  content: '';
+}
+
+.ss-cell:before {
+  content: '📱';
+}
+
+.ss-battery:before {
+  content: '🔋';
+}
+
+.ss-batteryhigh:before {
+  content: '';
+}
+
+.ss-batterymedium:before {
+  content: '';
+}
+
+.ss-batterylow:before {
+  content: '';
+}
+
+.ss-batteryempty:before {
+  content: '';
+}
+
+.ss-clouddownload:before {
+  content: '';
+}
+
+.ss-download:before {
+  content: '';
+}
+
+.ss-cloudupload:before {
+  content: '';
+}
+
+.ss-upload:before {
+  content: '';
+}
+
+.ss-fork:before {
+  content: '';
+}
+
+.ss-merge:before {
+  content: '';
+}
+
+.ss-refresh:before {
+  content: '↻';
+}
+
+.ss-sync:before {
+  content: '';
+}
+
+.ss-loading:before {
+  content: '';
+}
+
+.ss-wifi:before {
+  content: '';
+}
+
+.ss-connection:before {
+  content: '';
+}
+
+.ss-file:before {
+  content: '📄';
+}
+
+.ss-folder:before {
+  content: '📁';
+}
+
+.ss-quote:before {
+  content: '“';
+}
+
+.ss-text:before {
+  content: '';
+}
+
+.ss-font:before {
+  content: '';
+}
+
+.ss-print:before {
+  content: '⎙';
+}
+
+.ss-fax:before {
+  content: '📠';
+}
+
+.ss-list:before {
+  content: '';
+}
+
+.ss-layout:before {
+  content: '';
+}
+
+.ss-action:before {
+  content: '';
+}
+
+.ss-expand:before {
+  content: '⤢';
+}
+
+.ss-contract:before {
+  content: '';
+}
+
+.ss-help:before {
+  content: '❓';
+}
+
+.ss-info:before {
+  content: 'ℹ';
+}
+
+.ss-alert:before {
+  content: '⚠';
+}
+
+.ss-caution:before {
+  content: '⛔';
+}
+
+.ss-plus:before {
+  content: '+';
+}
+
+.ss-hyphen:before {
+  content: '-';
+}
+
+.ss-dropdown:before {
+  content: '▾';
+}
+
+.ss-check:before {
+  content: '✓';
+}
+
+.ss-delete:before {
+  content: '␡';
+}
+
+.ss-settings:before {
+  content: '⚙';
+}
+
+.ss-dashboard:before {
+  content: '';
+}
+
+.ss-notifications:before {
+  content: '🔔';
+}
+
+.ss-notificationsdisabled:before {
+  content: '🔕';
+}
+
+.ss-clock:before {
+  content: '⏲';
+}
+
+.ss-stopwatch:before {
+  content: '⏱';
+}
+
+.ss-calendar:before {
+  content: '📆';
+}
+
+.ss-calendaradd:before {
+  content: '';
+}
+
+.ss-calendarremove:before {
+  content: '';
+}
+
+.ss-calendarcheck:before {
+  content: '';
+}
+
+.ss-briefcase:before {
+  content: '💼';
+}
+
+.ss-cloud:before {
+  content: '☁';
+}
+
+.ss-navigateup:before {
+  content: '';
+}
+
+.ss-navigateright:before {
+  content: '▻';
+}
+
+.ss-navigatedown:before {
+  content: '';
+}
+
+.ss-navigateleft:before {
+  content: '◅';
+}
+
+.ss-up:before {
+  content: '⬆';
+}
+
+.ss-upright:before {
+  content: '⬈';
+}
+
+.ss-right:before {
+  content: '➡';
+}
+
+.ss-downright:before {
+  content: '⬊';
+}
+
+.ss-down:before {
+  content: '⬇';
+}
+
+.ss-downleft:before {
+  content: '⬋';
+}
+
+.ss-left:before {
+  content: '⬅';
+}
+
+.ss-upleft:before {
+  content: '⬉';
+}
+
+.ss-retweet:before {
+  content: '';
+}
+
+#block-menu-menu-utility-menu ul.menu li a:hover, #block-menu-menu-utility-menu ul.menu li a:active, .weforum-layout .weforum.top .inside div.panel-pane:first-of-type .pane-content a:hover, #tabs ul.primary li.active a, #tabs ul.primary a:hover, .node-type-project.global-hub ul.tabs.primary li:active a,
+.node-type-news.global-hub ul.tabs.primary li:active a,
+.node-type-page.global-hub ul.tabs.primary li:active a,
+.page-node-651.global-hub ul.tabs.primary li:active a,
+ul.tabs.secondary li:active a, .node-type-project.global-hub ul.tabs.primary li a:hover,
+.node-type-news.global-hub ul.tabs.primary li a:hover,
+.node-type-page.global-hub ul.tabs.primary li a:hover,
+.page-node-651.global-hub ul.tabs.primary li a:hover,
+ul.tabs.secondary li a:hover, .item-list ul.pager li a:hover, .weforum.main .weforum-layout-list .field-name-title .field-item:hover,
+.weforum.main .weforum-layout-list .field-name-title .field-item a:hover, .weforum.main .weforum-layout-list .field-name-group-audience a:hover, .pane-node-content .field-name-field-subject-tags a:hover, .weforum-media-links a:hover, .pane-weforum-search-glossary .weforum-glossary-links a:hover, .node-shaper.view-mode-connected_content .group-shaper-wrapper a:hover, .node-shaper.view-mode-search_result .field-name-node-link a, .node-shaper.view-mode-full .weforum-display.right fieldset .fieldset-wrapper a:hover, .node-project.view-mode-connected_content .field-name-title a:hover, .node-news.view-mode-connected_content .field-name-title a:hover, .pane-facetapi .facetapi-limit-link:hover, .view-mode-connected_content .field-name-group-audience a:hover, .stream-display .view-feeds .view-header a:hover,
+.stream-display .view-feeds .view-empty a:hover, .stream-display .view-feeds .views-field-field-link a:hover, .stream-display .view-feeds .views-field-field-tibbr-twitter a:hover,
+.stream-display .view-feeds .views-field-field-tibbr-facebook a:hover, #popup_contentDiv .openlayers-tooltip-name a:hover {
+  color: #409ed2;
+}
+
+ul.large-bullets li:before, #block-menu-menu-utility-menu ul.menu li.first:after, #block-menu-menu-utility-menu ul.menu li.last:before, .weforum.sidebar .hub-curator-welcome .hub-title, .node-hub.view-mode-search_result .weforum-listing.middle .field-name-title a:before, .node-hub.view-mode-search_result .weforum-listing.middle .weforum-hub-link, #popup_contentDiv .openlayers-tooltip-name a:before {
+  color: #00529b;
+}
+
+.front h1#page-title span.first-word, .weforum-media-links a, .weforum.sidebar .hub-curator-welcome .hub-welcome, .node-hub.view-mode-search_result .weforum-listing.middle .weforum-shaper-count .placeholder, .node-shaper.view-mode-full .weforum-display.right .field-name-group-audience a:hover, .view-number-of-initatives-in-a-hub .views-field-group-audience a,
+.view-number-of-initatives-in-a-hub .views-field-group-audience-1 a {
+  color: #002b5b;
+}
+
+#block-menu-menu-utility-menu ul.menu li a, .weforum-layout .weforum.top .inside div.panel-pane:first-of-type .pane-content a, #tabs ul.primary a, .node-type-project.global-hub ul.tabs.primary li a,
+.node-type-news.global-hub ul.tabs.primary li a,
+.node-type-page.global-hub ul.tabs.primary li a,
+.page-node-651.global-hub ul.tabs.primary li a,
+ul.tabs.secondary li a, .pane-weforum-search-glossary .weforum-glossary-links a, .pane-weforum-hub-search h2.pane-title .title-choose-hub, .pane-weforum-hub-search .pane-content, .ui-autocomplete.ui-menu .ui-menu-item a:hover, .stream-display .view-feeds .view-header a,
+.stream-display .view-feeds .view-empty a, .stream-display .view-feeds .views-field-field-tibbr-twitter a,
+.stream-display .view-feeds .views-field-field-tibbr-facebook a {
+  color: white;
+}
+
+.field-label, .weforum.main .weforum-layout-list .field-name-group-audience a, .weforum.main .weforum-layout-list .field-name-field-event,
+.weforum.main .weforum-layout-list .field-name-post-date, .weforum.main .weforum-layout-list .field-name-field-date .field-items, .pane-node-content .field-name-group-audience a, .pane-node-content .field-name-field-date,
+.pane-node-content .field-name-post-date, .pane-node-content .field-name-field-subject-tags .field-label, .node-hub.view-mode-search_result .weforum-listing.middle .field-name-field-region, .node-hub.view-mode-search_result .weforum-listing.middle .weforum-shaper-count, .node-shaper.view-mode-connected_content .group-shaper-wrapper a, .node-shaper.view-mode-search_result, .node-shaper.view-mode-search_result .field-name-field-tibbr-title .field-items,
+.node-shaper.view-mode-search_result .field-name-field-tibbr-organization .field-items, .node-shaper.view-mode-search_result fieldset legend, .node-shaper.view-mode-full .weforum-display.right .field-label, .node-shaper.view-mode-full .weforum-display.right .field-items, .node-shaper.view-mode-full .weforum-display.right fieldset legend, .node-shaper.view-mode-full .about-me-label, .pane-node-content .node-project .field-name-field-address .field-item, .node-project.view-mode-connected_content .field-name-title a, .node-project.view-mode-connected_content .field-name-field-date, .node-news.view-mode-connected_content .field-name-title a, .node-news.view-mode-connected_content .field-name-field-date, .view-mode-connected_content .field-name-group-audience a, .view-mode-connected_content .field-name-post-date, .node-page.view-mode-connected_content .field-name-field-page-title,
+.node-page.view-mode-connected_content .field-name-custom-page-title,
+.node-page.view-mode-connected_content .field-name-post-date, .node-page.view-mode-connected_content .field-name-custom-page-title a, #popup a,
+#popup a:visited, #popup_contentDiv .views-field-field-hub-curator .views-label,
+#popup_contentDiv .views-field-weforum-hub-shapers .views-label, #popup_contentDiv .views-field-weforum-hub-shapers .field-content {
+  color: black;
+}
+
+#block-lang-dropdown-language #lang-dropdown-form select, .pane-weforum-hub-search h2.pane-title .title-label {
+  color: #dddddd;
+}
+
+#touch-menu-btn, .item-list ul.pager li a, .pane-node-content .field-name-field-subject-tags a, .node-shaper.view-mode-search_result fieldset .fieldset-wrapper .field-item, .node-shaper.view-mode-search_result fieldset .fieldset-wrapper .field-item a, .node-shaper.view-mode-full .weforum-display.right fieldset .fieldset-wrapper a, .node-shaper.view-mode-full .weforum-display.right fieldset .field-name-field-tibbr-email .field-item, .ui-autocomplete.ui-menu .ui-menu-item a, .pane-facetapi ul.facetapi-facetapi-checkbox-links li a, .pane-facetapi .facetapi-limit-link, .stream-display .view-feeds .views-field-field-link a,
+.stream-display .view-feeds .views-field-created, .stream-display .view-feeds .views-field-field-link:after {
+  color: #555555;
+}
+
+#utility-bar, .weforum-layout .weforum.top .inside div.panel-pane:first-of-type, .node-type-project.global-hub ul.tabs.primary,
+.node-type-news.global-hub ul.tabs.primary,
+.node-type-page.global-hub ul.tabs.primary,
+.page-node-651.global-hub ul.tabs.primary,
+ul.tabs.secondary, .pane-weforum-search-glossary {
+  background-color: #00529b;
+}
+
+#utility, .weforum-layout .weforum.top .inside div.panel-pane:first-of-type .pane-content, .node-type-project.global-hub ul.tabs.primary li:hover,
+.node-type-news.global-hub ul.tabs.primary li:hover,
+.node-type-page.global-hub ul.tabs.primary li:hover,
+.page-node-651.global-hub ul.tabs.primary li:hover,
+ul.tabs.secondary li:hover, .pane-weforum-search-glossary .weforum-glossary-links, .pane-weforum-hub-search .pane-content {
+  background-color: #002b5b;
+}
+
+#main-menu a, .node-page.view-mode-full, .view-mode-connected_content, #popup {
+  background-color: white;
+}
+
+[role=banner], .weforum-slideshow-item {
+  position: relative;
+}
+
+#touch-menu, .weforum-slideshow-item .slider-wrapper, .weforum-slideshow-item .bottom-wrapper {
+  position: absolute;
+}
+
+.weforum-icon.project:after, .weforum-icon.news:after, .weforum-icon.events:after, #utility-bar-search, [dir="rtl"] #block-menu-menu-utility-menu, #block-lang-dropdown-language, #block-weforum-social-weforum-social-links,
+#block-weforum-social-weforum-social-links-footer, [dir="rtl"] #header, [dir="rtl"] #logo, [dir="rtl"] #main-menu a, [dir="rtl"] #footer img, [dir="rtl"] #footer .copyright, [dir="rtl"] .weforum.main .weforum-layout-list .field-name-field-event, [dir="rtl"]
+.weforum.main .weforum-layout-list .field-name-post-date, [dir="rtl"] .node-hub.view-mode-search_result .weforum-listing.middle .weforum-shaper-count, .node-shaper.view-mode-connected_content .group-shaper-wrapper .weforum-icon.shaper:after, .node-shaper.view-mode-search_result .weforum-icon.shaper, .node-shaper.view-mode-full .weforum-display.right .weforum-icon.shaper, .node-shaper.view-mode-full .field-name-field-video, .view-number-of-initatives-in-a-hub .views-field-group-audience, .pane-node-content .node-news .weforum-display.right, .pane-node-content .node-news .service-links, #weforum-contact-hub {
+  float: right;
+}
+
+[dir="rtl"] .weforum-icon.project:after, [dir="rtl"] .weforum-icon.shaper:after, [dir="rtl"] .weforum-icon.news:after, [dir="rtl"] .weforum-icon.events:after, [dir="rtl"] .weforum-icon.hubs:after, [dir="rtl"] #utility-bar-search, #block-menu-menu-utility-menu, [dir="rtl"] #block-lang-dropdown-language, [dir="rtl"] #block-weforum-social-weforum-social-links, [dir="rtl"]
+#block-weforum-social-weforum-social-links-footer, #header, #logo, #main-menu a, #footer img, #footer .copyright, .weforum.main .weforum-layout-list .field-name-field-event,
+.weforum.main .weforum-layout-list .field-name-post-date, .node-hub.view-mode-search_result .weforum-listing.middle .weforum-shaper-count, .node-shaper.view-mode-connected_content .field-name-field-shaper-profile-image, .node-shaper.view-mode-search_result fieldset legend, .node-shaper.view-mode-search_result fieldset .fieldset-wrapper, .node-shaper.view-mode-full .weforum-display.right fieldset legend, .node-shaper.view-mode-full .about-me-label, .pane-node-content .node-news .weforum-display.left {
+  float: left;
+}
+
+.node-shaper.view-mode-search_result .field-name-post-date {
+  float: none;
+}
+
+.weforum.main .weforum-layout-list .field-name-body .field-item, .pane-node-content .service-links, .pane-node-content .field-name-body, .pane-node-content .field-name-field-subject-tags, .node-page.view-mode-full .border-wrapper ul,
+.node-page.view-mode-full .border-wrapper h2,
+.node-page.view-mode-full .border-wrapper h3, .node-page.view-mode-full .field-name-body p, .node-shaper.view-mode-connected_content .group-shaper-wrapper, .node-shaper.view-mode-search_result .field-name-title, .node-shaper.view-mode-search_result .field-name-field-tibbr-title,
+.node-shaper.view-mode-search_result .field-name-field-tibbr-organization, .node-shaper.view-mode-full .field-name-field-tibbr-about-me, .pane-node-content .node-project .field-name-title, .pane-node-content .node-project .weforum-icon.project, .node-news.view-mode-connected_content .field-name-title, .view-mode-connected_content .field-name-group-audience, .stream-display .view-feeds .views-row {
+  padding: 0 10px;
+}
+
+h1#page-title, .weforum.main .weforum-layout-list .field-name-title, .weforum.main .weforum-layout-list .field-name-group-audience, .weforum.main .weforum-layout-list .field-name-field-event,
+.weforum.main .weforum-layout-list .field-name-post-date, .weforum.main .weforum-layout-list .field-name-field-date, .pane-node-content .field-name-group-audience, .pane-node-content .field-name-field-date,
+.pane-node-content .field-name-post-date, .node-page.view-mode-full .field-name-field-page-title, .node-shaper.view-mode-search_result .field-name-group-audience, .node-shaper.view-mode-search_result .field-name-field-joined, .node-shaper.view-mode-search_result fieldset, .node-shaper.view-mode-full .weforum-display.right .field-name-title, .node-shaper.view-mode-full .weforum-display.right .field-name-field-joined, .node-shaper.view-mode-full .weforum-display.right .field-name-field-tibbr-title,
+.node-shaper.view-mode-full .weforum-display.right .field-name-field-tibbr-organization, .node-shaper.view-mode-full .weforum-display.right fieldset, .node-shaper.view-mode-full .field-name-field-video, .node-shaper.view-mode-full .about-me-label, .pane-node-content .node-project .field-name-field-address, .node-project.weforum-layout-list .field-name-post-date, .node-project.view-mode-connected_content .field-name-field-date, .pane-node-content .node-news .field-name-title, .node-news.view-mode-connected_content .field-name-field-date, .ui-autocomplete.ui-menu .ui-menu-item a, .view-mode-connected_content .field-name-group-audience, .view-mode-connected_content .field-name-post-date, .node-page.view-mode-connected_content .field-name-field-page-title,
+.node-page.view-mode-connected_content .field-name-custom-page-title,
+.node-page.view-mode-connected_content .field-name-post-date, .stream-display .view-feeds .view-header,
+.stream-display .view-feeds .view-empty, .page-node-651 .webform-client-form, .page-node-651 .webform-client-form input[type="text"],
+.page-node-651 .webform-client-form input[type="email"],
+.page-node-651 .webform-client-form select, #popup_contentDiv .openlayers-tooltip-name a {
+  padding-left: 10px;
+}
+
+[dir="rtl"] .weforum.main .weforum-layout-list .field-name-field-event, [dir="rtl"]
+.weforum.main .weforum-layout-list .field-name-post-date, .weforum.main .weforum-layout-list .field-name-post-date .label-inline, .node-shaper.view-mode-connected_content .field-name-field-shaper-profile-image, .node-shaper.view-mode-search_result .field-name-node-link a, .node-shaper.view-mode-full .weforum-display.right .weforum-icon.shaper, .pane-node-content .node-news .weforum-icon.news, [dir="rtl"] .stream-display .view-feeds .view-header, [dir="rtl"]
+.stream-display .view-feeds .view-empty {
+  padding-right: 10px;
+}
+
+.weforum-listing.right, .pane-node-content .field-name-field-subject-tags, .node-hub.view-mode-search_result .weforum-listing.middle h2, .node-shaper.view-mode-full .weforum-display.right .field-name-title, .node-shaper.view-mode-full .weforum-display.right .group_shaper_wrapper, .pane-node-content .node-project .field-name-title, .pane-node-content .node-project .group_project_wrapper, .pane-node-content .node-news .field-name-title, .pane-node-content .node-news .field-name-group-audience, .pane-node-content .node-news .field-name-post-date, .weforum-slideshow-pager {
+  padding-top: 6px;
+}
+
+#block-lang-dropdown-language #lang-dropdown-form select, .weforum.main .weforum-layout-list .field-name-body .field-item, .pane-node-content .field-name-field-subject-tags, .node-hub.view-mode-search_result .weforum-listing.middle .field-name-field-region, .node-shaper.view-mode-search_result .field-name-node-link a, .node-shaper.view-mode-full .weforum-display.right .field-name-title, .node-shaper.view-mode-full .weforum-display.right .group_shaper_wrapper, .node-shaper.view-mode-full .weforum-display.right fieldset, .pane-node-content .node-project .field-name-title, .pane-node-content .node-project .group_project_wrapper, .pane-node-content .node-news .field-name-title, .pane-node-content .node-news .field-name-field-date, .pane-node-content .node-news .field-name-post-date {
+  padding-bottom: 6px;
+}
+
+.node-shaper.view-mode-search_result .field-name-node-link, .node-shaper.view-mode-full .weforum-display.right .group_shaper_wrapper, .pane-node-content .node-project .field-name-field-address {
+  margin-bottom: 6px;
+}
+
+.pane-node-content .node-project .field-name-field-address {
+  margin-top: 6px;
+}
+
+#block-menu-menu-utility-menu ul.menu li, #block-menu-menu-utility-menu ul.menu li a, #block-weforum-social-weforum-social-links .social-links,
+#block-weforum-social-weforum-social-links-footer .social-links, #main-menu a, #footer .copyright, .weforum.main .weforum-layout-list .field-name-field-date, .node-shaper.view-mode-full .about-me-label, .view-number-of-initatives-in-a-hub .views-field-group-audience-1, .weforum-slideshow-pager span {
+  display: inline-block;
+}
+
+.label-inline, .weforum.main .weforum-layout-list .field-name-field-date .field-items, .pane-node-content .field-name-field-subject-tags .field-label, .node-project.view-mode-connected_content .field-name-field-date {
+  display: inline;
+}
+
+#main-menu, .node-type-project.global-hub ul.tabs.primary li,
+.node-type-news.global-hub ul.tabs.primary li,
+.node-type-page.global-hub ul.tabs.primary li,
+.page-node-651.global-hub ul.tabs.primary li,
+ul.tabs.secondary li, .node-shaper.view-mode-search_result fieldset .fieldset-wrapper {
+  display: block;
+}
+
+.mission-statement, #main-menu a, #tabs ul.primary a, .weforum.main .weforum-layout-list .field-name-field-event,
+.weforum.main .weforum-layout-list .field-name-post-date, .weforum.main .weforum-layout-list .field-name-field-date .field-items, .pane-node-content .field-name-field-date,
+.pane-node-content .field-name-post-date, .weforum.sidebar .hub-curator-welcome .hub-title, .weforum.sidebar .hub-curator-welcome p, .node-hub.view-mode-search_result .weforum-listing.middle .weforum-hub-link, .node-shaper.view-mode-connected_content .group-shaper-wrapper .field-name-title .field-items a, .node-shaper.view-mode-search_result .field-name-node-link a, .pane-node-content .node-project .field-name-field-date .label-inline, .node-project.view-mode-connected_content .field-name-title a, .node-project.view-mode-connected_content .field-name-field-date, .node-news.view-mode-connected_content .field-name-title a, .node-news.view-mode-connected_content .field-name-field-date .field-items, .view-mode-connected_content .field-name-post-date, .node-page.view-mode-connected_content .field-name-field-page-title,
+.node-page.view-mode-connected_content .field-name-custom-page-title,
+.node-page.view-mode-connected_content .field-name-post-date, #popup_contentDiv .views-field-field-hub-curator .field-content a,
+#popup_contentDiv .views-field-weforum-hub-shapers .field-content a {
+  text-transform: uppercase;
+}
+
+.node-hub.view-mode-search_result .weforum-listing.middle .field-name-title a, .pane-node-content .node-news .field-name-field-date, .pane-node-content .node-news .field-name-field-date .field-label, .pane-weforum-hub-search h2.pane-title .title-choose-hub {
+  font-size: 18px;
+}
+
+.weforum.main .weforum-layout-list .field-name-title .field-item,
+.weforum.main .weforum-layout-list .field-name-title .field-item a, .node-shaper.view-mode-connected_content .group-shaper-wrapper .field-name-title .field-items a, .node-project.view-mode-connected_content .field-name-title a, .node-news.view-mode-connected_content .field-name-title a {
+  font-size: 16px;
+}
+
+#block-menu-menu-utility-menu ul.menu li a, .mission-umbrella, .weforum-layout .weforum.top .inside div.panel-pane:first-of-type .pane-content a, .node-type-project.global-hub ul.tabs.primary li a,
+.node-type-news.global-hub ul.tabs.primary li a,
+.node-type-page.global-hub ul.tabs.primary li a,
+.page-node-651.global-hub ul.tabs.primary li a,
+ul.tabs.secondary li a, #footer .copyright, #block-weforum-social-weforum-social-links-footer .follow, .weforum.main .weforum-layout-list .field-name-field-date, .pane-node-content .field-name-field-date,
+.pane-node-content .field-name-group-audience,
+.pane-node-content .field-name-post-date, .pane-node-content .field-name-field-subject-tags, .weforum-media-links a, .pane-weforum-search-glossary .weforum-glossary-links a, .node-hub.view-mode-search_result .weforum-listing.middle .field-name-field-region, .node-hub.view-mode-search_result .weforum-listing.middle .weforum-shaper-count, .node-hub.view-mode-search_result .weforum-listing.middle .weforum-hub-link, .node-shaper.view-mode-connected_content .group-shaper-wrapper .field-name-group-audience a, .node-shaper.view-mode-search_result .field-name-field-tibbr-title .field-items,
+.node-shaper.view-mode-search_result .field-name-field-tibbr-organization .field-items, .node-shaper.view-mode-search_result fieldset legend, .node-shaper.view-mode-search_result fieldset .fieldset-wrapper .field-item, .node-shaper.view-mode-search_result fieldset .fieldset-wrapper .field-item a, .node-shaper.view-mode-full .weforum-display.right .field-name-field-joined, .node-shaper.view-mode-full .weforum-display.right .field-name-field-tibbr-title .field-item,
+.node-shaper.view-mode-full .weforum-display.right .field-name-field-tibbr-organization .field-item, .node-shaper.view-mode-full .weforum-display.right fieldset legend, .node-shaper.view-mode-full .weforum-display.right fieldset .fieldset-wrapper .field-item a, .node-shaper.view-mode-full .weforum-display.right fieldset .field-name-field-tibbr-email .field-item, .pane-node-content .node-project .field-name-field-address .field-item, .node-project.view-mode-connected_content .field-name-field-date, .node-news.view-mode-connected_content .field-name-post-date, .node-news.view-mode-connected_content .field-name-field-date, .pane-weforum-hub-search h2.pane-title, .pane-facetapi ul.facetapi-facetapi-checkbox-links li, .pane-facetapi .facetapi-limit-link, .view-mode-connected_content .field-name-group-audience a, .node-page.view-mode-connected_content .field-name-post-date, .stream-display .view-feeds .views-field-body p, #popup a,
+#popup a:visited, #popup_contentDiv .views-field-field-hub-curator .views-label,
+#popup_contentDiv .views-field-weforum-hub-shapers .views-label, #popup_contentDiv .views-field-weforum-hub-shapers .field-content {
+  font-size: 14px;
+}
+
+#block-lang-dropdown-language #lang-dropdown-form select, .node-shaper.view-mode-search_result .field-name-node-link a, .pane-weforum-hub-search h2.pane-title .title-label, .pane-weforum-hub-search .pane-content, .ui-autocomplete.ui-menu .ui-menu-item a, .pane-facetapi h2, .stream-display .view-feeds .views-field-field-link a,
+.stream-display .view-feeds .views-field-created, .stream-display .view-feeds .views-field-field-link:after {
+  font-size: 12px;
+}
+
+.item-list ul.pager .pager-current, .weforum.sidebar .hub-curator-welcome .hub-title, .weforum.sidebar .hub-curator-welcome p, .ui-autocomplete.ui-menu .ui-menu-item a {
+  font-family: "HelveticaNeue45Light", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+.i18n-ar .item-list ul.pager .pager-current, .item-list ul.pager .i18n-ar .pager-current, .i18n-ar .weforum.sidebar .hub-curator-welcome .hub-title, .weforum.sidebar .hub-curator-welcome .i18n-ar .hub-title, .i18n-ar .weforum.sidebar .hub-curator-welcome p, .weforum.sidebar .hub-curator-welcome .i18n-ar p, .i18n-ar .ui-autocomplete.ui-menu .ui-menu-item a, .ui-autocomplete.ui-menu .ui-menu-item .i18n-ar a {
+  font-family: "HelveticaNeueArabic45Light", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+#block-menu-menu-utility-menu ul.menu li a, .mission-umbrella, #main-menu a, .weforum-layout .weforum.top .inside div.panel-pane:first-of-type .pane-content a, #tabs ul.primary a, .node-type-project.global-hub ul.tabs.primary li a,
+.node-type-news.global-hub ul.tabs.primary li a,
+.node-type-page.global-hub ul.tabs.primary li a,
+.page-node-651.global-hub ul.tabs.primary li a,
+ul.tabs.secondary li a, #footer .copyright, #block-weforum-social-weforum-social-links-footer .follow, .item-list ul.pager, .pane-node-content .field-name-field-date,
+.pane-node-content .field-name-post-date, .weforum-media-links a, .pane-weforum-search-glossary .weforum-glossary-links a, .node-hub.view-mode-search_result .weforum-listing.middle .field-name-field-region, .node-hub.view-mode-search_result .weforum-listing.middle .weforum-hub-link, .node-shaper.view-mode-search_result .field-name-field-joined .field-items, .node-shaper.view-mode-search_result .field-name-field-tibbr-title .field-items,
+.node-shaper.view-mode-search_result .field-name-field-tibbr-organization .field-items, .pane-node-content .node-project .field-name-field-address .field-item, .pane-facetapi ul.facetapi-facetapi-checkbox-links li, .view-mode-connected_content .field-name-post-date, .node-page.view-mode-connected_content .field-name-field-page-title,
+.node-page.view-mode-connected_content .field-name-custom-page-title,
+.node-page.view-mode-connected_content .field-name-post-date, .shaper-hub a {
+  font-family: "HelveticaNeue55Roman", "HelveticaNeue45Light", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+.i18n-ar #block-menu-menu-utility-menu ul.menu li a, #block-menu-menu-utility-menu ul.menu li .i18n-ar a, .i18n-ar .mission-umbrella, .i18n-ar #main-menu a, #main-menu .i18n-ar a, .i18n-ar .weforum-layout .weforum.top .inside div.panel-pane:first-of-type .pane-content a, .weforum-layout .weforum.top .inside div.panel-pane:first-of-type .pane-content .i18n-ar a, .i18n-ar #tabs ul.primary a, #tabs ul.primary .i18n-ar a, .i18n-ar .node-type-project.global-hub ul.tabs.primary li a, .node-type-project.global-hub ul.tabs.primary li .i18n-ar a,
+.i18n-ar .node-type-news.global-hub ul.tabs.primary li a,
+.node-type-news.global-hub ul.tabs.primary li .i18n-ar a,
+.i18n-ar .node-type-page.global-hub ul.tabs.primary li a,
+.node-type-page.global-hub ul.tabs.primary li .i18n-ar a,
+.i18n-ar .page-node-651.global-hub ul.tabs.primary li a,
+.page-node-651.global-hub ul.tabs.primary li .i18n-ar a,
+.i18n-ar ul.tabs.secondary li a,
+ul.tabs.secondary li .i18n-ar a, .i18n-ar #footer .copyright, #footer .i18n-ar .copyright, .i18n-ar #block-weforum-social-weforum-social-links-footer .follow, #block-weforum-social-weforum-social-links-footer .i18n-ar .follow, .i18n-ar .item-list ul.pager, .item-list .i18n-ar ul.pager, .i18n-ar .pane-node-content .field-name-field-date, .pane-node-content .i18n-ar .field-name-field-date,
+.i18n-ar .pane-node-content .field-name-post-date,
+.pane-node-content .i18n-ar .field-name-post-date, .i18n-ar .weforum-media-links a, .weforum-media-links .i18n-ar a, .i18n-ar .pane-weforum-search-glossary .weforum-glossary-links a, .pane-weforum-search-glossary .weforum-glossary-links .i18n-ar a, .i18n-ar .node-hub.view-mode-search_result .weforum-listing.middle .field-name-field-region, .node-hub.view-mode-search_result .weforum-listing.middle .i18n-ar .field-name-field-region, .i18n-ar .node-hub.view-mode-search_result .weforum-listing.middle .weforum-hub-link, .node-hub.view-mode-search_result .weforum-listing.middle .i18n-ar .weforum-hub-link, .i18n-ar .node-shaper.view-mode-search_result .field-name-field-joined .field-items, .node-shaper.view-mode-search_result .field-name-field-joined .i18n-ar .field-items, .i18n-ar .node-shaper.view-mode-search_result .field-name-field-tibbr-title .field-items, .node-shaper.view-mode-search_result .field-name-field-tibbr-title .i18n-ar .field-items,
+.i18n-ar .node-shaper.view-mode-search_result .field-name-field-tibbr-organization .field-items,
+.node-shaper.view-mode-search_result .field-name-field-tibbr-organization .i18n-ar .field-items, .i18n-ar .pane-node-content .node-project .field-name-field-address .field-item, .pane-node-content .node-project .field-name-field-address .i18n-ar .field-item, .i18n-ar .pane-facetapi ul.facetapi-facetapi-checkbox-links li, .pane-facetapi ul.facetapi-facetapi-checkbox-links .i18n-ar li, .i18n-ar .view-mode-connected_content .field-name-post-date, .view-mode-connected_content .i18n-ar .field-name-post-date, .i18n-ar .node-page.view-mode-connected_content .field-name-field-page-title, .node-page.view-mode-connected_content .i18n-ar .field-name-field-page-title,
+.i18n-ar .node-page.view-mode-connected_content .field-name-custom-page-title,
+.node-page.view-mode-connected_content .i18n-ar .field-name-custom-page-title,
+.i18n-ar .node-page.view-mode-connected_content .field-name-post-date,
+.node-page.view-mode-connected_content .i18n-ar .field-name-post-date, .i18n-ar .shaper-hub a, .shaper-hub .i18n-ar a {
+  font-family: "HelveticaNeueArabic55Roman", "HelveticaNeueArabic45Light", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+.mission-title, .mission-umbrella .title, h1#page-title, .weforum.main .weforum-layout-list .field-name-group-audience a, .pane-node-content .field-name-group-audience a, .node-hub.view-mode-search_result .weforum-listing.middle .field-name-title a, .node-hub.view-mode-search_result .weforum-listing.middle .weforum-shaper-count, .node-shaper.view-mode-connected_content .group-shaper-wrapper .field-name-group-audience a, .node-shaper.view-mode-search_result fieldset legend, .node-shaper.view-mode-full .weforum-display.right fieldset legend, .node-shaper.view-mode-full .about-me-label, .pane-node-content .node-news .field-name-field-date, .pane-weforum-hub-search h2.pane-title, .view-mode-connected_content .field-name-group-audience a, .shaper-title a, .openlayers-tooltip-name a,
+.openlayers-tooltip-name a:visited, #popup_contentDiv .openlayers-tooltip-name a, #popup_contentDiv .views-field-field-hub-curator .views-label,
+#popup_contentDiv .views-field-weforum-hub-shapers .views-label {
+  font-family: "HelveticaNeue65Medium", "HelveticaNeue55Roman", "HelveticaNeue45Light", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+.i18n-ar .mission-title, .i18n-ar .mission-umbrella .title, .mission-umbrella .i18n-ar .title, .i18n-ar h1#page-title, .i18n-ar .weforum.main .weforum-layout-list .field-name-group-audience a, .weforum.main .weforum-layout-list .field-name-group-audience .i18n-ar a, .i18n-ar .pane-node-content .field-name-group-audience a, .pane-node-content .field-name-group-audience .i18n-ar a, .i18n-ar .node-hub.view-mode-search_result .weforum-listing.middle .field-name-title a, .node-hub.view-mode-search_result .weforum-listing.middle .field-name-title .i18n-ar a, .i18n-ar .node-hub.view-mode-search_result .weforum-listing.middle .weforum-shaper-count, .node-hub.view-mode-search_result .weforum-listing.middle .i18n-ar .weforum-shaper-count, .i18n-ar .node-shaper.view-mode-connected_content .group-shaper-wrapper .field-name-group-audience a, .node-shaper.view-mode-connected_content .group-shaper-wrapper .field-name-group-audience .i18n-ar a, .i18n-ar .node-shaper.view-mode-search_result fieldset legend, .node-shaper.view-mode-search_result fieldset .i18n-ar legend, .i18n-ar .node-shaper.view-mode-full .weforum-display.right fieldset legend, .node-shaper.view-mode-full .weforum-display.right fieldset .i18n-ar legend, .i18n-ar .node-shaper.view-mode-full .about-me-label, .node-shaper.view-mode-full .i18n-ar .about-me-label, .i18n-ar .pane-node-content .node-news .field-name-field-date, .pane-node-content .node-news .i18n-ar .field-name-field-date, .i18n-ar .pane-weforum-hub-search h2.pane-title, .pane-weforum-hub-search .i18n-ar h2.pane-title, .i18n-ar .view-mode-connected_content .field-name-group-audience a, .view-mode-connected_content .field-name-group-audience .i18n-ar a, .i18n-ar .shaper-title a, .shaper-title .i18n-ar a, .i18n-ar .openlayers-tooltip-name a, .openlayers-tooltip-name .i18n-ar a,
+.i18n-ar .openlayers-tooltip-name a:visited,
+.openlayers-tooltip-name .i18n-ar a:visited, .i18n-ar #popup_contentDiv .openlayers-tooltip-name a, #popup_contentDiv .openlayers-tooltip-name .i18n-ar a, .i18n-ar #popup_contentDiv .views-field-field-hub-curator .views-label, #popup_contentDiv .views-field-field-hub-curator .i18n-ar .views-label,
+.i18n-ar #popup_contentDiv .views-field-weforum-hub-shapers .views-label,
+#popup_contentDiv .views-field-weforum-hub-shapers .i18n-ar .views-label {
+  font-family: "HelveticaNeueArabic55Roman", "HelveticaNeueArabic45Light", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+.weforum-facts .placeholder {
+  font-family: "HelveticaNeue75Bold", "HelveticaNeue65Medium", "HelveticaNeue55Roman", "HelveticaNeue45Light", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+.i18n-ar .weforum-facts .placeholder, .weforum-facts .i18n-ar .placeholder {
+  font-family: "HelveticaNeueArabic75Bold", "HelveticaNeueArabic55Roman", "HelveticaNeueArabic45Light", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+.weforum-listing.middle .top, .pane-node-content .field-name-field-subject-tags, .node-shaper.view-mode-connected_content .group-shaper-wrapper .field-name-title, .node-shaper.view-mode-search_result .field-name-title, .node-shaper.view-mode-full .weforum-display.right .group_shaper_wrapper, .pane-node-content .node-project .field-name-title, .pane-node-content .node-project .field-name-post-date, .pane-node-content .node-project .group_project_wrapper, .pane-node-content .node-news .field-name-title, .pane-node-content .node-news .field-name-group-audience, .pane-node-content .node-news .weforum-display.left,
+.pane-node-content .node-news .weforum-display.right {
+  min-height: 40px;
+}
+
+#block-menu-menu-utility-menu ul.menu, #block-weforum-social-weforum-social-links,
+#block-weforum-social-weforum-social-links-footer, #block-weforum-social-weforum-social-links .social-links,
+#block-weforum-social-weforum-social-links-footer .social-links, #footer .copyright, #block-weforum-social-weforum-social-links-footer .follow, .weforum.main .weforum-layout-list .field-name-field-event,
+.weforum.main .weforum-layout-list .field-name-post-date, .weforum.main .weforum-layout-list .field-name-field-date, .node-hub.view-mode-search_result .weforum-listing.middle .field-name-field-region, .node-hub.view-mode-search_result .weforum-listing.middle .weforum-shaper-count, .node-shaper.view-mode-connected_content .group-shaper-wrapper .field-name-title, .node-shaper.view-mode-connected_content .group-shaper-wrapper .field-name-group-audience .field-item, .node-shaper.view-mode-search_result .field-name-node-link a, .node-shaper.view-mode-full .weforum-display.right .field-name-field-tibbr-title .field-item,
+.node-shaper.view-mode-full .weforum-display.right .field-name-field-tibbr-organization .field-item, .node-shaper.view-mode-full .weforum-display.right fieldset legend, .node-shaper.view-mode-full .weforum-display.right fieldset .fieldset-wrapper .field, .node-shaper.view-mode-full .weforum-display.right fieldset .fieldset-wrapper .field-item a, .pane-node-content .node-project .field-name-field-address .field-item, .node-project.view-mode-connected_content .field-name-title, .node-news.view-mode-connected_content .field-name-title, .view-mode-connected_content .field-name-group-audience .field-item, .node-page.view-mode-connected_content .field-name-field-page-title,
+.node-page.view-mode-connected_content .field-name-custom-page-title,
+.node-page.view-mode-connected_content .field-name-post-date {
+  line-height: 1;
+}
+
+.border-wrapper, .item-list ul.pager, .weforum-listing.middle .top, .weforum.main .weforum-layout-list, .pane-node-content, .pane-node-content .field-name-post-date, .pane-node-content .service-links, .pane-node-content .field-name-body, .node-page.view-mode-full .field-name-field-page-title, .node-shaper.view-mode-search_result .field-name-title, .node-shaper.view-mode-full .weforum-display.right .field-name-title, .node-shaper.view-mode-full .weforum-display.right .group_shaper_wrapper, .node-shaper.view-mode-full .field-name-field-tibbr-about-me, .pane-node-content .node-project .field-name-title, .pane-node-content .node-news .field-name-group-audience, .pane-node-content .node-news .weforum-display.left,
+.pane-node-content .node-news .weforum-display.right, .ui-autocomplete.ui-menu .ui-menu-item a, .pane-facetapi .facetapi-limit-link, .view-mode-connected_content, .weforum-slideshow-pager, .stream-display .view-feeds .views-row, .openlayers-tooltip-name, #popup_contentDiv .views-field-field-hub-curator,
+#popup_contentDiv .views-field-weforum-hub-shapers {
+  border-bottom: 1px solid #dddddd;
+}
+
+.global-hub h1#page-title, #main-menu a, #footer, .ie7 #block-weforum-home-weforum-home-copyright, .item-list ul.pager, .weforum.main .weforum-layout-list, .pane-node-content, .node-shaper.view-mode-full .service-links, .pane-node-content .node-project .field-name-post-date, .pane-node-content .node-news .field-name-group-audience, .weforum-slideshow-pager {
+  border-top: 1px solid #dddddd;
+}
+
+#block-menu-menu-utility-menu ul.menu li a, #block-weforum-social-weforum-social-links .social-links a,
+#block-weforum-social-weforum-social-links-footer .social-links a, #logo, .weforum-layout .weforum.top .inside div.panel-pane:first-of-type .pane-content a, .item-list ul.pager li a, .pane-weforum-search-glossary .weforum-glossary-links a, .node-hub.view-mode-search_result .field-name-field-tibbr-hub-profile-image a, .view-number-of-initatives-in-a-hub .views-field-group-audience a,
+.view-number-of-initatives-in-a-hub .views-field-group-audience-1 a, .pane-node-content .node-news .field-name-post-date,
+.pane-node-content .node-news .service-links, .pane-facetapi ul.facetapi-facetapi-checkbox-links li a, .stream-display .view-feeds .views-field-field-link a,
+.stream-display .view-feeds .views-field-created, .stream-display .view-feeds .views-field-field-tibbr-twitter a,
+.stream-display .view-feeds .views-field-field-tibbr-facebook a, .stream-display .attachment .views-row, .page-node-651 .field-name-body, #popup a,
+#popup a:visited {
+  border-bottom: none;
+}
+
+ul.large-bullets {
+  list-style: none;
+  margin: 0 0 10px 0;
+  padding: 0;
+}
+ul.large-bullets li:before {
+  content: "•";
+  font-size: 21px;
+  margin-right: 6px;
+}
+
+#page-wrapper {
+  background: url('../images/bg.png') center top no-repeat;
+  background-color: black;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+#page {
+  background: white;
+  background: rgba(255, 255, 255, 0.8);
+  margin: 0 auto;
+  max-width: 1020px;
+  padding: 0 30px;
+  position: relative;
+}
+.ie8 #page, .ie7 #page, .ie6 #page {
+  background: transparent;
+  filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr=#ccffffff, endColorstr=#ccffffff);
+}
+@media (max-width: 39.375em) {
+  #page {
+    padding: 0 0.5em;
+  }
+}
+
+.field-label {
+  font-size: 14px;
+}
+
+.weforum-icon {
+  padding-right: 6px;
+}
+
+.weforum-icon.project:after {
+  content: url('../images/content-icons/icon-lg-projects.png');
+}
+
+.weforum-icon.shaper:after {
+  content: url('../images/content-icons/icon-lg-shapers.png');
+}
+
+.weforum-icon.news:after {
+  content: url('../images/content-icons/icon-lg-news.png');
+  position: relative;
+  top: 4px;
+}
+
+.weforum-icon.events:after {
+  content: url('../images/content-icons/icon-lg-events.png');
+  position: relative;
+  top: 4px;
+}
+
+.weforum-icon.hubs:after {
+  content: url('../images/content-icons/icon-lg-hubs.png');
+}
+
+.views-field-field-video {
+  position: absolute;
+  top: 0;
+}
+.views-field-field-video .field-content:after {
+  content: url('../images/media-icons/icon-lg-video.png');
+  position: relative;
+  left: 665px;
+  top: -35px;
+}
+
+.border-wrapper {
+  margin-bottom: 10px;
+}
+
+.node-type-page .pane-node-content,
+.node-type-webform .pane-node-content {
+  background-color: transparent;
+}
+
+.views-exposed-form .views-exposed-widget {
+  padding: 0;
+}
+
+#views-exposed-form-global-search-global-search-results label,
+.views-widget-filter-search_api_views_fulltext label {
+  display: none;
+}
+#views-exposed-form-global-search-global-search-results input:focus,
+#views-exposed-form-global-search-global-search-results input:active,
+.views-widget-filter-search_api_views_fulltext input:focus,
+.views-widget-filter-search_api_views_fulltext input:active {
+  border: none;
+  box-shadow: none;
+}
+
+#edit-search-api-views-fulltext-wrapper {
+  width: 203px;
+}
+#edit-search-api-views-fulltext-wrapper #edit-search-api-views-fulltext {
+  background: url('../images/search_magnifying_glass.png') no-repeat right center;
+  background-color: white;
+  padding-right: 20px;
+}
+[dir="rtl"] #edit-search-api-views-fulltext-wrapper #edit-search-api-views-fulltext {
+  background-position: left center;
+  padding-right: 0.5em;
+  padding-left: 20px;
+}
+.ie8 #edit-search-api-views-fulltext-wrapper #edit-search-api-views-fulltext, .ie7 #edit-search-api-views-fulltext-wrapper #edit-search-api-views-fulltext {
+  padding-right: 0;
+}
+#edit-search-api-views-fulltext-wrapper .form-item-search-api-views-fulltext {
+  border: 4px solid #002b5b;
+}
+#edit-search-api-views-fulltext-wrapper .form-item-search-api-views-fulltext input {
+  border: 0;
+  outline: none;
+}
+.ie8 #edit-search-api-views-fulltext-wrapper .form-item-search-api-views-fulltext input, .ie7 #edit-search-api-views-fulltext-wrapper .form-item-search-api-views-fulltext input {
+  width: 192px;
+  padding-right: 0;
+}
+
+#views-exposed-form-hubs-panel-pane-1 {
+  margin-top: -7px;
+}
+#views-exposed-form-hubs-panel-pane-1 #edit-search-wrapper {
+  float: none;
+  padding: 0;
+}
+#views-exposed-form-hubs-panel-pane-1 #edit-submit-hubs {
+  display: none;
+}
+#views-exposed-form-hubs-panel-pane-1 #edit-search {
+  background: url('../images/search_magnifying_glass.png') no-repeat center right;
+  background-color: white;
+  padding-right: 20px;
+}
+[dir="rtl"] #views-exposed-form-hubs-panel-pane-1 #edit-search {
+  background-position: left center;
+  padding-right: 0.5em;
+  padding-left: 20px;
+}
+.ie8 #views-exposed-form-hubs-panel-pane-1 #edit-search, .ie7 #views-exposed-form-hubs-panel-pane-1 #edit-search {
+  padding-right: 0;
+}
+
+.pane-global-search-global-search-results .pane-title .normal-font {
+  font-family: "HelveticaNeue55Roman", "HelveticaNeue45Light", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+#utility-bar-search {
+  border-right: 2px solid #002b5b;
+  border-bottom: 2px solid #002b5b;
+  border-left: 2px solid #002b5b;
+  margin-top: -5px;
+}
+#utility-bar-search .views-exposed-widgets {
+  margin-bottom: 0;
+}
+#utility-bar-search .views-exposed-form .views-exposed-widget {
+  float: none;
+  padding: 0;
+}
+#utility-bar-search input:focus,
+#utility-bar-search input:active {
+  border: none;
+  box-shadow: none;
+}
+.ie8 #utility-bar-search input, .ie7 #utility-bar-search input {
+  width: 192px;
+  padding-right: 0;
+}
+
+#utility-bar {
+  padding: 4px 0 0 4px;
+}
+.ie8 #utility-bar, .ie7 #utility-bar {
+  background-color: #00529b;
+}
+.ie8 #utility-bar .container, .ie7 #utility-bar .container {
+  background-color: #002b5b;
+  min-height: 28px;
+  padding: 0 4px 0 6px;
+}
+.ie8 #utility-bar .container a, .ie7 #utility-bar .container a {
+  border-bottom: none;
+  color: white;
+}
+
+#utility {
+  *zoom: 1;
+  min-height: 28px;
+  padding: 0 4px 0 6px;
+}
+#utility:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+#block-menu-menu-utility-menu ul.menu {
+  margin: 0;
+  padding: 5px 0 0 0;
+}
+#block-menu-menu-utility-menu ul.menu li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ie8 #block-menu-menu-utility-menu ul.menu li, .ie7 #block-menu-menu-utility-menu ul.menu li {
+  display: inline;
+}
+#block-menu-menu-utility-menu ul.menu li a {
+  width: 45px;
+  text-align: center;
+}
+.ie8 #block-menu-menu-utility-menu ul.menu li a, .ie7 #block-menu-menu-utility-menu ul.menu li a {
+  display: inline;
+}
+#block-menu-menu-utility-menu ul.menu li.first a {
+  text-align: left;
+}
+#block-menu-menu-utility-menu ul.menu li.first:after {
+  content: "|";
+}
+#block-menu-menu-utility-menu ul.menu li.last a {
+  text-align: right;
+}
+#block-menu-menu-utility-menu ul.menu li.last:before {
+  content: "|";
+}
+
+#block-lang-dropdown-language {
+  margin-right: 6px;
+}
+#block-lang-dropdown-language #lang-dropdown-form {
+  background: url('../images/arrow-dropdown.png') no-repeat 98% center, #00529b;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  vertical-align: top;
+  width: 85px !important;
+}
+.ie8 #block-lang-dropdown-language #lang-dropdown-form {
+  background-color: #00529b;
+}
+#block-lang-dropdown-language #lang-dropdown-form select {
+  background: transparent;
+  border: 0;
+}
+.ie7 #block-lang-dropdown-language #lang-dropdown-form select {
+  color: black;
+}
+#block-lang-dropdown-language #lang-dropdown-form select option[selected="selected"] {
+  outline: none;
+  border: 0;
+}
+#block-lang-dropdown-language #lang-dropdown-form select::-moz-focus-inner, #block-lang-dropdown-language #lang-dropdown-form select:-moz-focusring, #block-lang-dropdown-language #lang-dropdown-form select:active, #block-lang-dropdown-language #lang-dropdown-form select:focus {
+  outline: none;
+  border: 0;
+  padding: 0;
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  -moz-outline: none;
+}
+
+#block-weforum-social-weforum-social-links,
+#block-weforum-social-weforum-social-links-footer {
+  text-align: right;
+}
+#block-weforum-social-weforum-social-links .social-links,
+#block-weforum-social-weforum-social-links-footer .social-links {
+  padding-right: 2px;
+}
+#block-weforum-social-weforum-social-links .social-links:last-child,
+#block-weforum-social-weforum-social-links-footer .social-links:last-child {
+  padding-right: 0;
+}
+
+#block-weforum-social-weforum-social-links {
+  padding-top: 5px;
+}
+.ie7 #block-weforum-social-weforum-social-links .social-links {
+  display: inline;
+}
+
+#logo {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 20px;
+}
+.ie8 #logo, .ie7 #logo {
+  border-bottom: none;
+}
+
+@media (max-width: 47.8125em) {
+  #logo {
+    width: 24.994%;
+    padding: 0.5em 0;
+  }
+}
+@media (max-width: 28.125em) {
+  #logo {
+    margin: 0 auto;
+    float: none;
+    clear: both;
+    display: block;
+    width: 50%;
+  }
+}
+
+@media (max-width: 47.8125em) {
+  #header {
+    width: 74.994%;
+    float: right;
+    margin-right: 0;
+  }
+  [dir="rtl"] #header {
+    float: left;
+    margin-left: 0;
+  }
+  #header .mission-statement {
+    margin-top: 0.5em;
+  }
+}
+@media (max-width: 28.125em) {
+  #header {
+    float: none;
+    width: auto;
+    margin: 0 0.5em;
+  }
+}
+
+.mission-statement {
+  line-height: 20px;
+  margin-top: 38px;
+  max-width: 520px;
+}
+.ie8 .mission-statement {
+  max-width: 770px;
+}
+
+h1#page-title {
+  border: 1px #dddddd solid;
+  font-size: 74px;
+  letter-spacing: -2px;
+  line-height: 1;
+  min-height: 90px;
+  padding: 4px;
+  text-transform: none;
+}
+@media (max-width: 34.375em) {
+  h1#page-title {
+    font-size: 54px;
+    min-height: 66px;
+    padding-bottom: 6px !important;
+  }
+}
+.ie8 h1#page-title {
+  margin-top: -24px;
+}
+
+h1#page-title {
+  background-color: #00529b;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#002b5b', endColorstr='#2989d8',GradientType=0 );
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(15%, #002b5b), color-stop(85%, #00529b));
+  background-image: -webkit-linear-gradient(top, #002b5b 15%, #00529b 85%);
+  background-image: -moz-linear-gradient(top, #002b5b 15%, #00529b 85%);
+  background-image: -o-linear-gradient(top, #002b5b 15%, #00529b 85%);
+  background-image: -ms-linear-gradient(top, #002b5b 15%, #00529b 85%);
+  background-image: linear-gradient(top, #002b5b 15%, #00529b 85%);
+  border-top: 4px solid #00529b;
+  border-right: 4px solid #00529b;
+  border-left: 4px solid #00529b;
+  color: white;
+}
+h1#page-title a,
+h1#page-title a:visited {
+  color: white;
+}
+
+.global-hub h1#page-title {
+  background-color: white;
+  color: #00529b;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#dddddd', endColorstr='#ffffff',GradientType=0 );
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(15%, #dddddd), color-stop(85%, #ffffff));
+  background-image: -webkit-linear-gradient(top, #dddddd 15%, #ffffff 85%);
+  background-image: -moz-linear-gradient(top, #dddddd 15%, #ffffff 85%);
+  background-image: -o-linear-gradient(top, #dddddd 15%, #ffffff 85%);
+  background-image: -ms-linear-gradient(top, #dddddd 15%, #ffffff 85%);
+  background-image: linear-gradient(top, #dddddd 15%, #ffffff 85%);
+  border-right: 0;
+  border-left: 0;
+  padding: 6px 0 0 6px;
+  position: relative;
+  z-index: 1;
+}
+.global-hub h1#page-title:before {
+  content: "";
+  border-top: 3px solid white;
+  border-right: 3px solid white;
+  border-left: 3px solid white;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  z-index: -1;
+}
+.global-hub h1#page-title a {
+  color: #00529b;
+}
+.global-hub h1#page-title a:visited {
+  color: #00529b;
+}
+
+#main-menu {
+  overflow: hidden;
+  *zoom: 1;
+  margin: 0;
+  width: 100%;
+}
+#main-menu li {
+  padding: 0;
+}
+#main-menu li:nth-of-type(1) {
+  width: 20%;
+  float: left;
+  margin-right: 0%;
+}
+[dir="rtl"] #main-menu li:nth-of-type(1) {
+  float: right;
+  margin-right: 0;
+  margin-left: 0%;
+}
+#main-menu li:nth-of-type(2) {
+  width: 20%;
+  float: left;
+  margin-right: 0%;
+}
+[dir="rtl"] #main-menu li:nth-of-type(2) {
+  float: right;
+  margin-right: 0;
+  margin-left: 0%;
+}
+#main-menu li:nth-of-type(3) {
+  width: 20%;
+  float: left;
+  margin-right: 0%;
+}
+[dir="rtl"] #main-menu li:nth-of-type(3) {
+  float: right;
+  margin-right: 0;
+  margin-left: 0%;
+}
+#main-menu li:nth-of-type(4) {
+  width: 20%;
+  float: left;
+  margin-right: 0%;
+}
+[dir="rtl"] #main-menu li:nth-of-type(4) {
+  float: right;
+  margin-right: 0;
+  margin-left: 0%;
+}
+#main-menu li:nth-of-type(5) {
+  width: 20%;
+  float: right;
+  margin-right: 0;
+}
+[dir="rtl"] #main-menu li:nth-of-type(5) {
+  float: left;
+  margin-left: 0;
+}
+#main-menu li.first.last {
+  width: auto;
+}
+#main-menu li.first.last a {
+  padding-right: 0.5em;
+}
+[dir="rtl"] #main-menu li.first.last a {
+  padding: 8px 40px 0 0.5em;
+}
+#main-menu a {
+  -moz-border-radius-topleft: 5px;
+  -webkit-border-top-left-radius: 5px;
+  border-top-left-radius: 5px;
+  -moz-border-radius-topright: 5px;
+  -webkit-border-top-right-radius: 5px;
+  border-top-right-radius: 5px;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f0f0f0',GradientType=0 );
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #f0f0f0));
+  background-image: -webkit-linear-gradient(top, #ffffff, #f0f0f0);
+  background-image: -moz-linear-gradient(top, #ffffff, #f0f0f0);
+  background-image: -o-linear-gradient(top, #ffffff, #f0f0f0);
+  background-image: -ms-linear-gradient(top, #ffffff, #f0f0f0);
+  background-image: linear-gradient(top, #ffffff, #f0f0f0);
+  border-right: 1px solid #dddddd;
+  border-bottom: none;
+  border-left: 1px solid #dddddd;
+  color: #002b5b;
+  height: 40px;
+  padding: 8px 0 0 0.5em;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+.ie8 #main-menu a {
+  padding-left: 10px;
+  width: 192px;
+}
+.ie7 #main-menu a {
+  width: 162px;
+}
+[dir="rtl"] #main-menu a {
+  padding: 8px 8px 0 0;
+}
+#main-menu a:before {
+  -moz-border-radius-topleft: 5px;
+  -webkit-border-top-left-radius: 5px;
+  border-top-left-radius: 5px;
+  -moz-border-radius-topright: 5px;
+  -webkit-border-top-right-radius: 5px;
+  border-top-right-radius: 5px;
+  border-top: 3px solid white;
+  border-right: 3px solid white;
+  border-left: 3px solid white;
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  z-index: -1;
+}
+#main-menu a.active,
+#main-menu a:hover {
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#d2d2d2', endColorstr='#dddddd',GradientType=0 );
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #d2d2d2), color-stop(15%, #dddddd));
+  background-image: -webkit-linear-gradient(top, #d2d2d2, #dddddd 15%);
+  background-image: -moz-linear-gradient(top, #d2d2d2, #dddddd 15%);
+  background-image: -o-linear-gradient(top, #d2d2d2, #dddddd 15%);
+  background-image: -ms-linear-gradient(top, #d2d2d2, #dddddd 15%);
+  background-image: linear-gradient(top, #d2d2d2, #dddddd 15%);
+}
+
+@media (min-width: 57em) {
+  #main-menu a {
+    padding-left: 40px;
+  }
+  [dir="rtl"] #main-menu a {
+    padding-left: 0;
+    padding-right: 40px;
+  }
+  #main-menu li.first a {
+    line-height: 1.7;
+  }
+  #main-menu li.first a:before {
+    content: url('../images/content-icons/icon-lg-global_home.png');
+    padding: 3px 0 0 3px;
+  }
+  #main-menu li:nth-of-type(2) a {
+    line-height: 1.7;
+  }
+  #main-menu li:nth-of-type(2) a:before {
+    content: url('../images/content-icons/icon-lg-hubs.png');
+    padding: 3px 0 0 3px;
+  }
+  #main-menu li:nth-of-type(3) a {
+    line-height: 1.7;
+  }
+  #main-menu li:nth-of-type(3) a:before {
+    content: url('../images/content-icons/icon-lg-shapers.png');
+    padding: 3px 0 0 3px;
+  }
+  #main-menu li:nth-of-type(4) a {
+    line-height: 1.7;
+  }
+  #main-menu li:nth-of-type(4) a:before {
+    content: url('../images/content-icons/icon-lg-projects.png');
+    padding: 3px 0 0 3px;
+  }
+  #main-menu li:nth-of-type(5) a {
+    line-height: 1.7;
+  }
+  #main-menu li:nth-of-type(5) a:before {
+    content: url('../images/content-icons/icon-lg-news.png');
+    padding: 3px 0 0 3px;
+  }
+}
+.ie8 #main-menu a, .ie7 #main-menu a {
+  padding-left: 40px;
+}
+.ie8 #main-menu li.menu-218 a, .ie7 #main-menu li.menu-218 a {
+  line-height: 1.7;
+}
+.ie8 #main-menu li.menu-218 a:before, .ie7 #main-menu li.menu-218 a:before {
+  content: url('../images/content-icons/icon-lg-global_home.png');
+  padding: 3px 0 0 3px;
+}
+.ie8 #main-menu li.menu-1120 a, .ie7 #main-menu li.menu-1120 a {
+  line-height: 1.7;
+}
+.ie8 #main-menu li.menu-1120 a:before, .ie7 #main-menu li.menu-1120 a:before {
+  content: url('../images/content-icons/icon-lg-hubs.png');
+  padding: 3px 0 0 3px;
+}
+.ie8 #main-menu li.menu-1122 a, .ie7 #main-menu li.menu-1122 a {
+  line-height: 1.7;
+}
+.ie8 #main-menu li.menu-1122 a:before, .ie7 #main-menu li.menu-1122 a:before {
+  content: url('../images/content-icons/icon-lg-shapers.png');
+  padding: 3px 0 0 3px;
+}
+.ie8 #main-menu li.menu-1119 a, .ie7 #main-menu li.menu-1119 a {
+  line-height: 1.7;
+}
+.ie8 #main-menu li.menu-1119 a:before, .ie7 #main-menu li.menu-1119 a:before {
+  content: url('../images/content-icons/icon-lg-projects.png');
+  padding: 3px 0 0 3px;
+}
+.ie8 #main-menu li.menu-1121 a, .ie7 #main-menu li.menu-1121 a {
+  line-height: 1.7;
+}
+.ie8 #main-menu li.menu-1121 a:before, .ie7 #main-menu li.menu-1121 a:before {
+  content: url('../images/content-icons/icon-lg-news.png');
+  padding: 3px 0 0 3px;
+}
+
+.weforum-layout .weforum.top .inside .pane-custom p {
+  display: none;
+}
+.ie8 .weforum-layout .weforum.top .inside div.panel-pane, .ie7 .weforum-layout .weforum.top .inside div.panel-pane {
+  background-color: #00529b;
+  min-height: 28px;
+  padding: 4px 0 0 4px;
+}
+.ie8 .weforum-layout .weforum.top .inside div.panel-pane .pane-content, .ie7 .weforum-layout .weforum.top .inside div.panel-pane .pane-content {
+  background-color: #002b5b;
+  min-height: 28px;
+}
+.ie8 .weforum-layout .weforum.top .inside div.panel-pane .pane-content a, .ie7 .weforum-layout .weforum.top .inside div.panel-pane .pane-content a {
+  color: white;
+  border-bottom: none;
+}
+.weforum-layout .weforum.top .inside div.panel-pane:first-of-type {
+  padding: 0 0 0 4px;
+  border-top: 4px solid #00529b;
+  min-height: 28px;
+}
+.weforum-layout .weforum.top .inside div.panel-pane:first-of-type .pane-content {
+  min-height: 28px;
+}
+.weforum-layout .weforum.top .inside div.panel-pane:first-of-type .pane-content a {
+  padding: 0 6px;
+}
+.weforum-layout .weforum.top .inside div.panel-pane:nth-of-type(3) .weforum-media-links {
+  min-height: 28px;
+  position: relative;
+  top: 10px;
+}
+.weforum-layout .weforum.top .inside div.panel-pane:nth-of-type(3) .weforum-media-links a:first-of-type {
+  padding-left: 0;
+}
+
+.weforum.main .weforum-media-links {
+  position: relative;
+  top: 10px;
+}
+.weforum.main .weforum-media-links a:first-of-type {
+  padding-left: 0;
+}
+
+.page-hubs .weforum-layout .weforum.top .inside div.panel-pane:first-of-type {
+  background-color: none;
+  padding: 0;
+  border-top: none;
+}
+.page-hubs .weforum-layout .weforum.top .inside div.panel-pane:first-of-type .pane-content {
+  background-color: none;
+}
+
+#tabs ul.primary {
+  margin: 0;
+  padding: 2px 0 2px 4px;
+  border-bottom: 0;
+}
+#tabs ul.primary li.active {
+  background-color: transparent;
+  border: none;
+}
+#tabs ul.primary li.active a {
+  background-color: transparent;
+  border: none;
+}
+#tabs ul.primary a {
+  background-color: transparent;
+  border: none;
+  padding: 0 0 0 4px;
+  vertical-align: text-top;
+}
+#tabs ul.primary a:hover {
+  background-color: transparent;
+}
+#tabs .weforum-local-task.shapers:before {
+  content: url('../images/content-icons/icon-sm-shapers.png');
+}
+#tabs .weforum-local-task.projects:before {
+  content: url('../images/content-icons/icon-sm-projects.png');
+}
+#tabs .weforum-local-task.news:before {
+  content: url('../images/content-icons/icon-sm-news_events.png');
+}
+
+.hub-links, #tabs .weforum-local-task.shapers:before, #tabs .weforum-local-task.projects:before, #tabs .weforum-local-task.news:before {
+  position: relative;
+  top: 2px;
+}
+
+.node-type-project.global-hub ul.tabs.primary,
+.node-type-news.global-hub ul.tabs.primary,
+.node-type-page.global-hub ul.tabs.primary,
+.page-node-651.global-hub ul.tabs.primary,
+ul.tabs.secondary {
+  border-bottom: 0;
+  margin: 0;
+  padding: 0 !important;
+  position: fixed;
+  left: 0;
+}
+.node-type-project.global-hub ul.tabs.primary li,
+.node-type-news.global-hub ul.tabs.primary li,
+.node-type-page.global-hub ul.tabs.primary li,
+.page-node-651.global-hub ul.tabs.primary li,
+ul.tabs.secondary li {
+  border: none;
+  padding: 0 1em;
+}
+.node-type-project.global-hub ul.tabs.primary li:active,
+.node-type-news.global-hub ul.tabs.primary li:active,
+.node-type-page.global-hub ul.tabs.primary li:active,
+.page-node-651.global-hub ul.tabs.primary li:active,
+ul.tabs.secondary li:active {
+  background-color: transparent;
+  border: none;
+}
+.node-type-project.global-hub ul.tabs.primary li:active a,
+.node-type-news.global-hub ul.tabs.primary li:active a,
+.node-type-page.global-hub ul.tabs.primary li:active a,
+.page-node-651.global-hub ul.tabs.primary li:active a,
+ul.tabs.secondary li:active a {
+  background-color: transparent;
+  border: none;
+}
+.node-type-project.global-hub ul.tabs.primary li a,
+.node-type-news.global-hub ul.tabs.primary li a,
+.node-type-page.global-hub ul.tabs.primary li a,
+.page-node-651.global-hub ul.tabs.primary li a,
+ul.tabs.secondary li a {
+  text-transform: none !important;
+  background-color: transparent;
+  border: none;
+  padding: 0 0 0 4px;
+  text-transform: none;
+  vertical-align: text-top;
+}
+.node-type-project.global-hub ul.tabs.primary li a:hover,
+.node-type-news.global-hub ul.tabs.primary li a:hover,
+.node-type-page.global-hub ul.tabs.primary li a:hover,
+.page-node-651.global-hub ul.tabs.primary li a:hover,
+ul.tabs.secondary li a:hover {
+  background-color: transparent;
+}
+
+#admin-menu, #admin-menu .dropdown {
+  z-index: 9999;
+}
+
+#admin-menu {
+  position: fixed;
+}
+
+.simplemenu-block {
+  height: 0;
+  position: fixed;
+  z-index: 2;
+}
+
+.simplemenu-block li {
+  border-bottom: 4px solid white;
+}
+
+.simplemenu-enabled #page {
+  padding-top: 24px;
+}
+
+@media (max-width: 34.375em) {
+  [role=banner] {
+    margin: 0 -0.5em;
+  }
+}
+
+@media (max-width: 34.375em) {
+  .js [role=navigation], .js #utility-bar, .js .pane-weforum-hub-search {
+    display: none;
+  }
+}
+
+@media (max-width: 48.75em) {
+  #main-menu li {
+    display: table-cell;
+    float: none !important;
+    max-width: 20%;
+  }
+  #main-menu li a {
+    white-space: nowrap;
+    width: auto;
+    float: none;
+    display: block;
+    padding-right: 0.5em;
+  }
+  [dir="rtl"] #main-menu li a {
+    float: none;
+    padding: 8px 0.5em 0;
+  }
+}
+
+#touch-menu-btn {
+  float: right;
+  height: 44px;
+  width: 44px;
+  padding: 0 0 0 0;
+  color: #002b5b;
+  border-right: 0;
+  border-bottom: 1px solid #002b5b;
+  border-left: 1px solid #002b5b;
+  background-color: white;
+  line-height: 44px;
+  text-align: center;
+}
+@media (max-width: 34.375em) {
+  #touch-menu-btn {
+    display: block !important;
+    visibility: visible;
+  }
+}
+@media (min-width: 34.375em) {
+  #touch-menu-btn {
+    display: none;
+  }
+}
+#touch-menu-btn.close {
+  background-color: #2f2f2f;
+  color: white;
+}
+[dir="rtl"] #touch-menu-btn {
+  float: left;
+  border-right: 1px solid #002b5b;
+  border-left: 0;
+}
+
+@media (max-width: 34.375em) {
+  #utility-bar-search {
+    border: none;
+    border-right: 0;
+    border-bottom: 1px solid #002b5b;
+    border-left: 0;
+    margin-top: 0;
+    float: none;
+    height: 44px;
+    margin-right: 44px;
+  }
+  #utility-bar-search #edit-search-api-views-fulltext-wrapper {
+    width: auto;
+  }
+  #utility-bar-search #edit-search-api-views-fulltext-wrapper .form-item-search-api-views-fulltext {
+    border: none;
+  }
+  #utility-bar-search #edit-search-api-views-fulltext-wrapper #edit-search-api-views-fulltext {
+    width: 100%;
+    height: 43px;
+  }
+  [dir="rtl"] #utility-bar-search {
+    margin-right: 0;
+    margin-left: 44px;
+    float: none;
+  }
+  [dir="rtl"] #utility-bar-search #edit-search-api-views-fulltext {
+    padding-right: 0.5em;
+  }
+}
+
+#touch-menu {
+  top: 44px;
+  width: 100%;
+  background-color: #555555;
+  color: white;
+  z-index: 10;
+  padding: 3px;
+  padding: 0 0.5em 1em;
+  border-bottom: 1px solid #2f2f2f;
+  -webkit-box-shadow: rgba(47, 47, 47, 0.5) 0 4px 8px 4px;
+  -moz-box-shadow: rgba(47, 47, 47, 0.5) 0 4px 8px 4px;
+  box-shadow: rgba(47, 47, 47, 0.5) 0 4px 8px 4px;
+}
+@media (min-width: 34.375em) {
+  #touch-menu {
+    display: none;
+  }
+}
+#touch-menu a {
+  color: white;
+}
+#touch-menu a:visited {
+  color: white;
+}
+#touch-menu a:hover {
+  color: #409ed2;
+}
+#touch-menu a:active {
+  color: #409ed2;
+}
+#touch-menu ul {
+  padding-left: 0;
+  line-height: 44px;
+}
+#touch-menu ul li {
+  margin-left: 0;
+}
+#touch-menu ul.menu li {
+  display: inline;
+}
+#touch-menu #touch-main-menu {
+  display: block;
+  font-size: 25px;
+}
+#touch-menu #touch-main-menu li {
+  display: block;
+  padding-left: 0;
+}
+#touch-menu h2.pane-title {
+  color: white;
+  font-family: "HelveticaNeue45Light", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-size: 16px;
+}
+#touch-menu .touch-pane-weforum-hub-search {
+  background-color: #2f2f2f;
+  margin: 0 -0.5em 1em;
+  padding: 0;
+}
+#touch-menu .touch-pane-weforum-hub-search h2 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+  padding: 0 0.5em;
+}
+#touch-menu .touch-pane-weforum-hub-search .title-choose-hub {
+  font-family: handsean, cursive;
+  display: block;
+}
+#touch-menu .touch-pane-weforum-hub-search .pane-content a {
+  display: none;
+}
+#touch-menu .touch-pane-weforum-hub-search .pane-content input {
+  height: 44px;
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+}
+#touch-menu .touch-pane-weforum-hub-search .pane-content .weforum-facts {
+  border-bottom: none;
+  padding: 0 0.5em;
+}
+#touch-menu #touch-block-lang-dropdown-language {
+  width: 100%;
+  margin-bottom: 1em;
+}
+#touch-menu #touch-block-lang-dropdown-language .form-item-lang-dropdown-select {
+  width: 100%;
+}
+#touch-menu #touch-block-lang-dropdown-language select {
+  height: 44px;
+  width: 100% !important;
+}
+#touch-menu #touch-weforum-social-weforum-social-links .social-links {
+  display: inline;
+  margin-right: 1em;
+}
+[dir="rtl"] #touch-menu #edit-search {
+  padding-right: 0.5em;
+}
+
+#footer {
+  margin-top: 20px;
+}
+#footer .block-weforum-social {
+  margin-top: 20px;
+  min-width: 12em;
+}
+#footer .copyright {
+  margin-top: 22px;
+}
+
+#block-weforum-social-weforum-social-links-footer a {
+  border-bottom: none;
+}
+#block-weforum-social-weforum-social-links-footer .follow {
+  float: left;
+  margin-right: 3px;
+}
+.ie7 #block-weforum-social-weforum-social-links-footer {
+  margin-top: 20px;
+}
+.ie7 #block-weforum-social-weforum-social-links-footer .social-links {
+  display: inline;
+}
+
+.ie7 #block-weforum-home-weforum-home-copyright {
+  background-color: white;
+}
+.ie7 #block-weforum-home-weforum-home-copyright .copyright {
+  float: left;
+  margin-top: 20px;
+}
+.ie7 #block-weforum-home-weforum-home-copyright img {
+  float: left;
+}
+
+.item-list ul.pager {
+  margin: 0;
+  padding: 10px 0 10px 0;
+}
+.item-list ul.pager li {
+  display: inline-block;
+  height: 30px;
+  margin: 0;
+  padding: 0;
+  text-transform: lowercase;
+  vertical-align: top;
+}
+.ie7 .item-list ul.pager li {
+  display: inline;
+}
+.item-list ul.pager .pager-previous {
+  width: 88px;
+}
+.item-list ul.pager .pager-previous a {
+  border-bottom: none;
+}
+.item-list ul.pager .pager-previous a:before {
+  content: url('../images/slideshow-arrow-back.png');
+  padding-right: 3px;
+  position: relative;
+  top: 7px;
+}
+[dir="rtl"] .item-list ul.pager .pager-previous a:before {
+  content: url('../images/slideshow-arrow-forward.png');
+}
+.item-list ul.pager .pager-previous a:hover:before {
+  content: url('../images/slideshow-arrow-back-hover.png');
+}
+[dir="rtl"] .item-list ul.pager .pager-previous a:hover:before {
+  content: url('../images/slideshow-arrow-forward-hover.png');
+}
+.item-list ul.pager .pager-next {
+  width: 73px;
+}
+.item-list ul.pager .pager-next a {
+  border-bottom: none;
+}
+.item-list ul.pager .pager-next a:after {
+  content: url('../images/slideshow-arrow-forward.png');
+  padding-left: 3px;
+  position: relative;
+  top: 7px;
+}
+[dir="rtl"] .item-list ul.pager .pager-next a:after {
+  content: url('../images/slideshow-arrow-back.png');
+}
+.item-list ul.pager .pager-next a:hover:after {
+  content: url('../images/slideshow-arrow-forward-hover.png');
+}
+[dir="rtl"] .item-list ul.pager .pager-next a:hover:after {
+  content: url('../images/slideshow-arrow-back-hover.png');
+}
+.item-list ul.pager .pager-current {
+  line-height: 2.2;
+  margin: 0 40px;
+  width: 100px;
+}
+.item-list ul.pager .pager-current:before {
+  content: "page ";
+}
+.ie8 .item-list ul.pager .pager-current {
+  width: 101px;
+}
+
+.weforum-listing.middle {
+  vertical-align: top;
+}
+.weforum-listing.middle .top {
+  padding-top: 3px;
+}
+.weforum-listing.middle .bottom {
+  overflow: hidden;
+  *zoom: 1;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+.ie7 .weforum-listing.middle {
+  width: 239px;
+}
+
+.weforum-listing.right {
+  border-left: 1px solid #dddddd;
+  min-height: 90px;
+  vertical-align: top;
+}
+[dir="rtl"] .weforum-listing.right {
+  border-left: none;
+  border-right: 1px solid #dddddd;
+}
+.ie7 .weforum-listing.right {
+  width: 299px;
+}
+.ie8 .weforum-listing.right {
+  min-height: auto;
+}
+
+.weforum.main .weforum-layout-list {
+  background-color: white;
+  margin: 10px 0;
+}
+.weforum.main .weforum-layout-list a {
+  border-bottom: none;
+}
+.weforum.main .weforum-layout-list .weforum-listing.right .field-items {
+  line-height: 1.2;
+}
+.weforum.main .weforum-layout-list .field-name-title .field-item,
+.weforum.main .weforum-layout-list .field-name-title .field-item a {
+  line-height: 1.3;
+}
+.weforum.main .weforum-layout-list .field-name-group-audience {
+  line-height: 1.2;
+}
+[dir="rtl"] .weforum.main .weforum-layout-list .field-name-field-event, [dir="rtl"]
+.weforum.main .weforum-layout-list .field-name-post-date {
+  padding-left: 0;
+}
+.weforum.main .weforum-layout-list .field-name-field-date .field-items {
+  letter-spacing: -1px;
+}
+.weforum.main .weforum-layout-list .field-name-body .field-item {
+  line-height: 1.2;
+}
+
+.pane-node-content {
+  background-color: white;
+}
+.pane-node-content .field-name-group-audience a {
+  border-bottom: none;
+}
+.pane-node-content .field-name-field-date,
+.pane-node-content .field-name-group-audience {
+  line-height: 1.2;
+}
+.pane-node-content .field-name-field-date .label-inline,
+.pane-node-content .field-name-post-date .label-inline {
+  padding-right: 3px;
+}
+.pane-node-content .field-name-post-date {
+  text-transform: none;
+}
+.pane-node-content .service-links {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.pane-node-content .service-links img {
+  vertical-align: super;
+}
+.pane-node-content .service-links .item-list ul {
+  height: 23px;
+  list-style: none;
+  margin: 0;
+}
+.pane-node-content .service-links .item-list ul li {
+  display: inline-block;
+  margin: 0;
+  vertical-align: top;
+}
+.ie7 .pane-node-content .service-links .item-list ul li {
+  display: inline;
+}
+.pane-node-content .service-links .item-list ul li.first {
+  width: 77px;
+}
+.pane-node-content .service-links .item-list ul li.last {
+  width: 63px !important;
+}
+.pane-node-content .service-links .item-list ul li a {
+  border-bottom: none;
+}
+.pane-node-content .field-name-field-subject-tags a {
+  border-bottom: none;
+}
+
+.node-page.view-mode-full .field-name-field-page-title {
+  font-size: 26px;
+}
+.node-page.view-mode-full .field-name-field-video {
+  float: right;
+  margin-top: -40px;
+  padding-left: 10px;
+}
+.node-page.view-mode-full .border-wrapper:last-of-type {
+  border-bottom: 0;
+}
+.node-page.view-mode-full .field-name-body {
+  padding: 0;
+}
+
+.weforum-media-links a {
+  padding: 0 4px;
+  border-bottom: none;
+}
+
+.weforum.sidebar .hub-curator-welcome .hub-welcome {
+  font-size: 22px;
+  text-transform: none;
+}
+.weforum.sidebar .hub-curator-welcome p {
+  line-height: 1.3;
+}
+
+.pane-weforum-search-glossary {
+  padding: 4px 0 0 4px;
+}
+.pane-weforum-search-glossary .weforum-glossary-links {
+  min-height: 28px;
+  padding: 0 0 0 4px;
+}
+.pane-weforum-search-glossary .weforum-glossary-links a {
+  padding: 0 4px;
+  display: inline-block;
+}
+
+.view-mode-search_result .weforum-listing {
+  display: table-cell;
+}
+.view-mode-search_result > .left {
+  width: 22.85714%;
+}
+.view-mode-search_result > .middle {
+  width: 34.28571%;
+}
+.view-mode-search_result > .right {
+  width: 42.85714%;
+}
+@media (max-width: 28.125em) {
+  .view-mode-search_result > .left {
+    width: 36.11376%;
+    float: left;
+    margin-right: 4.16667%;
+  }
+  [dir="rtl"] .view-mode-search_result > .left {
+    float: right;
+    margin-right: 0;
+    margin-left: 4.16667%;
+  }
+  .view-mode-search_result > .middle {
+    width: 59.71957%;
+    float: right;
+    margin-right: 0;
+  }
+  [dir="rtl"] .view-mode-search_result > .middle {
+    float: left;
+    margin-left: 0;
+  }
+  .view-mode-search_result > .right {
+    clear: both;
+    float: none;
+    width: 100%;
+    display: block;
+  }
+}
+
+.node-hub.view-mode-search_result .weforum-listing.middle {
+  width: 77.14286%;
+}
+@media (max-width: 28.125em) {
+  .node-hub.view-mode-search_result .weforum-listing.middle {
+    width: 59.71957%;
+  }
+}
+.node-hub.view-mode-search_result .weforum-listing.middle h2 {
+  padding-bottom: 0;
+  text-transform: none;
+}
+.node-hub.view-mode-search_result .weforum-listing.middle .field-name-title a {
+  padding-bottom: 0;
+  text-transform: none;
+}
+.node-hub.view-mode-search_result .weforum-listing.middle .field-name-title a:before {
+  content: "•";
+  font-size: 21px;
+  margin-right: 6px;
+}
+.node-hub.view-mode-search_result .weforum-listing.middle .field-name-field-region {
+  padding-left: 26px;
+}
+.node-hub.view-mode-search_result .weforum-listing.middle .weforum-shaper-count {
+  padding-left: 26px;
+}
+[dir="rtl"] .node-hub.view-mode-search_result .weforum-listing.middle .weforum-shaper-count {
+  padding-left: 0;
+  padding-right: 26px;
+}
+.node-hub.view-mode-search_result .weforum-listing.middle .weforum-shaper-count .placeholder {
+  font-style: normal;
+}
+.node-hub.view-mode-search_result .weforum-listing.middle .weforum-hub-link {
+  border-bottom: none;
+  background: url('../images/weforum_pointer_blue.png') no-repeat center right;
+  float: right;
+  line-height: 1.5;
+  margin-right: 3px;
+  padding-right: 20px;
+}
+[dir="rtl"] .node-hub.view-mode-search_result .weforum-listing.middle .weforum-hub-link {
+  float: left;
+  padding-right: 0;
+  padding-left: 20px;
+  background-position: left center;
+}
+
+.node-shaper.view-mode-connected_content {
+  margin-bottom: 0;
+}
+.node-shaper.view-mode-connected_content a {
+  border-bottom: none;
+}
+.node-shaper.view-mode-connected_content .field-name-field-shaper-profile-image {
+  height: 60px;
+}
+.node-shaper.view-mode-connected_content .group-shaper-wrapper {
+  padding-top: 3px;
+}
+.node-shaper.view-mode-connected_content .group-shaper-wrapper .field-name-title {
+  display: inline;
+}
+.view-hub-curator .node-shaper.view-mode-connected_content .group-shaper-wrapper .field-name-title {
+  min-height: 0;
+}
+.node-shaper.view-mode-connected_content .group-shaper-wrapper .field-name-title .field-label {
+  line-height: 0.8;
+}
+.node-shaper.view-mode-connected_content .group-shaper-wrapper .field-name-title .field-items {
+  padding-top: 3px;
+}
+.node-shaper.view-mode-connected_content .group-shaper-wrapper .field-name-group-audience {
+  padding-left: 60px;
+}
+.node-shaper.view-mode-connected_content .group-shaper-wrapper .weforum-icon.shaper {
+  padding-right: 0;
+}
+.node-shaper.view-mode-connected_content .group-shaper-wrapper .weforum-icon.shaper:after {
+  content: url('../images/content-icons/icon-sm-shapers.png');
+  border: 1px solid red;
+}
+
+.node-shaper.view-mode-search_result .middle .field-label {
+  width: 32.33333%;
+  float: left;
+  margin-right: 2%;
+}
+[dir="rtl"] .node-shaper.view-mode-search_result .middle .field-label {
+  float: right;
+  margin-right: 0;
+  margin-left: 2%;
+}
+.node-shaper.view-mode-search_result .middle .field-items {
+  width: 65.66667%;
+  float: right;
+  margin-right: 0;
+}
+[dir="rtl"] .node-shaper.view-mode-search_result .middle .field-items {
+  float: left;
+  margin-left: 0;
+}
+.node-shaper.view-mode-search_result .middle .field-items .field-item a {
+  display: inline-block;
+  vertical-align: bottom;
+}
+.node-shaper.view-mode-search_result .field-name-title {
+  margin-bottom: 3px;
+  width: 225%;
+}
+.node-shaper.view-mode-search_result .field-name-title .field-label {
+  width: 13.7037%;
+}
+.node-shaper.view-mode-search_result .field-name-title .field-items {
+  float: left;
+  width: 27.96296%;
+}
+[dir="rtl"] .node-shaper.view-mode-search_result .field-name-title .field-items {
+  float: right;
+}
+.node-shaper.view-mode-search_result .field-name-node-link {
+  margin-top: 16px;
+  text-align: right;
+}
+[dir="rtl"] .node-shaper.view-mode-search_result .field-name-node-link {
+  text-align: left;
+}
+.node-shaper.view-mode-search_result .field-name-node-link a {
+  position: relative;
+  top: -7px;
+}
+.node-shaper.view-mode-search_result .field-name-group-audience .field-item {
+  margin-top: -2px;
+}
+.node-shaper.view-mode-search_result .field-name-group-audience .field-label,
+.node-shaper.view-mode-search_result .field-name-field-joined .field-label {
+  width: 55px;
+}
+.node-shaper.view-mode-search_result .field-name-field-tibbr-title,
+.node-shaper.view-mode-search_result .field-name-field-tibbr-organization {
+  line-height: 1.1;
+}
+.node-shaper.view-mode-search_result .field-name-field-tibbr-title {
+  padding-bottom: 3px;
+}
+[dir="rtl"] .node-shaper.view-mode-search_result .weforum-icon.shaper {
+  float: left;
+}
+.node-shaper.view-mode-search_result fieldset {
+  border: 0;
+  margin: 0;
+}
+.node-shaper.view-mode-search_result fieldset legend {
+  margin-top: -33px;
+}
+.node-shaper.view-mode-search_result fieldset .fieldset-wrapper {
+  padding-top: 6px;
+}
+.node-shaper.view-mode-search_result fieldset .fieldset-wrapper .field-item a {
+  line-height: 1.4;
+}
+.node-shaper.view-mode-search_result fieldset .fieldset-wrapper .field-item a:hover {
+  color: #409ed2;
+}
+
+.node-shaper.view-mode-full .weforum-display.right {
+  min-height: 220px;
+}
+.node-shaper.view-mode-full .weforum-display.bottom {
+  width: 100%;
+}
+.node-shaper.view-mode-full a {
+  border-bottom: none;
+}
+.node-shaper.view-mode-full .weforum-display.right {
+  width: 29.999em;
+}
+.ie7 .node-shaper.view-mode-full .weforum-display.right {
+  min-height: 220px;
+}
+.node-shaper.view-mode-full .weforum-display.right .field {
+  line-height: 1.2;
+}
+.node-shaper.view-mode-full .weforum-display.right .field-label {
+  width: 105px;
+}
+.node-shaper.view-mode-full .weforum-display.right .field-name-title .field-label {
+  margin-top: 12px;
+}
+.node-shaper.view-mode-full .weforum-display.right .field-name-title h1 {
+  margin-top: 5px;
+}
+.node-shaper.view-mode-full .weforum-display.right .weforum-icon.shaper {
+  margin-top: -14px;
+}
+.node-shaper.view-mode-full .weforum-display.right fieldset {
+  border: 0;
+  margin: 0;
+}
+.node-shaper.view-mode-full .weforum-display.right fieldset .fieldset-wrapper {
+  margin-left: 105px;
+}
+.node-shaper.view-mode-full .weforum-display.right fieldset .field-name-field-tibbr-email .field-label {
+  margin-top: 8px;
+}
+.node-shaper.view-mode-full .service-links .item-list {
+  position: relative;
+  text-align: right;
+  z-index: 1;
+}
+.node-shaper.view-mode-full .field-name-field-tibbr-about-me {
+  padding-bottom: 10px;
+}
+.node-shaper.view-mode-full .about-me-label {
+  border-right: 1px solid #dddddd;
+  line-height: 2.5;
+  width: 221px;
+}
+
+.pane-featured-slider-per-hub-panel-pane-3 h2 {
+  left: 10px;
+  padding: 0;
+  position: relative;
+  top: 33px;
+  width: 0;
+  z-index: 1;
+}
+
+.ie7 .pane-node-content .node-project .weforum-display.left {
+  width: 330px;
+}
+.ie9 .pane-node-content .node-project .weforum-display.left {
+  max-width: 47%;
+}
+
+.node-project.view-mode-connected_content .field-name-title {
+  padding: 3px 10px;
+}
+.node-project.view-mode-connected_content .field-name-title a {
+  border-bottom: none;
+}
+.node-project.view-mode-connected_content .field-name-field-date .label-inline {
+  padding-right: 3px;
+}
+
+.pane-node-content .node-news {
+  overflow: hidden;
+  *zoom: 1;
+}
+.pane-node-content .node-news .field-name-group-audience {
+  line-height: 2;
+}
+.pane-node-content .node-news .field-name-field-date .field-label {
+  text-transform: none;
+}
+.pane-node-content .node-news .weforum-icon.news {
+  padding-top: 4px;
+}
+.pane-node-content .node-news .field-name-post-date {
+  line-height: 1.7;
+}
+.pane-node-content .node-news .weforum-display.left,
+.pane-node-content .node-news .weforum-display.right {
+  width: 100%;
+}
+.pane-node-content .node-news .weforum-display.left {
+  border-right: 1px #dddddd solid;
+}
+.pane-node-content .node-news .weforum-display.bottom {
+  margin-top: 3em;
+}
+
+.node-news.view-mode-connected_content .field-name-title {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+.node-news.view-mode-connected_content .field-name-title a {
+  border-bottom: none;
+}
+
+.pane-weforum-hub-search {
+  margin-top: -31px;
+  position: relative;
+  z-index: 1;
+}
+.pane-weforum-hub-search h2.pane-title {
+  color: white;
+  background: url('../images/weforum_pointer_white.png') no-repeat 98% 30%;
+  background-color: #00529b;
+  border-right: 5px solid #002b5b;
+  font-family: "HelveticaNeue55Roman", "HelveticaNeue45Light", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  line-height: 1.2;
+  margin: 0 0 0 5px;
+  padding: 8px 0 15px 5px;
+}
+[dir="rtl"] .pane-weforum-hub-search h2.pane-title {
+  background-position: 2% 30%;
+}
+.ie8 .pane-weforum-hub-search h2.pane-title {
+  background-color: #00529b;
+  padding: 6px 0 12px 5px;
+}
+.ie8 .pane-weforum-hub-search h2.pane-title:after {
+  content: url('../images/weforum_pointer_white.png');
+  position: relative;
+  right: -120px;
+}
+.pane-weforum-hub-search h2.pane-title .title-choose-hub {
+  position: absolute;
+  top: -45px;
+  left: 0;
+  z-index: 2;
+  font-family: handsean, cursive;
+  color: white;
+  line-height: 28px;
+  padding-top: 0;
+}
+[dir="rtl"] .pane-weforum-hub-search h2.pane-title .title-choose-hub {
+  left: auto;
+}
+@media (max-width: 52.1875em) {
+  .pane-weforum-hub-search h2.pane-title .title-choose-hub {
+    top: -3.5em;
+  }
+}
+.global-hub .pane-weforum-hub-search h2.pane-title .title-choose-hub {
+  color: #002b5b;
+}
+.pane-weforum-hub-search h2.pane-title .title-label {
+  margin-left: -102px;
+  margin-right: 6px;
+  font-weight: normal;
+}
+[dir="rtl"] .pane-weforum-hub-search h2.pane-title .title-label {
+  margin-left: 6px;
+  margin-right: -102px;
+}
+.pane-weforum-hub-search .pane-content {
+  margin-top: -9px;
+  padding-right: 5px;
+  padding-left: 5px;
+  padding-bottom: 5px;
+}
+.ie8 .pane-weforum-hub-search .pane-content {
+  background-color: #002b5b;
+  margin-top: -10px;
+}
+@media (max-width: 50em) {
+  .pane-weforum-hub-search {
+    float: right;
+    margin-top: 2em;
+    margin-bottom: 20px;
+  }
+  .pane-weforum-hub-search h2.pane-title {
+    border-right: none;
+    margin-left: 0;
+  }
+  .pane-weforum-hub-search h2.pane-title .title-choose-hub {
+    top: -1.75em;
+  }
+  .pane-weforum-hub-search h2.pane-title .title-label {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+  .pane-weforum-hub-search img {
+    width: 100%;
+  }
+}
+
+@media (max-width: 50em) {
+  .panel-panel.sidebar .pane-views-exp-projects-panel-pane-2 {
+    overflow: hidden;
+    *zoom: 1;
+  }
+  .panel-panel.sidebar .pane-views-exp-projects-panel-pane-2 .clearfix {
+    zoom: auto;
+  }
+  .panel-panel.sidebar .pane-views-exp-projects-panel-pane-2 .clearfix:after {
+    display: none;
+    clear: none;
+  }
+  .panel-panel.sidebar .panel-pane {
+    max-width: 50%;
+  }
+  .panel-panel.sidebar .panel-pane:not(.pane-weforum-hub-search) {
+    clear: left;
+  }
+}
+@media (max-width: 34.375em) {
+  .panel-panel.sidebar .clearfix {
+    overflow: hidden;
+    *zoom: 1;
+  }
+  .panel-panel.sidebar .panel-pane {
+    max-width: 100%;
+  }
+}
+
+.page-hubs .pane-weforum-hub-search {
+  margin-top: -24px;
+}
+
+.weforum-facts {
+  color: white;
+  border-bottom: 1px solid #00529b;
+  line-height: 2;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.weforum-facts .placeholder {
+  font-style: normal;
+}
+
+.ui-autocomplete.ui-menu {
+  border-radius: 0;
+  border: 0;
+  padding: 0;
+  width: 210px !important;
+}
+.ui-autocomplete.ui-menu .ui-corner-all {
+  border-radius: 0;
+}
+.ui-autocomplete.ui-menu .ui-menu-item,
+.ui-autocomplete.ui-menu .ui-menu-item a {
+  min-height: 20px;
+}
+.ui-autocomplete.ui-menu .ui-menu-item a {
+  background: url('../images/weforum_hub_dropdown-arrow-grey.png') 95% center no-repeat;
+  line-height: 1.2;
+  padding-top: 4px;
+  padding-right: 20px;
+  padding-bottom: 4px;
+  width: 210px !important;
+}
+.ui-autocomplete.ui-menu .ui-menu-item a:hover {
+  background: url('../images/weforum_hub_dropdown-arrow-white.png') 95% center no-repeat, #409ed2;
+  margin: 0;
+}
+.ie8 .ui-autocomplete.ui-menu .ui-menu-item a:hover, .ie7 .ui-autocomplete.ui-menu .ui-menu-item a:hover {
+  color: white;
+  background-color: #409ed2;
+  background-image: none;
+}
+.ui-autocomplete.ui-menu .ui-state-hover,
+.ui-autocomplete.ui-menu .ui-widget-content .ui-state-hover,
+.ui-autocomplete.ui-menu .ui-widget-header .ui-state-hover,
+.ui-autocomplete.ui-menu .ui-state-focus,
+.ui-autocomplete.ui-menu .ui-widget-content .ui-state-focus,
+.ui-autocomplete.ui-menu .ui-widget-header .ui-state-focus {
+  color: white;
+  background-color: #409ed2;
+  background-image: none;
+  border: none;
+}
+
+.pane-facetapi h2 {
+  padding-bottom: 10px;
+}
+.pane-facetapi ul.facetapi-facetapi-checkbox-links li {
+  list-style-image: none;
+  list-style: none;
+  margin: 0;
+}
+.ie8 .pane-facetapi ul.facetapi-facetapi-checkbox-links li a {
+  border-bottom: none;
+}
+
+.view-mode-connected_content {
+  margin-bottom: 20px;
+}
+.view-mode-connected_content a {
+  border-bottom: none;
+}
+.view-mode-connected_content .weforum-listing.middle {
+  min-width: inherit;
+}
+.view-mode-connected_content .weforum-listing.middle .top {
+  padding-top: 0;
+}
+.view-mode-connected_content .field-name-post-date .label-inline {
+  margin-right: 3px;
+}
+
+.node-page.view-mode-connected_content .field-name-custom-page-title {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+.node-page.view-mode-connected_content .field-name-custom-page-title a:hover {
+  color: #409ed2;
+}
+
+.weforum-slideshow .view-content {
+  position: relative;
+}
+
+.weforum-slideshow-pager {
+  text-align: center;
+  background-color: white;
+  height: 40px;
+}
+.weforum-slideshow-pager span {
+  cursor: pointer;
+}
+.weforum-slideshow-pager .pager-button {
+  text-indent: 110%;
+  white-space: nowrap;
+  overflow: hidden;
+  background-image: url('../images/slideshow-counter.png');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  width: 8px;
+  height: 8px;
+  height: 24px;
+  margin: 0 4px;
+}
+.ie7 .weforum-slideshow-pager .pager-button {
+  background-image: none;
+  text-indent: 0;
+  overflow: visible;
+}
+.weforum-slideshow-pager .pager-button.active, .weforum-slideshow-pager .pager-button:hover {
+  text-indent: 110%;
+  white-space: nowrap;
+  overflow: hidden;
+  background-image: url('../images/slideshow-counter-active.png');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  width: 8px;
+  height: 8px;
+  height: 24px;
+}
+.ie7 .weforum-slideshow-pager .pager-button.active, .ie7 .weforum-slideshow-pager .pager-button:hover {
+  background-image: none;
+  text-indent: 0;
+  overflow: visible;
+}
+.weforum-slideshow-pager .item-prev {
+  text-indent: 110%;
+  white-space: nowrap;
+  overflow: hidden;
+  background-image: url('../images/slideshow-arrow-back.png');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  width: 24px;
+  height: 24px;
+}
+[dir="rtl"] .weforum-slideshow-pager .item-prev {
+  text-indent: 110%;
+  white-space: nowrap;
+  overflow: hidden;
+  background-image: url('../images/slideshow-arrow-forward.png');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  width: 24px;
+  height: 24px;
+}
+.ie7 .weforum-slideshow-pager .item-prev {
+  background-image: none;
+  text-indent: 0;
+  overflow: visible;
+}
+.weforum-slideshow-pager .item-prev:hover {
+  text-indent: 110%;
+  white-space: nowrap;
+  overflow: hidden;
+  background-image: url('../images/slideshow-arrow-back-hover.png');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  width: 24px;
+  height: 24px;
+}
+[dir="rtl"] .weforum-slideshow-pager .item-prev:hover {
+  text-indent: 110%;
+  white-space: nowrap;
+  overflow: hidden;
+  background-image: url('../images/slideshow-arrow-forward-hover.png');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  width: 24px;
+  height: 24px;
+}
+.ie7 .weforum-slideshow-pager .item-prev:hover {
+  background-image: none;
+  text-indent: 0;
+  overflow: visible;
+}
+.weforum-slideshow-pager .item-next {
+  text-indent: 110%;
+  white-space: nowrap;
+  overflow: hidden;
+  background-image: url('../images/slideshow-arrow-forward.png');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  width: 24px;
+  height: 24px;
+}
+[dir="rtl"] .weforum-slideshow-pager .item-next {
+  text-indent: 110%;
+  white-space: nowrap;
+  overflow: hidden;
+  background-image: url('../images/slideshow-arrow-back.png');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  width: 24px;
+  height: 24px;
+}
+.ie7 .weforum-slideshow-pager .item-next {
+  background-image: none;
+  text-indent: 0;
+  overflow: visible;
+}
+.weforum-slideshow-pager .item-next:hover {
+  text-indent: 110%;
+  white-space: nowrap;
+  overflow: hidden;
+  background-image: url('../images/slideshow-arrow-forward-hover.png');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  width: 24px;
+  height: 24px;
+}
+[dir="rtl"] .weforum-slideshow-pager .item-next:hover {
+  text-indent: 110%;
+  white-space: nowrap;
+  overflow: hidden;
+  background-image: url('../images/slideshow-arrow-back-hover.png');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  width: 24px;
+  height: 24px;
+}
+.ie7 .weforum-slideshow-pager .item-next:hover {
+  background-image: none;
+  text-indent: 0;
+  overflow: visible;
+}
+
+.weforum-slideshow-item .slider-wrapper {
+  top: 0;
+  height: 100%;
+  width: 400px;
+  min-width: 57.14286%;
+  max-width: 100%;
+  padding: 0 20px;
+  overflow: hidden;
+}
+.weforum-slideshow-item .bottom-wrapper {
+  bottom: 0;
+  padding-right: 20px;
+  padding-bottom: 10px;
+}
+.ie7 .weforum-slideshow-item .bottom-wrapper {
+  bottom: 70px;
+}
+.weforum-slideshow-item .top-wrapper {
+  top: 0;
+  padding-right: 20px;
+  padding-top: 20px;
+}
+
+.weforum-slideshow-item {
+  color: white;
+}
+.weforum-slideshow-item .slider-wrapper {
+  background-color: white;
+  filter: alpha(opacity=50);
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.weforum-slideshow-item .title a {
+  border-bottom: none;
+  color: white;
+  font-size: 40px;
+  line-height: 1;
+}
+.weforum-slideshow-item .title a:visited, .weforum-slideshow-item .title a:hover {
+  color: white;
+}
+.weforum-slideshow-item .teaser {
+  color: white;
+  font-size: 18px;
+}
+
+.weforum-slideshow-pane h2 {
+  left: 10px;
+  padding: 0;
+  position: relative;
+  top: 33px;
+  width: 0;
+  z-index: 1;
+}
+[dir="rtl"] .weforum-slideshow-pane h2 {
+  left: -6px;
+}
+
+.shaper-teaser {
+  font-size: 16px;
+  line-height: 1.3;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 3;
+}
+.shaper-teaser p:first-of-type {
+  margin: 0;
+}
+.shaper-teaser p:first-of-type:before {
+  content: "“";
+}
+.shaper-teaser p:last-of-type:after {
+  content: "”";
+}
+
+.shaper-title {
+  line-height: 1.2;
+  position: relative;
+  z-index: 3;
+}
+.shaper-title a {
+  color: white;
+  font-size: 18px;
+  border-bottom: none;
+}
+
+.shaper-hub {
+  color: white;
+  line-height: 1;
+  position: relative;
+  z-index: 3;
+}
+.shaper-hub a {
+  color: white;
+  border-bottom: none;
+}
+
+.slider-wrapper.News .top-wrapper,
+.slider-wrapper.Project .top-wrapper {
+  display: none;
+}
+
+.slider-wrapper.Shaper .bottom-wrapper {
+  display: none;
+}
+
+.stream-display {
+  margin-top: 20px;
+}
+.stream-display h2 {
+  font-size: 22px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+.stream-display .view-feeds .view-header,
+.stream-display .view-feeds .view-empty {
+  padding-bottom: 0;
+}
+[dir="rtl"] .stream-display .view-feeds .view-header, [dir="rtl"]
+.stream-display .view-feeds .view-empty {
+  padding-left: 0;
+}
+.stream-display .view-feeds .view-header a,
+.stream-display .view-feeds .view-empty a {
+  padding-top: 0;
+}
+.stream-display .view-feeds .view-header p,
+.stream-display .view-feeds .view-empty p {
+  margin: 0;
+}
+.stream-display .view-feeds .views-field-body p {
+  line-height: 1.5;
+  margin-bottom: 0;
+  word-wrap: break-word;
+}
+.stream-display .view-feeds .views-field-created .placeholder {
+  font-style: normal;
+}
+.stream-display .view-feeds .views-field-field-link:after {
+  content: "•";
+}
+.stream-display .view-feeds .views-field-field-tibbr-twitter a,
+.stream-display .view-feeds .views-field-field-tibbr-facebook a {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+@media (max-width: 50em) {
+  .panel-panel.sidebar .pane-views-panes.stream-display:nth-of-type(odd) {
+    width: 49%;
+    float: left;
+    margin-right: 2%;
+    clear: both;
+  }
+  [dir="rtl"] .panel-panel.sidebar .pane-views-panes.stream-display:nth-of-type(odd) {
+    float: right;
+    margin-right: 0;
+    margin-left: 2%;
+  }
+  .panel-panel.sidebar .pane-views-panes.stream-display:nth-of-type(even) {
+    width: 49%;
+    float: right;
+    margin-right: 0;
+    clear: none;
+  }
+  [dir="rtl"] .panel-panel.sidebar .pane-views-panes.stream-display:nth-of-type(even) {
+    float: left;
+    margin-left: 0;
+  }
+}
+@media (max-width: 28.125em) {
+  .panel-panel.sidebar .pane-views-panes.stream-display {
+    float: none !important;
+    width: 100% !important;
+  }
+}
+@media (max-width: 50em) {
+  .panel-panel.sidebar .pane-weforum-feeds-weforum-feeds-global-block.stream-display,
+  .panel-panel.sidebar .pane-weforum-feeds-weforum-feeds-block.stream-display {
+    width: 100%;
+    max-width: 100%;
+    float: none;
+    clear: both;
+  }
+  .panel-panel.sidebar .pane-weforum-feeds-weforum-feeds-global-block.stream-display .twitter-stream-display, .panel-panel.sidebar .pane-weforum-feeds-weforum-feeds-global-block.stream-display .facebook-stream-display,
+  .panel-panel.sidebar .pane-weforum-feeds-weforum-feeds-block.stream-display .twitter-stream-display,
+  .panel-panel.sidebar .pane-weforum-feeds-weforum-feeds-block.stream-display .facebook-stream-display {
+    width: 49%;
+    float: left;
+    margin-right: 2%;
+  }
+  [dir="rtl"] .panel-panel.sidebar .pane-weforum-feeds-weforum-feeds-global-block.stream-display .twitter-stream-display, [dir="rtl"] .panel-panel.sidebar .pane-weforum-feeds-weforum-feeds-global-block.stream-display .facebook-stream-display, [dir="rtl"]
+  .panel-panel.sidebar .pane-weforum-feeds-weforum-feeds-block.stream-display .twitter-stream-display, [dir="rtl"]
+  .panel-panel.sidebar .pane-weforum-feeds-weforum-feeds-block.stream-display .facebook-stream-display {
+    float: right;
+    margin-right: 0;
+    margin-left: 2%;
+  }
+  .panel-panel.sidebar .pane-weforum-feeds-weforum-feeds-global-block.stream-display .facebook-stream-display,
+  .panel-panel.sidebar .pane-weforum-feeds-weforum-feeds-block.stream-display .facebook-stream-display {
+    width: 49%;
+    float: right;
+    margin-right: 0;
+  }
+  [dir="rtl"] .panel-panel.sidebar .pane-weforum-feeds-weforum-feeds-global-block.stream-display .facebook-stream-display, [dir="rtl"]
+  .panel-panel.sidebar .pane-weforum-feeds-weforum-feeds-block.stream-display .facebook-stream-display {
+    float: left;
+    margin-left: 0;
+  }
+}
+@media (max-width: 28.125em) {
+  .panel-panel.sidebar .pane-weforum-feeds-weforum-feeds-global-block.stream-display .twitter-stream-display, .panel-panel.sidebar .pane-weforum-feeds-weforum-feeds-global-block.stream-display .facebook-stream-display,
+  .panel-panel.sidebar .pane-weforum-feeds-weforum-feeds-block.stream-display .twitter-stream-display,
+  .panel-panel.sidebar .pane-weforum-feeds-weforum-feeds-block.stream-display .facebook-stream-display {
+    float: none !important;
+    width: 100% !important;
+  }
+}
+
+.twitter-stream-display {
+  background: url('../images/feed-twitter.png') right top no-repeat;
+  margin-bottom: 20px;
+}
+
+.facebook-stream-display {
+  background: url('../images/feed-facebook.png') right top repeat-x;
+}
+
+.twitter-stream-display, .facebook-stream-display {
+  background-color: white;
+}
+[dir="rtl"] .twitter-stream-display, [dir="rtl"] .facebook-stream-display {
+  background-image: none;
+}
+[dir="rtl"] .twitter-stream-display .view-header, [dir="rtl"] .facebook-stream-display .view-header {
+  background-color: #dddddd;
+}
+@media (max-width: 50em) {
+  .twitter-stream-display, .facebook-stream-display {
+    background-repeat: repeat-x;
+    background-position: left top;
+  }
+}
+
+.page-node-651 .pane-title {
+  padding-bottom: 0;
+}
+.page-node-651 select#edit-submitted-hub {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-appearance: menulist-button;
+  -moz-appearance: menulist;
+  width: 370px;
+  margin-top: 20px;
+}
+.page-node-651 .webform-component-textfield,
+.page-node-651 .webform-component-email,
+.page-node-651 .webform-component-textarea {
+  width: 370px;
+}
+.page-node-651 .webform-client-form input[type="text"],
+.page-node-651 .webform-client-form input[type="email"],
+.page-node-651 .webform-client-form textarea,
+.page-node-651 .webform-client-form #edit-actions input {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid #666666;
+}
+.page-node-651 .webform-client-form input[type="text"],
+.page-node-651 .webform-client-form input[type="email"],
+.page-node-651 .webform-client-form select {
+  height: 30px;
+}
+.page-node-651 .webform-client-form textarea {
+  min-height: 180px;
+  padding: 6px 10px 6px 10px;
+}
+.page-node-651 .webform-client-form #edit-actions {
+  text-align: right;
+  width: 370px;
+}
+.page-node-651 .webform-client-form #edit-actions input {
+  width: 74px;
+  height: 28px;
+}
+.page-node-651 .webform-client-form #webform-component-name {
+  margin-top: 0;
+}
+.page-node-651 .webform-client-form #webform-component-submit-an-application h3 {
+  padding-bottom: 0;
+}
+.page-node-651 .webform-client-form #edit-submitted-attachment-upload-button {
+  margin-left: 52px;
+}
+
+#weforum-contact-hub {
+  margin-top: 30px;
+  width: 220px;
+}
+
+.olLayerGooglePoweredBy.olLayerGoogleV3.gmnoprint {
+  display: none !important;
+}
+
+#popup {
+  background-color: rgba(255, 255, 255, 0.7);
+  width: 220px !important;
+}
+
+#popup_contentDiv {
+  height: inherit !important;
+  top: inherit !important;
+  left: inherit !important;
+  width: 220px !important;
+}
+#popup_contentDiv .openlayers-tooltip-name a:before {
+  content: "•";
+  font-size: 21px;
+  position: relative;
+  top: 3px;
+  left: -3px;
+}
+#popup_contentDiv .views-field-field-hub-curator,
+#popup_contentDiv .views-field-weforum-hub-shapers {
+  padding-left: 20px;
+}
+#popup_contentDiv .views-field-field-hub-curator .field-content a,
+#popup_contentDiv .views-field-weforum-hub-shapers .field-content a {
+  padding-left: 0;
+}
+
+#popup_close.olPopupCloseBox {
+  background: url('../images/popup_close.png') no-repeat;
+  position: relative !important;
+  top: 3px !important;
+  right: -200px !important;
+}
+
+.olFramedCloudPopupContent {
+  padding: 0 !important;
+}
+
+#popup_FrameDecorationDiv_0,
+#popup_FrameDecorationImg_0,
+#popup_FrameDecorationDiv_1,
+#popup_FrameDecorationImg_1,
+#popup_FrameDecorationDiv_2,
+#popup_FrameDecorationImg_2,
+#popup_FrameDecorationDiv_3,
+#popup_FrameDecorationImg_3,
+#popup_FrameDecorationDiv_4,
+#popup_FrameDecorationImg_4 {
+  display: none;
+}

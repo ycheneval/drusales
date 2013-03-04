@@ -1,0 +1,233 @@
+// Global sidebar elements
+
+// Global listings
+.pane-weforum-hub-search
+  margin-top: -31px
+  position: relative
+  z-index: 1
+  h2.pane-title
+    color: $white
+    @extend %size-14
+    @extend %weight-500
+    background: image_url("weforum_pointer_white.png") no-repeat 98% 30%
+    background-color: $royal-blue
+    border-right: 5px solid $navy-blue
+    font-family: $font-sans-roman
+    line-height: 1.2
+    margin: 0 0 0 5px
+    padding: 8px 0 15px 5px
+    [dir="rtl"] &
+      background-position: 2% 30%
+    .ie8 &
+      background-color: $royal-blue
+      padding: 6px 0 12px 5px
+      &:after
+        content: image_url("weforum_pointer_white.png")
+        position: relative
+        right: -120px
+
+    .title-choose-hub
+      position: absolute
+      top: -45px
+      left: 0
+      z-index: 2
+      @extend %size-18
+      font-family: $font-serifs
+      @extend %white
+      color: $white
+      line-height: 28px
+      padding-top: 0
+      [dir="rtl"] &
+        left: auto
+      +breakpoint($bp-choose-hub-label-wrap)
+        top: -3.5em
+      .global-hub &
+        color: $navy-blue
+    .title-label
+      margin-left: -102px
+      margin-right: 6px
+      @extend %size-12
+      @extend %lightgrey
+      font-weight: normal
+      [dir="rtl"] &
+        margin-left: 6px
+        margin-right: -102px
+  .pane-content
+    @extend %white
+    @extend %background-navy-blue
+    @extend %size-12
+    margin-top: -9px
+    padding:
+      right: 5px
+      left: 5px
+      bottom: 5px
+    .ie8 &
+      background-color: $navy-blue
+      margin-top: -10px
+  +breakpoint($bp-wide)
+    float: right
+    margin-top: 2em
+    margin-bottom: 20px
+    h2.pane-title
+      border-right: none
+      margin-left: 0
+      .title-choose-hub
+        top: -1.75em
+      .title-label
+        +visuallyhidden
+    img
+      width: 100%
+
+.panel-panel.sidebar
+  +breakpoint($bp-wide)
+    .pane-views-exp-projects-panel-pane-2
+      +clearfix
+      .clearfix
+        zoom: auto
+        &:after
+          display: none
+          clear: none
+    .panel-pane
+      max-width: 50%
+      &:not(.pane-weforum-hub-search)
+        clear: left
+  +breakpoint($bp-menu-hide)
+    .clearfix
+      +clearfix
+    .panel-pane
+      max-width: 100%
+
+
+// Specific styling for the hub page idiosyncrasies
+.page-hubs .pane-weforum-hub-search
+  margin-top: -24px
+
+// Weforum numbers facts
+.weforum-facts
+  color: $white
+  border-bottom: 1px solid $royal-blue
+  line-height: 2
+  padding-left: 4px
+  padding-right: 4px
+  .placeholder
+    font-style: normal
+    @extend %weight-700
+
+// Hub search autocomplete dropdown menu
+.ui-autocomplete.ui-menu
+  border-radius: 0
+  border: 0
+  padding: 0
+  width: 210px !important
+  .ui-corner-all
+    border-radius: 0
+  .ui-menu-item,
+  .ui-menu-item a
+    min-height: 20px
+  .ui-menu-item a
+    background: image_url("weforum_hub_dropdown-arrow-grey.png") 95% center no-repeat
+    @extend %grey
+    @extend %section-border-bottom
+    @extend %padding-left
+    @extend %size-12
+    @extend %weight-100
+    line-height: 1.2
+    padding-top: 4px
+    padding-right: 20px
+    padding-bottom: 4px
+    width: 210px !important
+    &:hover
+      @extend %white
+      background: ((image_url("weforum_hub_dropdown-arrow-white.png") 95% center no-repeat), $aqua-blue)
+      margin: 0
+      .ie8 &,
+      .ie7 &
+        color: $white
+        background-color: $aqua-blue
+        background-image: none
+  .ui-state-hover,
+  .ui-widget-content .ui-state-hover,
+  .ui-widget-header .ui-state-hover,
+  .ui-state-focus,
+  .ui-widget-content .ui-state-focus,
+  .ui-widget-header .ui-state-focus
+    color: $white
+    background-color: $aqua-blue
+    background-image: none
+    border: none
+
+// Facet checkboxes
+.pane-facetapi
+  h2
+    @extend %size-12
+    padding-bottom: 10px
+  ul.facetapi-facetapi-checkbox-links
+    li
+      list-style-image: none
+      list-style: none
+      margin: 0
+      @extend %weight-300
+      @extend %size-14
+      a
+        @extend %grey
+        @extend %border-bottom-none
+        .ie8 &
+          border-bottom: none
+  .facetapi-limit-link
+    @extend %size-14
+    @extend %grey
+    @extend %section-border-bottom
+    &:hover
+      @extend %aqua-blue
+
+// Connected content general styles
+.view-mode-connected_content
+  @extend %background-white
+  @extend %section-border-bottom
+  margin-bottom: 20px
+  a
+    border-bottom: none
+  .weforum-listing.middle
+    min-width: inherit
+    .top
+      padding-top: 0
+
+  .field-name-group-audience
+    @extend %padding
+    @extend %padding-left
+    .field-item
+      @extend %line-height
+    a
+      @extend %black
+      @extend %size-14
+      @extend %weight-500
+      &:hover
+        @extend %aqua-blue
+
+  .field-name-post-date
+    @extend %black
+    @extend %padding-left
+    @extend %text-uppercase
+    @extend %weight-300
+    .label-inline
+      margin-right: 3px
+
+// Media as connected content
+.node-page.view-mode-connected_content
+  .field-name-field-page-title,
+  .field-name-custom-page-title,
+  .field-name-post-date
+    @extend %padding-left
+    @extend %weight-300
+    @extend %black
+    @extend %text-uppercase
+    @extend %line-height
+  .field-name-custom-page-title
+    padding-top: 3px
+    padding-bottom: 3px
+    a
+      @extend %black
+      &:hover
+        color: $aqua-blue
+  .field-name-post-date
+    @extend %size-14

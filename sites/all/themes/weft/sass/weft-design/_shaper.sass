@@ -1,0 +1,280 @@
+// Styling for shaper type content
+
+// Shaper in the sidebar - Connected Content
+.node-shaper.view-mode-connected_content
+  margin-bottom: 0
+  a
+    border-bottom: none
+  .field-name-field-shaper-profile-image
+    @extend %float-left
+    @extend %padding-right
+    height: 60px
+  .group-shaper-wrapper
+    @extend %padding
+    padding-top: 3px
+    a
+      @extend %black
+      &:hover
+        @extend %aqua-blue
+
+    .field-name-title
+      @extend %min-height
+      @extend %line-height
+      display: inline
+      .view-hub-curator &
+        min-height: 0
+      .field-label
+        line-height: .8
+      .field-items
+        padding-top: 3px
+        a
+          @extend %size-16
+          @extend %text-uppercase
+
+    .field-name-group-audience
+      padding-left: 60px
+      .field-item
+        @extend %line-height
+      a
+        @extend %size-14
+        @extend %weight-500
+
+    // For shaper content using the small icon
+    .weforum-icon.shaper
+      padding-right: 0
+      &:after
+        content: image_url("content-icons/icon-sm-shapers.png")
+        @extend %float-right
+        border: 1px solid red
+
+
+// Shaper in a search result
+.node-shaper.view-mode-search_result
+  @extend %black
+  .middle
+    .field-label
+      +grid-span(1, 1, $two-thirds)
+    .field-items
+      +grid-span(1, 2, $two-thirds)
+      .field-item
+        a
+          display: inline-block
+          vertical-align: bottom
+  .field-name-title
+    @extend %section-border-bottom
+    @extend %padding
+    @extend %min-height
+    margin-bottom: 3px
+    // For underline across full width
+    width: 225%
+    .field-label
+      width: percentage(74 / 540)
+    .field-items
+      float: left
+      width: percentage(151 / 540)
+      [dir="rtl"] &
+        float: right
+
+  .field-name-node-link
+    @extend %margin-bottom
+    margin-top: 16px
+    text-align: right
+    [dir="rtl"] &
+      text-align: left
+    a
+      @extend %size-12
+      @extend %line-height
+      @extend %text-uppercase
+      @extend %aqua-blue
+      @extend %padding-right
+      @extend %padding-bottom
+      position: relative
+      top: -7px
+
+  .field-name-group-audience
+    @extend %padding-left
+    .field-item
+      margin-top: -2px
+
+  .field-name-field-joined
+    @extend %padding-left
+    .field-items
+      @extend %weight-300
+
+  .field-name-group-audience,
+  .field-name-field-joined
+    .field-label
+      width: 55px
+
+  .field-name-field-tibbr-title,
+  .field-name-field-tibbr-organization
+    @extend %padding
+    line-height: 1.1
+    .field-items
+      @extend %black
+      @extend %weight-300
+      @extend %size-14
+
+  .field-name-field-tibbr-title
+    padding-bottom: 3px
+
+  .field-name-post-date
+    @extend %float-none
+
+  .weforum-icon.shaper
+    @extend %float-right
+    [dir="rtl"] &
+      float: left
+
+  fieldset
+    border: 0
+    margin: 0
+    @extend %padding-left
+    legend
+      @extend %float-left
+      @extend %black
+      @extend %size-14
+      @extend %weight-500
+      margin-top: -33px
+    .fieldset-wrapper
+      @extend %block
+      @extend %float-left
+      padding-top: 6px
+      .field-item
+        @extend %grey
+        @extend %size-14
+        a
+          @extend %grey
+          @extend %size-14
+          line-height: 1.4
+          &:hover
+            color: $aqua-blue
+
+// Shaper full content page
+.node-shaper.view-mode-full
+  .weforum-display.right
+    min-height: 220px
+  .weforum-display.bottom
+    width: 100%
+  a
+    border-bottom: none
+  .weforum-display.right
+    width: 29.999em
+    .ie7 &
+      min-height: 220px
+    .field
+      line-height: 1.2
+    .field-label
+      @extend %black
+      width: 105px
+    .field-items
+      @extend %black
+
+    .field-name-title
+      @extend %section-border-bottom
+      @extend %padding-left
+      @extend %padding-top
+      @extend %padding-bottom
+      .field-label
+        margin-top: 12px
+      h1
+        margin-top: 5px
+
+    .field-name-group-audience
+      a:hover
+        @extend %navy-blue
+
+    .weforum-icon.shaper
+      @extend %float-right
+      @extend %padding-right
+      margin-top: -14px
+
+    .field-name-field-joined
+      @extend %padding-left
+      @extend %size-14
+
+    .field-name-field-tibbr-title,
+    .field-name-field-tibbr-organization
+      @extend %padding-left
+      .field-item
+        @extend %size-14
+        @extend %line-height
+
+    .group_shaper_wrapper
+      @extend %section-border-bottom
+      @extend %padding-top
+      @extend %padding-bottom
+      @extend %margin-bottom
+      @extend %min-height
+
+    fieldset
+      border: 0
+      margin: 0
+      @extend %padding-bottom
+      @extend %padding-left
+
+      legend
+        @extend %float-left
+        @extend %black
+        @extend %size-14
+        @extend %weight-500
+        @extend %line-height
+
+      .fieldset-wrapper
+        margin-left: 105px
+        .field
+          @extend %line-height
+        .field-item a
+          @extend %size-14
+          @extend %line-height
+        a
+          @extend %grey
+          &:hover
+            @extend %aqua-blue
+
+      .field-name-field-tibbr-email
+        .field-label
+          margin-top: 8px
+        .field-item
+          @extend %grey
+          @extend %size-14
+
+  // Video styling
+  .field-name-field-video
+    @extend %float-right
+    @extend %padding-left
+
+  // Provides styling for the service links and the full width borders
+  .service-links
+    @extend %section-border-top
+    .item-list
+      position: relative
+      text-align: right
+      z-index: 1
+
+  .field-name-field-tibbr-about-me
+    @extend %padding
+    padding-bottom: 10px
+    @extend %section-border-bottom
+
+  // About me label styling
+  .about-me-label
+    @extend %inline-block
+    @extend %black
+    @extend %padding-left
+    @extend %weight-500
+    @extend %padding-left
+    @extend %float-left
+    border-right: 1px solid $lightgrey
+    line-height: 2.5
+    width: 221px
+
+// Slideshow title
+.pane-featured-slider-per-hub-panel-pane-3
+  h2
+    left: 10px
+    padding: 0
+    position: relative
+    top: 33px
+    width: 0
+    z-index: 1

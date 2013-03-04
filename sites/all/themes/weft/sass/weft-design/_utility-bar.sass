@@ -1,0 +1,129 @@
+// Styling for the utility bar at the top of every page
+
+// Utility bar wrapper outer
+#utility-bar
+  @extend %background-royal-blue
+  padding: 4px 0 0 4px
+  .ie8 &,
+  .ie7 &
+    background-color: $royal-blue
+    .container
+      background-color: $navy-blue
+      min-height: 28px
+      padding: 0 4px 0 6px
+      a
+        border-bottom: none
+        color: $white
+
+//  Utility bar wrapper inner
+#utility
+  +pie-clearfix
+  @extend %background-navy-blue
+  min-height: 28px
+  padding: 0 4px 0 6px
+
+// The about and contact links
+#block-menu-menu-utility-menu
+  @extend %float-left
+  [dir="rtl"] &
+    @extend %float-right
+  ul.menu
+    @extend %line-height
+    margin: 0
+    padding: 5px 0 0 0
+    li
+      @extend %inline-block
+      margin: 0
+      padding: 0
+      list-style: none
+      .ie8 &,
+      .ie7 &
+        display: inline
+      a
+        @extend %border-bottom-none
+        @extend %white
+        @extend %size-14
+        @extend %weight-300
+        @extend %inline-block
+        width: 45px
+        text-align: center
+        &:hover,
+        &:active
+          @extend %aqua-blue
+        .ie8 &,
+        .ie7 &
+          display: inline
+    li.first
+      a
+        text-align: left
+      &:after
+        content: "|"
+        @extend %royal-blue
+    li.last
+      a
+        text-align: right
+      &:before
+        content: "|"
+        @extend %royal-blue
+
+// Language select dropdown
+#block-lang-dropdown-language
+  @extend %float-right
+  [dir="rtl"] &
+    @extend %float-left
+  margin-right: 6px
+  #lang-dropdown-form
+    background: image_url("arrow-dropdown.png") no-repeat 98% center, $royal-blue
+    border: none
+    cursor: pointer
+    overflow: hidden
+    vertical-align: top
+    width: 85px !important
+    .ie8 &
+      background-color: $royal-blue
+    select
+      @extend %padding-bottom
+      @extend %size-12
+      @extend %lightgrey
+      background: transparent
+      border: 0
+      .ie7 &
+        color: $black
+      option[selected="selected"]
+        outline: none
+        border: 0
+      &::-moz-focus-inner,
+      &:-moz-focusring,
+      &:active,
+      &:focus
+        outline: none
+        border: 0
+        padding: 0
+        -moz-box-shadow: none
+        -webkit-box-shadow: none
+        box-shadow: none
+        -moz-outline: none
+
+
+// The social buttons links
+#block-weforum-social-weforum-social-links,
+#block-weforum-social-weforum-social-links-footer
+  @extend %float-right
+  @extend %line-height
+  [dir="rtl"] &
+    @extend %float-left
+  text-align: right
+  .social-links
+    @extend %inline-block
+    @extend %line-height
+    padding-right: 2px
+    &:last-child
+      padding-right: 0
+    a
+      @extend %border-bottom-none
+
+#block-weforum-social-weforum-social-links
+  padding-top: 5px
+  .ie7 &
+    .social-links
+      display: inline

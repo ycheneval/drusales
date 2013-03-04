@@ -1,0 +1,267 @@
+////////////////////////////
+// Create your site-specific
+// styles here
+////////////////////////////
+
+// EXTENDABLE CLASSES
+
+// Text Colors
+%aqua-blue
+  color: $aqua-blue
+
+%royal-blue
+  color: $royal-blue
+
+%navy-blue
+  color: $navy-blue
+
+%white
+  color: $white
+
+%black
+  color: $black
+
+%lightgrey
+  color: $lightgrey
+
+%grey
+  color: $grey
+
+// Background Colors
+%background-royal-blue
+  background-color: $royal-blue
+
+%background-navy-blue
+  background-color: $navy-blue
+
+%background-aqua-blue
+  background-color: $aqua-blue
+
+%background-white
+  background-color: $white
+
+// Positioning
+%relative
+  position: relative
+%absolute
+  position: absolute
+
+// Floats
+// Float right
+%float-right
+  float: right
+
+// Float left
+%float-left
+  float: left
+
+%float-none
+  float: none
+
+// Padding
+%padding
+  padding: 0 10px
+
+%padding-left
+  padding-left: 10px
+
+%padding-right
+  padding-right: 10px
+
+%padding-top
+  padding-top: 6px
+
+%padding-bottom
+  padding-bottom: 6px
+
+// Margins
+%margin-bottom
+  margin-bottom: 6px
+
+%margin-top
+  margin-top: 6px
+
+// Displays
+%inline-block
+  display: inline-block
+
+%inline
+  display: inline
+
+%block
+  display: block
+
+// Text transform
+%text-uppercase
+  text-transform: uppercase
+
+// Font size
+%size-18
+  font-size: 18px
+
+%size-16
+  font-size: 16px
+
+%size-14
+  font-size: 14px
+
+%size-12
+  font-size: 12px
+
+// Font weight
+%weight-100
+  font-family: $font-sans-light
+  .i18n-ar &
+    font-family: $font-sans-light-arabic
+
+%weight-300
+  font-family: $font-sans-roman
+  .i18n-ar &
+    font-family: $font-sans-roman-arabic
+
+%weight-500
+  font-family: $font-sans-medium
+  .i18n-ar &
+    font-family: $font-sans-roman-arabic
+
+%weight-700
+  font-family: $font-sans-bold
+  .i18n-ar &
+    font-family: $font-sans-bold-arabic
+
+// Min height
+%min-height
+  min-height: 40px
+
+// Line height
+%line-height
+  line-height: 1
+
+// BORDERS
+// Grey border
+%section-border-bottom
+  border-bottom: 1px solid $lightgrey
+
+%section-border-top
+  border-top: 1px solid $lightgrey
+
+// Remove bottom border
+%border-bottom-none
+  border-bottom: none
+
+// List style with large blue bullets
+ul.large-bullets
+  list-style: none
+  margin: 0 0 10px 0
+  padding: 0
+  li
+    &:before
+      content: "•"
+      @extend %royal-blue
+      font-size: 21px
+      margin-right: 6px
+
+// Default page styles
+// styling for fixed background image
+#page-wrapper
+  background: image_url("bg.png") center top no-repeat
+  background-color: $black
+  position: fixed
+  width: 100%
+  height: 100%
+
+// Styling for page region
+#page
+  // Background fallback
+  background: rgb(255, 255, 255)
+  background: rgba($white, 0.8)
+  margin: 0 auto
+  max-width: 1020px
+  padding: 0 30px
+  position: relative
+  .ie8 &,
+  .ie7 &,
+  .ie6 &
+    background: transparent
+    filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr=#ccffffff, endColorstr=#ccffffff)
+  +breakpoint($bp-thick-page-padding)
+    padding: 0 0.5em
+
+// MAIN CONTENT
+
+// Labels that are displayed inline with items like on shapers' bios
+.field-label
+  @extend %black
+  font-size: 14px
+
+.label-inline
+  @extend %inline
+
+// CONTENT-SPECIFIC ICONS USED GLOBALLY ON SITE
+.weforum-icon
+  padding-right: 6px
+
+// For project content
+.weforum-icon.project
+  &:after
+    content: image_url("content-icons/icon-lg-projects.png")
+    @extend %float-right
+    [dir="rtl"] &
+      @extend %float-left
+
+// For shaper content
+.weforum-icon.shaper
+  &:after
+    content: image_url("content-icons/icon-lg-shapers.png")
+    [dir="rtl"] &
+      @extend %float-left
+
+// For news and events content
+.weforum-icon.news
+  &:after
+    content: image_url("content-icons/icon-lg-news.png")
+    @extend %float-right
+    position: relative
+    top: 4px
+    [dir="rtl"] &
+      @extend %float-left
+
+// For events content
+.weforum-icon.events
+  &:after
+    content: image_url("content-icons/icon-lg-events.png")
+    @extend %float-right
+    position: relative
+    top: 4px
+    [dir="rtl"] &
+      @extend %float-left
+
+// For hub content
+.weforum-icon.hubs
+  &:after
+    content: image_url("content-icons/icon-lg-hubs.png")
+    [dir="rtl"] &
+      @extend %float-left
+
+// Add the video icon to the corner of videos
+// Video in a slideshow
+.views-field-field-video
+  position: absolute
+  top: 0
+  .field-content
+    &:after
+      content: image_url("media-icons/icon-lg-video.png")
+      position: relative
+      left: 665px
+      top: -35px
+
+// Wrapper to add a border bottom to body content
+.border-wrapper
+  @extend %section-border-bottom
+  margin-bottom: 10px
+
+// Remove white background on page and webform nodes
+.node-type-page,
+.node-type-webform
+  .pane-node-content
+    background-color: transparent

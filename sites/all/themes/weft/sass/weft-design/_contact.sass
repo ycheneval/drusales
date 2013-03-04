@@ -1,0 +1,55 @@
+// CONTACT PAGE
+
+.page-node-651
+  .pane-title
+    padding-bottom: 0
+  .field-name-body
+    @extend %border-bottom-none
+  #webform-component-hub
+    label
+      @extend %h2
+  select#edit-submitted-hub
+    +border-radius(3px)
+    -webkit-appearance: menulist-button
+    -moz-appearance: menulist
+    width: 370px
+    margin-top: 20px
+  .webform-client-form
+    @extend %padding-left
+  .webform-component-textfield,
+  .webform-component-email,
+  .webform-component-textarea
+    width: 370px
+  .webform-client-form
+    input[type="text"],
+    input[type="email"],
+    textarea,
+    #edit-actions input
+      +border-radius(3px)
+      border: 1px solid #666
+    input[type="text"],
+    input[type="email"],
+    select
+      height: 30px
+      @extend %padding-left
+    textarea
+      min-height: 180px
+      padding: 6px 10px 6px 10px
+    #edit-actions
+      text-align: right
+      width: 370px
+      input
+        width: 74px
+        height: 28px
+    #webform-component-name
+      margin-top: 0
+    #webform-component-submit-an-application h3
+      padding-bottom: 0
+    #edit-submitted-attachment-upload-button
+      margin-left: 52px
+
+// Styling if there is a hub curator
+#weforum-contact-hub
+  @extend %float-right
+  margin-top: 30px
+  width: 220px

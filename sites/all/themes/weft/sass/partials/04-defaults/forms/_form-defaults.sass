@@ -1,0 +1,49 @@
+/* Forms --------------------------------------------------------------
+
+// USE FORMALIZE TO EVEN FORMS ACROSS BROWSERS
+// @import _formalize
+
+fieldset
+  margin: 0
+  padding: 0
+
+legend
+  padding: 0
+
+label
+  display: inline
+  font-family: $font-sans-medium
+  font-size: 16px
+
+.field .field-label
+  font-weight: normal
+  font-family: $font-sans-medium
+
+%textinput
+  @extend %constrain-to-parent
+  +rhythm-borders(1px, 0.25, $base-font-size)
+  border-width: 1px
+  margin-top: 0
+  border-color: $border-color
+
+input
+  &[type=email], &[type=url], &[type=tel], &[type=text],
+  &[type=date], &[type=datetime], &[type=datetime-local], &[type=month], &[type=week], &[type=time],
+  &[type=number], &[type=range], &[type=search], &[type=color]
+    @extend %textinput
+  // reset webkit search styles
+  &[type=search]
+    -webkit-appearance: none
+    &::-webkit-search-decoration
+      display: none
+
+input
+  &[type="radio"], &[type="checkbox"]
+    margin-left: 0.25em
+    margin-right: 0.25em
+
+textarea, input:not([type="radio"])
+  @extend %constrain-to-parent
+
+input[type="file"]
+  font-size: 12px

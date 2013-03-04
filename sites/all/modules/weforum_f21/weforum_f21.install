@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * Implementation of hook_requirements
+ */
+function weforum_f21_requirements($phase) {
+  $requirements = array();
+  $t = get_t();
+  $severity = REQUIREMENT_OK;
+  $value = $t('F21 available');
+  if ($phase == 'running') {
+    if (!extension_loaded('mssql')) {
+      $severity = REQUIREMENT_ERROR;
+      $value = $t('MSsql extension not found');
+    }
+    elseif (!weforum_f21_test()) {
+      $severity = REQUIREMENT_ERROR;
+      $value = $t('Connection to F21 failed');
+    }
+  }
+  $requirements['weforum_f21'] = array(
+    'title' => 'MSSQL',
+    'description' => 'Availability of the F21 connection',
+    'value' => $value,
+    'severity' => $severity,
+  );
+
+  return $requirements;
+}
+

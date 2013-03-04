@@ -1,0 +1,92 @@
+// Content in list form, such as search results or landing pages
+
+// Listed content sections
+
+.weforum-listing.middle
+  vertical-align: top
+  .top
+    @extend %section-border-bottom
+    @extend %min-height
+    padding-top: 3px
+  .bottom
+    +clearfix
+    padding-top: 3px
+    padding-bottom: 3px
+  .ie7 &
+    width: 239px
+
+.weforum-listing.right
+  border-left: 1px solid $lightgrey
+  min-height: 90px
+  vertical-align: top
+  @extend %padding-top
+  [dir="rtl"] &
+    border-left: none
+    border-right: 1px solid $lightgrey
+  .ie7 &
+    width: 299px
+  .ie8 &
+    min-height: auto
+
+// Content styling
+.weforum.main .weforum-layout-list
+  background-color: $white
+  @extend %section-border-top
+  @extend %section-border-bottom
+  margin: 10px 0
+  a
+    border-bottom: none
+
+  .weforum-listing.right .field-items
+    line-height: 1.2
+
+  .field-name-title
+    @extend %padding-left
+    .field-item,
+    .field-item a
+      @extend %h1
+      @extend %size-16
+      line-height: 1.3
+      &:hover
+        @extend %aqua-blue
+
+  .field-name-group-audience
+    @extend %padding-left
+    line-height: 1.2
+    a
+      @extend %black
+      @extend %weight-500
+      &:hover
+        @extend %aqua-blue
+
+  .field-name-field-event,
+  .field-name-post-date
+    @extend %black
+    @extend %float-left
+    @extend %padding-left
+    @extend %text-uppercase
+    @extend %line-height
+    [dir="rtl"] &
+      @extend %float-right
+      padding-left: 0
+      @extend %padding-right
+
+  .field-name-post-date .label-inline
+    @extend %padding-right
+
+  .field-name-field-date
+    @extend %inline-block
+    @extend %size-14
+    @extend %padding-left
+    @extend %line-height
+    .field-items
+      @extend %inline
+      @extend %black
+      @extend %text-uppercase
+      letter-spacing: -1px
+
+  .field-name-body
+    .field-item
+      @extend %padding
+      @extend %padding-bottom
+      line-height: 1.2

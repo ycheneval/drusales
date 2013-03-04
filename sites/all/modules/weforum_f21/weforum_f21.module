@@ -1,0 +1,96 @@
+<?php
+
+/**
+ * Implementation of hook_menu
+ */
+function weforum_f21_menu() {
+  $items = array();
+
+  $items['admin/config/weforum_f21'] = array(
+    'title' => 'F21 configuration',
+    'description' => 'F21 credentials',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('weforum_f21_admin_settings'),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'weforum_f21.admin.inc',
+  );
+  $items['forum21'] = array(
+    'page callback' => 'weforum_f21_testpage',
+    'access callback' => TRUE,
+  );
+  return $items;
+}
+
+function weforum_f21_test() {
+  $f21 = weforum_f21_connect();
+  return(!empty($f21));
+}
+
+function weforum_f21_connect() {
+  static $f21;
+  if (empty($f21)) {
+    $username = variable_get('weforum_f21_username');
+    $password = variable_get('weforum_f21_password');
+    $hostname = variable_get('weforum_f21_host');
+    $f21 = mssql_connect($hostname, $username, $password);
+    if (empty($f21)) {
+      watchdog('weforum_f21', 'Failed connection to F21 on %ip', array('%ip' => $hostname), WATCHDOG_ERROR);
+    }
+    else {
+      mssql_select_db('FORUM21', $f21);
+    }
+  }
+  return $f21;
+}
+
+function weforum_f21_query($sql) {
+  $t_rows = array();
+  if ($result = mssql_query($sql, weforum_f21_connect())) {
+    while ($row = mssql_fetch_array($result)) {
+      $t_rows[] = $row;
+    }
+    mssql_free_result($result);
+  }
+
+  return $t_rows;
+}
+
+function weforum_f21_testpage() {
+  $out = 'test';
+  $sql = "SELECT PER.PER_ID,PER.PER_LAST_NAME,PER.PER_FIRST_NAME,ORG.ORG_PUBLIC_NAME,
+FULL_NAME =PER.PER_LAST_NAME + ' ' +isnull(PER.PER_FIRST_NAME,''), ORG.ORG_ID ,
+INT_NAME AS 'AREA_OF_IMPACT',
+SEC.SEC_NAME AS 'SECTOR',
+SECTYPE.SEC_NAME AS 'MODEL'
+FROM 
+PERSON_GROUP PG 
+inner join CONSTITUENTGROUP CG on CG.CGR_ID = PG.CGR_ID
+inner join PERSON PER on PG.PER_ID = PER.PER_ID
+inner join RESPONSIBILITY RES on RES.PER_ID = PER.PER_ID
+inner join ORGANIZATION ORG on RES.ORG_ID = ORG.ORG_ID
+left outer join ORGANIZATION_OTHERINTEREST OI on  OI.ORG_ID = ORG.ORG_ID
+left outer join INTEREST INTE on INTE.INT_ID=OI.INT_ID
+left outer join ORGANIZATION_SECTOR ORS on ORS.ORG_ID = ORG.ORG_ID
+left outer join SECTOR SEC on ORS.SEC_ID = SEC.SEC_ID
+left outer join ORGANIZATION_SECTOR ORGTYPE on ORGTYPE.ORG_ID = ORG.ORG_ID
+left outer join SECTOR SECTYPE on ORGTYPE.SEC_ID = SECTYPE.SEC_ID
+WHERE 
+(CGR_NAME LIKE 'SCHWAB SOCIAL ENTREPRENEUR 2%' OR CGR_NAME LIKE 'SCHWAB SOCIAL ENTREPRENEUR of the Year 2%')
+AND PG.GST_ID = 2 -- ACCEPTED
+AND RES.RES_ACTIVE_FLAG='Y'
+AND RES_PRIMARY_FLAG='Y'
+AND RES_START_DATE < GETDATE()
+AND ISNULL(RES_END_DATE,DATEADD(D,1,GETDATE())) >= GETDATE()
+AND LEFT(SEC.SEC_CODE,1) ='Z'
+AND LEFT(SECTYPE.SEC_CODE,1) = 'Y'
+ORDER BY 2,3";
+  $result = weforum_f21_query($sql);
+  foreach ($result as $key => $value) {
+    $out.=($value['FULL_NAME']);
+  }
+  //$out .= weforum_f21_query();
+  return $out;
+}
+
+
