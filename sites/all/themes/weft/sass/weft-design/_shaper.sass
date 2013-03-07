@@ -9,6 +9,10 @@
     @extend %float-left
     @extend %padding-right
     height: 60px
+    [dir="rtl"] &
+      @extend %float-right
+      padding-right: 0
+      @extend %padding-left
   .group-shaper-wrapper
     @extend %padding
     padding-top: 3px
@@ -43,23 +47,18 @@
     .weforum-icon.shaper
       padding-right: 0
       &:after
-        content: image_url("content-icons/icon-sm-shapers.png")
+        +icons-sprite(icon-sm-shapers)
+        content: $space
         @extend %float-right
-        border: 1px solid red
+      [dir="rtl"] &
+        float: left
+        @extend %float-left
+
 
 
 // Shaper in a search result
 .node-shaper.view-mode-search_result
   @extend %black
-  .middle
-    .field-label
-      +grid-span(1, 1, $two-thirds)
-    .field-items
-      +grid-span(1, 2, $two-thirds)
-      .field-item
-        a
-          display: inline-block
-          vertical-align: bottom
   .field-name-title
     @extend %section-border-bottom
     @extend %padding
@@ -67,11 +66,15 @@
     margin-bottom: 3px
     // For underline across full width
     width: 225%
+    +breakpoint($bp-narrow)
+      max-width: 100%
     .field-label
-      width: percentage(74 / 540)
+      width: percentage(60 / 540)
     .field-items
       float: left
-      width: percentage(151 / 540)
+      width: percentage(165 / 540)
+      +breakpoint($bp-shaper-names-overlap)
+        clear: both
       [dir="rtl"] &
         float: right
 
@@ -104,7 +107,9 @@
   .field-name-group-audience,
   .field-name-field-joined
     .field-label
-      width: 55px
+      width: 60px
+      [dir="rtl"] &
+        @extend %padding-right
 
   .field-name-field-tibbr-title,
   .field-name-field-tibbr-organization
@@ -136,10 +141,21 @@
       @extend %size-14
       @extend %weight-500
       margin-top: -33px
+      [dir="rtl"] &
+        @extend %float-right
+        @extend %padding-right
     .fieldset-wrapper
       @extend %block
       @extend %float-left
       padding-top: 6px
+      +breakpoint($bp-shaper-names-overlap)
+        padding-top: 24px
+      +breakpoint($bp-narrow)
+        padding-top: 6px
+        margin-top: -12px
+      [dir="rtl"] &
+        @extend %float-right
+        @extend %padding-right
       .field-item
         @extend %grey
         @extend %size-14
@@ -164,6 +180,8 @@
       min-height: 220px
     .field
       line-height: 1.2
+      [dir="rtl"] &
+        @extend %padding-right
     .field-label
       @extend %black
       width: 105px
@@ -188,6 +206,9 @@
       @extend %float-right
       @extend %padding-right
       margin-top: -14px
+      [dir="rtl"] &
+        @extend %float-left
+        @extend %padding-left
 
     .field-name-field-joined
       @extend %padding-left
@@ -219,9 +240,15 @@
         @extend %size-14
         @extend %weight-500
         @extend %line-height
+        [dir="rtl"] &
+          @extend %float-right
+          padding-right: 10px
 
       .fieldset-wrapper
         margin-left: 105px
+        [dir="rtl"] &
+          margin-left: 0
+          margin-right: 105px
         .field
           @extend %line-height
         .field-item a
@@ -268,13 +295,8 @@
     border-right: 1px solid $lightgrey
     line-height: 2.5
     width: 221px
+    [dir="rtl"] &
+      padding-left: 0
+      @extend %padding-right
+      @extend %float-right
 
-// Slideshow title
-.pane-featured-slider-per-hub-panel-pane-3
-  h2
-    left: 10px
-    padding: 0
-    position: relative
-    top: 33px
-    width: 0
-    z-index: 1

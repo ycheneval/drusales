@@ -44,7 +44,7 @@
         @extend %white
         @extend %size-14
         @extend %weight-300
-        @extend %inline-block
+        @extend %inline
         width: 45px
         text-align: center
         &:hover,
@@ -79,7 +79,7 @@
     overflow: hidden
     vertical-align: top
     width: 85px !important
-    .ie8 &
+    .ie9 &, .ie8 &, .ie7 &, .ie6 &
       background-color: $royal-blue
     select
       @extend %padding-bottom
@@ -92,6 +92,11 @@
       option[selected="selected"]
         outline: none
         border: 0
+      .ie9 &, .ie8 &, .ie7 &, .ie6 &
+        option
+          color: black
+        option[selected="selected"]
+          color: $lightgrey
       &::-moz-focus-inner,
       &:-moz-focusring,
       &:active,

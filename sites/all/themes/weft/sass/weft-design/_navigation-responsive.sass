@@ -57,6 +57,8 @@
     border:
       right: 1px solid $navy-blue
       left: 0
+  .ie6 &, .ie7 &
+    display: none
 
 #utility-bar-search
   +breakpoint($bp-menu-hide)
@@ -153,3 +155,5 @@
   [dir="rtl"] &
     #edit-search
       padding-right: 0.5em
+  .ie6 &, .ie7 &
+    display: none

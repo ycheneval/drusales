@@ -46,8 +46,12 @@
     .ie8 &
       padding-left: 10px
       width: 192px
+    [dir="rtl"].ie8 &
+      padding-right: 40px
     .ie7 &
       width: 162px
+    [dir="rtl"].ie7 &
+      width: 154px
     [dir="rtl"] &
       @extend %float-right
       padding: 8px 8px 0 0
@@ -79,41 +83,44 @@
       [dir="rtl"] &
         padding-left: 0
         padding-right: 40px
-
-    // Global home link
-    li.first a
+    li a
       line-height: 1.7
       &:before
-        content: image_url("content-icons/icon-lg-global_home.png")
         padding: 3px 0 0 3px
+    // Global home link
+    li.first a
+      &:before
+        content: inline-image("icons/icon-lg-global_home.png")
+        .ie8 &, .ie7 &, .ie6 &
+          content: image_url("icons/icon-lg-global_home.png")
 
     // Hubs link
     li:nth-of-type(2) a
-      line-height: 1.7
       &:before
-        content: image_url("content-icons/icon-lg-hubs.png")
-        padding: 3px 0 0 3px
+        content: inline-image("icons/icon-lg-hubs.png")
+        .ie8 &, .ie7 &, .ie6 &
+          content: image_url("icons/icon-lg-hubs.png")
 
     // Shapers link
     li:nth-of-type(3) a
-      line-height: 1.7
       &:before
-        content: image_url("content-icons/icon-lg-shapers.png")
-        padding: 3px 0 0 3px
+        content: inline-image("icons/icon-lg-shapers.png")
+        .ie8 &, .ie7 &, .ie6 &
+          content: image_url("icons/icon-lg-shapers.png")
 
     // Projects link
     li:nth-of-type(4) a
-      line-height: 1.7
       &:before
-        content: image_url("content-icons/icon-lg-projects.png")
-        padding: 3px 0 0 3px
+        content: inline-image("icons/icon-lg-projects.png")
+        .ie8 &, .ie7 &, .ie6 &
+          content: image_url("icons/icon-lg-projects.png")
 
     // News and Events links
     li:nth-of-type(5) a
-      line-height: 1.7
       &:before
-        content: image_url("content-icons/icon-lg-news.png")
-        padding: 3px 0 0 3px
+        content: inline-image("icons/icon-lg-news.png")
+        .ie8 &, .ie7 &, .ie6 &
+          content: image_url("icons/icon-lg-news.png")
 
 
 
@@ -124,31 +131,26 @@
     a
       padding-left: 40px
     li.menu-218 a
-      line-height: 1.7
       &:before
-        content: image_url("content-icons/icon-lg-global_home.png")
-        padding: 3px 0 0 3px
+        +icons-sprite(icon-lg-global_home)
+        content: $space
 
     li.menu-1120 a
-      line-height: 1.7
       &:before
-        content: image_url("content-icons/icon-lg-hubs.png")
-        padding: 3px 0 0 3px
+        +icons-sprite(icon-lg-hubs)
+        content: $space
 
     li.menu-1122 a
-      line-height: 1.7
       &:before
-        content: image_url("content-icons/icon-lg-shapers.png")
-        padding: 3px 0 0 3px
+        +icons-sprite(icon-lg-shapers)
+        content: $space
 
     li.menu-1119 a
-      line-height: 1.7
       &:before
-        content: image_url("content-icons/icon-lg-projects.png")
-        padding: 3px 0 0 3px
+        +icons-sprite(icon-lg-projects)
+        content: $space
 
     li.menu-1121 a
-      line-height: 1.7
       &:before
-        content: image_url("content-icons/icon-lg-news.png")
-        padding: 3px 0 0 3px
+        +icons-sprite(icon-lg-news)
+        content: $space

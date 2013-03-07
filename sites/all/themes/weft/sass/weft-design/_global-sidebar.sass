@@ -5,6 +5,9 @@
   margin-top: -31px
   position: relative
   z-index: 1
+  .ie7 &,
+  .ie6 &
+    max-width: 240px
   h2.pane-title
     color: $white
     @extend %size-14
@@ -21,11 +24,8 @@
     .ie8 &
       background-color: $royal-blue
       padding: 6px 0 12px 5px
-      &:after
-        content: image_url("weforum_pointer_white.png")
-        position: relative
-        right: -120px
-
+    [dir="rtl"].ie7 &
+      position: relative
     .title-choose-hub
       position: absolute
       top: -45px
@@ -37,8 +37,21 @@
       color: $white
       line-height: 28px
       padding-top: 0
+      .ie8 &,
+      .ie7 &,
+      .ie6 &
+        font-size: 24px
+        top: -30px
       [dir="rtl"] &
         left: auto
+        right: 0
+      [lang="fr"] &
+        font-size: 15px
+        padding-left: 5px
+        top: -36px
+      [lang="es"] &
+        padding-left: 7px
+        top: -36px
       +breakpoint($bp-choose-hub-label-wrap)
         top: -3.5em
       .global-hub &
@@ -49,9 +62,22 @@
       @extend %size-12
       @extend %lightgrey
       font-weight: normal
+      [dir="rtl"].ie7 &,
+        position: absolute
+        right: 0
       [dir="rtl"] &
         margin-left: 6px
         margin-right: -102px
+      [lang="fr"] &
+        margin-left: -140px
+      [lang="es"] &
+        margin-left: -112px
+      [lang="zh-hans"] &
+        margin-left: -80px
+      [lang="ar"] &
+        margin-right: -49px
+      [lang="he"] &
+        margin-right: -57px
   .pane-content
     @extend %white
     @extend %background-navy-blue

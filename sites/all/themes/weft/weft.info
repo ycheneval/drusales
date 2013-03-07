@@ -8,6 +8,7 @@ base theme  = survivalkit
 
 ; stylesheets
 stylesheets[all][] = css/style.css
+stylesheets[print][] = css/print.css
 stylesheets[all][] = css/styleguide.css
 stylesheets[all][] = panels.css
 ; regions

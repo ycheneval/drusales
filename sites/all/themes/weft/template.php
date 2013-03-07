@@ -45,8 +45,9 @@ function weft_preprocess_page(&$variables) {
   $theme_path = drupal_get_path('theme', 'weft');
 
   // Add placeholder plugin
-  drupal_add_js($theme_path . '/js/libs/jquery.placeholder.min.js');
-  // Add placeholder implementation
+  drupal_add_js($theme_path . '/js/libs/jquery.html5-placeholder-shim.js');
+  drupal_add_js($theme_path . '/js/ios-orientationchange-fix.js');
+
   drupal_add_js($theme_path . '/js/script.js');
   drupal_add_js($theme_path . '/js/ss-standard.js');
   drupal_add_js($theme_path . '/js/modernizr.custom.37877.js');
@@ -119,4 +120,19 @@ function weft_form_webform_client_form_alter(&$form, &$form_state, $form_id) {
       $form['submitted'][$key]['#attributes']['placeholder'] = $value['#title'];
     }
   }
+}
+
+/**
+ * Returns HTML for the inactive facet item's count.
+ *
+ * @param $variables
+ *   An associative array containing:
+ *   - count: The item's facet count.
+ *
+ * @ingroup themeable
+ */
+function weft_facetapi_count($variables) {
+  global $language;
+  $dir = ($language->direction == 1) ? 'rtl' : 'ltr';
+  return '<span dir="'.$dir.'">(' . (int) $variables['count'] . ')</span>';
 }

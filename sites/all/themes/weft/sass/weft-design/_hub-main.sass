@@ -51,13 +51,17 @@
 // layout rules
 .view-mode-search_result
   .weforum-listing
-    display: table-cell
+    display: block
+    float: left
   > .left
     width: grid-span(1, 1, $desk-content-columns, $desk-content-gutter)
+    max-width: 160px
+    overflow: hidden
   > .middle
     width: grid-span(1, 2, $desk-content-columns, $desk-content-gutter)
   > .right
     width: grid-span(1, 3, $desk-content-columns, $desk-content-gutter)
+    float: right
   +breakpoint($bp-narrow)
     > .left
       +grid-span(1, 1, $narrow-columns, $narrow-gutter, 0)

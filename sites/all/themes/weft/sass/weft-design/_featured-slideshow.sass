@@ -11,13 +11,17 @@
   height: 40px
   @extend  %section-border-bottom
   @extend  %section-border-top
+  margin-top: -33px
+  +breakpoint($bp-narrow)
+    text-align: right
+    padding-right: 0.5em
   span
     cursor: pointer
     @extend %inline-block
 
   .pager-button
-    +replace-text-with-dimensions("slideshow-counter.png")
-    height: 24px
+    +hide-text
+    +icons-sprite(slideshow-counter)
     margin: 0 4px
     .ie7 &
       background-image: none
@@ -25,41 +29,49 @@
       overflow: visible
     &.active,
     &:hover
-      +replace-text-with-dimensions("slideshow-counter-active.png")
-      height: 24px
+      +hide-text
+      +icons-sprite(slideshow-counter-active)
       .ie7 &
         background-image: none
         text-indent: 0
         overflow: visible
   .item-prev
-    +replace-text-with-dimensions("slideshow-arrow-back.png")
+    +hide-text
+    +icons-sprite(slideshow-arrow-back)
     [dir="rtl"] &
-      +replace-text-with-dimensions("slideshow-arrow-forward.png")
+      +hide-text
+      +icons-sprite(slideshow-arrow-forward)
     .ie7 &
       background-image: none
       text-indent: 0
       overflow: visible
     &:hover
-      +replace-text-with-dimensions("slideshow-arrow-back-hover.png")
+      +hide-text
+      +icons-sprite(slideshow-arrow-back-hover)
       [dir="rtl"] &
-        +replace-text-with-dimensions("slideshow-arrow-forward-hover.png")
+        +hide-text
+        +icons-sprite(slideshow-arrow-forward-hover)
       .ie7 &
         background-image: none
         text-indent: 0
         overflow: visible
 
   .item-next
-    +replace-text-with-dimensions("slideshow-arrow-forward.png")
+    +hide-text
+    +icons-sprite(slideshow-arrow-forward)
     [dir="rtl"] &
-      +replace-text-with-dimensions("slideshow-arrow-back.png")
+      +hide-text
+      +icons-sprite(slideshow-arrow-back)
     .ie7 &
       background-image: none
       text-indent: 0
       overflow: visible
     &:hover
-      +replace-text-with-dimensions("slideshow-arrow-forward-hover.png")
+      +hide-text
+      +icons-sprite(slideshow-arrow-forward-hover)
       [dir="rtl"] &
-        +replace-text-with-dimensions("slideshow-arrow-back-hover.png")
+        +hide-text
+        +icons-sprite(slideshow-arrow-back-hover)
       .ie7 &
         background-image: none
         text-indent: 0
@@ -94,9 +106,9 @@
 .weforum-slideshow-item
   color: $white
   .slider-wrapper
-    background-color: $white
+    background-color: $black
     filter: alpha(opacity=50)
-    background-color: rgba($white, 0.5)
+    background-color: rgba($black, 0.5)
   .title
     a
       border-bottom: none
@@ -111,13 +123,16 @@
     font-size: 18px
 
 // Feature title styling
-.weforum-slideshow-pane
+.weforum-slideshow-pane,
+.pane-featured-slider-per-hub-panel-pane-3,
+.pane-featured-slider-per-hub-panel-pane-4,
+.pane-featured-slider-per-hub-panel-pane-5
   h2
     left: 10px
-    padding: 0
-    position: relative
-    top: 33px
+    padding: 0 0 0 0.5em
+    margin-top: 33px
     width: 0
+    position: relative
     z-index: 1
     [dir="rtl"] &
       left: -6px

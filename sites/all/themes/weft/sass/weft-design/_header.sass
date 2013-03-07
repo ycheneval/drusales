@@ -19,6 +19,13 @@
     border-bottom: none
 
 #logo
+  .inlinesvg &
+    padding: 0
+    background:
+      image: inline-image('logo.svg')
+    background-size: 100% 100%
+    img
+      opacity: 0
   +breakpoint(765px)
     width: grid-span(1, 1, $header-columns, $header-gutter)
     padding: 0.5em 0
@@ -72,8 +79,6 @@ h1#page-title
     font-size: 54px
     min-height: 66px
     padding-bottom: 6px !important
-  .ie8 &
-    margin-top: -24px
 
 
 
@@ -122,6 +127,8 @@ h1#page-title
       color: $royal-blue
       &:visited
         color: $royal-blue
+  [lang="ar"] &
+    padding-bottom: 30px
 
 // Styling for the front page
 .front h1#page-title span.first-word

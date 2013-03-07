@@ -22,44 +22,45 @@
         @extend %aqua-blue
 
   .pager-previous
-    width: 88px
     a
       border-bottom: none
       &:before
-        content: image_url("slideshow-arrow-back.png")
+        +icons-sprite(slideshow-arrow-back)
+        content: $space
+        display: inline-block
         padding-right: 3px
         position: relative
         top: 7px
         [dir="rtl"] &
-          content: image_url("slideshow-arrow-forward.png")
+          +icons-sprite(slideshow-arrow-forward)
       &:hover
         &:before
-          content: image_url("slideshow-arrow-back-hover.png")
+          +icons-sprite(slideshow-arrow-back-hover)
           [dir="rtl"] &
-            content: image_url("slideshow-arrow-forward-hover.png")
+            +icons-sprite(slideshow-arrow-forward-hover)
 
   .pager-next
-    width: 73px
     a
       border-bottom: none
       &:after
-        content: image_url("slideshow-arrow-forward.png")
+        +icons-sprite(slideshow-arrow-forward)
+        content: $space
+        display: inline-block
         padding-left: 3px
         position: relative
         top: 7px
         [dir="rtl"] &
-          content: image_url("slideshow-arrow-back.png")
+          +icons-sprite(slideshow-arrow-back)
       &:hover
         &:after
-          content: image_url("slideshow-arrow-forward-hover.png")
+          +icons-sprite(slideshow-arrow-forward-hover)
           [dir="rtl"] &
-            content: image_url("slideshow-arrow-back-hover.png")
+            +icons-sprite(slideshow-arrow-back-hover)
 
   .pager-current
     @extend %weight-100
     line-height: 2.2
     margin: 0 40px
-    width: 100px
     &:before
       content: "page "
     .ie8 &

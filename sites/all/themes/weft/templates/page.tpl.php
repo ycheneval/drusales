@@ -9,7 +9,7 @@
 
   <div id="page-wrapper"></div><div id="page">
 
-    <header role="banner" class="clearfix">
+    <header role="banner" class="clearfix page-banner">
 
       <?php if ($utility = render($page['utility'])): ?>
         <div id="utility-bar">

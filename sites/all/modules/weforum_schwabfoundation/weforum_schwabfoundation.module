@@ -136,7 +136,7 @@ ORDER BY 2,3";
   if(!empty($result->ordered_results)) {
     foreach($result->ordered_results as $key => $value) {
       node_delete($value->entity_id);
-      watchdog('weforum_schwabfoundation', 'Social entrepreneur removed', array(), WATCHDOG_ERROR);
+      watchdog('weforum_schwabfoundation', 'Social entrepreneur removed', array(), WATCHDOG_INFO);
     }
   }
   return $count;

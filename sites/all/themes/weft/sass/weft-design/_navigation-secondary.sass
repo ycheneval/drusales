@@ -84,19 +84,25 @@
   // Shapers link
   .weforum-local-task.shapers
     &:before
-      content: image_url("content-icons/icon-sm-shapers.png")
+      +icons-sprite(icon-sm-shapers)
+      content: $space
+      display: inline-block
       @extend .hub-links
 
   // Projects link
   .weforum-local-task.projects
     &:before
-      content: image_url("content-icons/icon-sm-projects.png")
+      +icons-sprite(icon-sm-projects)
+      content: $space
+      display: inline-block
       @extend .hub-links
 
   // News & Events link
   .weforum-local-task.news
     &:before
-      content: image_url("content-icons/icon-sm-news_events.png")
+      +icons-sprite(icon-sm-news_events)
+      content: $space
+      display: inline-block
       @extend .hub-links
 
 .hub-links
