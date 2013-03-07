@@ -4,4 +4,5 @@ package = WEForum
 core = 7.x
 files[] = weforum_f21.module
 configure = admin/config/weforum_f21
+version = dev
 
