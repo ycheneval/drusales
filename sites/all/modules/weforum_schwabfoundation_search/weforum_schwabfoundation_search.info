@@ -1,0 +1,7 @@
+dependencies = weforum_f21[]
+name = Schwab Foundation Search
+core = 7.x
+description = Specific functions for Schwab Foundation
+package = WEForum
+version = dev
+

@@ -8,40 +8,51 @@
 /**
  * Implements hook_preprocess_HOOK() for page.tpl.php.
  */
+
+function weforum_hub_get_page_type($node)
+{
+    return WEFORUM_HUB_GROUP_PAGE;
+}
+
+function og_context()
+{
+    
+}
+
 function weft_preprocess_page(&$variables) {
   // Unset the breadcrumb.
   $variables['breadcrumb'] = '';
 
-  $node = isset($variables['node']) ? $variables['node'] : NULL;
-  $page_type = weforum_hub_get_page_type($node);
-  if ($page_type == WEFORUM_HUB_GROUP_PAGE) {
-    $group = og_context();
-    $variables['title'] = l($group->label, $group->entity_type . '/' . $group->etid);
-  }
-
-  // Remove all but the first menu item on group pages.
-  if ($page_type == WEFORUM_HUB_GROUP_PAGE || $page_type == WEFORUM_HUB_REGION_PAGE) {
-    $key = key($variables['main_menu']);
-    $variables['main_menu'] = array(
-      $key => $variables['main_menu'][$key],
-    );
-  }
-  if ($page_type == WEFORUM_HUB_REGION_PAGE) {
-    $variables['title'] = l($node->title, 'node/' . $node->nid);
-  }
-  if ($page_type == WEFORUM_HUB_GLOBAL_PAGE && $node) {
-    switch ($node->type) {
-      case 'news':
-        $variables['title'] = l('News & Events', 'news');
-        break;
-      case 'project':
-        $variables['title'] = l('Projects', 'projects');
-        break;
-      case 'shaper':
-        $variables['title'] = l('Shapers', 'shapers');
-        break;
-    }
-  }
+//  $node = isset($variables['node']) ? $variables['node'] : NULL;
+//  $page_type = weforum_hub_get_page_type($node);
+//  if ($page_type == WEFORUM_HUB_GROUP_PAGE) {
+//    $group = og_context();
+//    $variables['title'] = l($group->label, $group->entity_type . '/' . $group->etid);
+//  }
+//
+//  // Remove all but the first menu item on group pages.
+//  if ($page_type == WEFORUM_HUB_GROUP_PAGE || $page_type == WEFORUM_HUB_REGION_PAGE) {
+//    $key = key($variables['main_menu']);
+//    $variables['main_menu'] = array(
+//      $key => $variables['main_menu'][$key],
+//    );
+//  }
+//  if ($page_type == WEFORUM_HUB_REGION_PAGE) {
+//    $variables['title'] = l($node->title, 'node/' . $node->nid);
+//  }
+//  if ($page_type == WEFORUM_HUB_GLOBAL_PAGE && $node) {
+//    switch ($node->type) {
+//      case 'news':
+//        $variables['title'] = l('News & Events', 'news');
+//        break;
+//      case 'project':
+//        $variables['title'] = l('Projects', 'projects');
+//        break;
+//      case 'shaper':
+//        $variables['title'] = l('Shapers', 'shapers');
+//        break;
+//    }
+//  }
   $theme_path = drupal_get_path('theme', 'weft');
 
   // Add placeholder plugin
@@ -51,6 +62,17 @@ function weft_preprocess_page(&$variables) {
   drupal_add_js($theme_path . '/js/script.js');
   drupal_add_js($theme_path . '/js/ss-standard.js');
   drupal_add_js($theme_path . '/js/modernizr.custom.37877.js');
+  
+//  if (strcmp(strtolower(current_path()),'entrepreneurs') == 0) {
+  if (strcmp(strtolower(current_path()),'entrepreneurs') == 0) {
+      drupal_add_css($theme_path . '/css/tablesorter/tablesorter.theme.blue.css');
+      drupal_add_js($theme_path . '/js/libs/tablesorter/jquery.tablesorter.min.js');
+      drupal_add_js($theme_path . '/js/libs/tablesorter/jquery.tablesorter.widgets.min.js');
+      drupal_add_js($theme_path . '/js/search_tablesorter.js', array('type' => 'file', 'scope' => 'footer', 'weight' => 5));
+  }
+  if (strcmp(strtolower(current_path()),'home') == 0) {
+      drupal_add_js($theme_path . '/js/libs/weforum_slideshow.js', array('type' => 'file', 'scope' => 'footer', 'weight' => 5));
+  }
 }
 
 /**
@@ -61,9 +83,9 @@ function weft_preprocess_html(&$variables) {
   if ($language->language == 'ar') {
     drupal_add_css(drupal_get_path('theme', 'weft') . '/css/font-face-arabic.css', array('group' => CSS_DEFAULT));
   }
-  if (!weforum_hub_get_page_type()) {
-    $variables['classes_array'][] = 'global-hub';
-  }
+//  if (!weforum_hub_get_page_type()) {
+//    $variables['classes_array'][] = 'global-hub';
+//  }
 }
 
 /**
@@ -74,9 +96,9 @@ function weft_menu_local_task__weforum_hub($variables) {
   $link_text = $link['title'];
 
   $classes_array = array('weforum-local-task');
-  if (isset($variables['element']['#weforum_hub_type'])) {
-    $classes_array[] = $variables['element']['#weforum_hub_type'];
-  }
+//  if (isset($variables['element']['#weforum_hub_type'])) {
+//    $classes_array[] = $variables['element']['#weforum_hub_type'];
+//  }
 
   if (!empty($variables['element']['#active'])) {
     $classes_array[] = 'active';
@@ -136,3 +158,4 @@ function weft_facetapi_count($variables) {
   $dir = ($language->direction == 1) ? 'rtl' : 'ltr';
   return '<span dir="'.$dir.'">(' . (int) $variables['count'] . ')</span>';
 }
+?>

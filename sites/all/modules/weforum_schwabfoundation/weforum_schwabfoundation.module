@@ -4,20 +4,47 @@
  * Implements hook_menu
  */
 function weforum_schwabfoundation_menu() {
-  $items = array();
-  return $items;
+    $items = array();
+    return $items;
 }
 
 /**
  * Implements hook_cron_queue_info
  */
 function weforum_schwabfoundation_cron_queue_info() {
-  $queues = array();
-  $queues['socialentrepreneurs'] = array(
-    'worker callback' => 'weforum_schwabfoundation_worker',
-    'time' => 240,
-  );
-  return $queues;
+    $queues = array();
+    $queues['socialentrepreneurs'] = array(
+        'worker callback' => 'weforum_schwabfoundation_worker',
+        'time' => 360,
+    );
+    return $queues;
+}
+
+function cleanDate($incomingDate) {
+    $trimmed = trim($incomingDate);
+//    drush_log('cleanDate(): "'.$trimmed.'" as '.gettype($trimmed));
+    $result = $trimmed;
+
+    if (!empty($trimmed) && strlen($trimmed) >= 4) {
+        $result = substr($trimmed, -4);
+    }
+
+    return $result;
+}
+
+function buildLink($incomingUrl) {
+    $result = '';
+
+    if (empty($incomingUrl)) {
+        $result = 'N/A';
+    } else {
+        $urlLink = $incomingUrl;
+        if (!(strpos($incomingUrl, "http") === 0)) {
+            $urlLink = 'http://' . $incomingUrl;
+        }
+        $result = '<a href="' . $urlLink . '">' . $incomingUrl . '</a>';
+    }
+    return $result;
 }
 
 /**
@@ -26,57 +53,107 @@ function weforum_schwabfoundation_cron_queue_info() {
  * 
  */
 function weforum_schwabfoundation_worker($person = FALSE) {
-  $result = new EntityFieldQuery();
-  $result->entityCondition('entity_type', 'node')
-          ->EntityCondition('bundle', 'social_entrepreneur')
-          ->fieldCondition('field_per_id', 'value', $person['per_id'])
-          ->execute();
+    $result = new EntityFieldQuery();
+    $result->entityCondition('entity_type', 'node')
+            ->EntityCondition('bundle', 'social_entrepreneur')
+            ->fieldCondition('field_per_id', 'value', $person['per_id'])
+            ->execute();
 
-  if (empty($result->ordered_results)) {
-    $node = new stdClass();
-    $node->type = 'social_entrepreneur';
-    node_object_prepare($node);
-  }
-  else {
-    $node = node_load((int) $result->ordered_results[0]->entity_id);
-  }
+    if (empty($result->ordered_results)) {
+        $node = new stdClass();
+        $node->type = 'social_entrepreneur';
+        node_object_prepare($node);
+    } else {
+        $node = node_load((int) $result->ordered_results[0]->entity_id);
+    }
 
-  $node->field_full_name['und'][0]['value'] = $node->title = $person['full_name'];
-  $node->field_per_id['und'][0]['value'] = $person['per_id'];
-  $node->field_last_name['und'][0]['value'] = $person['last_name'];
-  $node->field_first_name['und'][0]['value'] = $person['first_name'];
-  $node->field_org_public_name['und'][0]['value'] = $person['org_public_name'];
-  $node->field_org_id['und'][0]['value'] = $person['org_id'];
-  
-  $node->field_area_of_impact['und'] = array();
-  foreach ($person['areas_of_impact'] as $key => $value) {
-    $node->field_area_of_impact['und'][] = array('value' => $key);
-  }
-  
-  $node->field_model['und'] = array();
-  foreach ($person['models'] as $key => $value) {
-    $node->field_model['und'][] = array('value' => $key);
-  }
-  
-  $node->field_sector['und'] = array();
-  foreach ($person['sectors'] as $key => $value) {
-    $node->field_sector['und'][] = array('value' => $key);
-  }
-  node_save($node);
+    $node->field_full_name['und'][0]['value'] = $node->title = $person['full_name'];
+    $node->field_per_id['und'][0]['value'] = $person['per_id'];
+    $node->field_last_name['und'][0]['value'] = $person['last_name'];
+    $node->field_first_name['und'][0]['value'] = $person['first_name'];
+    $node->field_org_public_name['und'][0]['value'] = $person['org_public_name'];
+    $node->field_org_id['und'][0]['value'] = $person['org_id'];
+    $node->body['und'][0]['value'] = $person['body'];
+    $node->body['und'][0]['format'] = 'full_html';
+    $node->field_country['und'][0]['value'] = $person['country'];
+    $node->field_year_founded['und'][0]['value'] = cleanDate($person['year_founded']);
+    $node->field_website['und'][0]['value'] = buildLink($person['website']);
+    $node->field_website['und'][0]['format'] = 'simple_html';
+
+    // Handle photo
+    $pho_id = intval($person['pho_id']);
+    $per_id = intval($person['per_id']);
+//    drush_log('Photo import for '.$per_id.', pho_id: '.$pho_id);
+    $file = isset($node->field_per_image['und']) ? $node->field_per_image['und'][0]:NULL;
+    if (!empty($pho_id)) {
+        if (hasPhotoChanged($per_id, $pho_id, $file)) {
+            // returns also true if the photo does not exist yet
+            drush_log('Photo changed, import for '.$per_id.', pho_id: '.$pho_id);
+            $buffer = getAgoraRawPhoto($pho_id);
+            if (strlen($buffer) > 0) {
+                $newfilename = 'public://per_images/'.$per_id.'_'.gmdate('Y_m_d_His');
+                drush_log('Agora data ok size '.strlen($buffer).', new filename: "'.$newfilename.'", old file uri: "'.$file['uri'].'"');
+                if (!empty($file)) {
+//                    drush_log('Trying to override an existing file');
+                    $file = file_save_data($buffer, $file['uri'], FILE_EXISTS_REPLACE);
+                    file_move($file, $newfilename, FILE_EXISTS_REPLACE);
+                } else {
+//                    drush_log('Saving a new file in Drupal');
+                    $file = file_save_data($buffer, $newfilename, FILE_EXISTS_REPLACE);            
+        //            drush_log('File saved, file is '.print_r($file));
+                }
+        //        drush_log('Assigning the file to the node');
+                $node->field_per_image['und'][0] = (array)$file;
+            }
+        }
+    }
+    else {
+        drush_log('Agora photo not found for per_id: '.$per_id);   
+        if ($file) {
+//            file_delete($stdfile);
+//            unset($file);
+            $node->field_per_image['und'][0] = NULL;
+        }
+    }
+
+
+    $node->field_area_of_impact['und'] = array();
+    foreach ($person['areas_of_impact'] as $key => $value) {
+        $node->field_area_of_impact['und'][] = array('value' => trim($key));
+    }
+
+    $node->field_model['und'] = array();
+    foreach ($person['models'] as $key => $value) {
+        $node->field_model['und'][] = array('value' => trim($key));
+    }
+
+    $node->field_sector['und'] = array();
+    foreach ($person['sectors'] as $key => $value) {
+        $node->field_sector['und'][] = array('value' => trim($key));
+    }
+    node_save($node);
 }
 
 function weforum_schwabfoundation_importf21() {
-  $sql = "SELECT PER.PER_ID,PER.PER_LAST_NAME,PER.PER_FIRST_NAME,ORG.ORG_PUBLIC_NAME,
+    $sql = "SELECT PER.PER_ID,PER.PER_LAST_NAME,PER.PER_FIRST_NAME,ORG.ORG_PUBLIC_NAME,
 FULL_NAME =PER.PER_LAST_NAME + ' ' +isnull(PER.PER_FIRST_NAME,''), ORG.ORG_ID ,
 INT_NAME AS 'AREA_OF_IMPACT',
 SEC.SEC_NAME AS 'SECTOR',
-SECTYPE.SEC_NAME AS 'MODEL'
+SECTYPE.SEC_NAME AS 'MODEL',
+ORG.Org_comments as 'ORG_COMMENTS',
+ORG.ORG_CREATION_DATETEXT as YEAR_FOUNDED,
+ORG.ORG_WEB_SITE as WEBSITE,
+COU.COU_NAME as COUNTRY,
+PER.PHO_ID as 'PHO_ID'
+
+
 FROM 
 PERSON_GROUP PG 
 inner join CONSTITUENTGROUP CG on CG.CGR_ID = PG.CGR_ID
 inner join PERSON PER on PG.PER_ID = PER.PER_ID
 inner join RESPONSIBILITY RES on RES.PER_ID = PER.PER_ID
 inner join ORGANIZATION ORG on RES.ORG_ID = ORG.ORG_ID
+inner join COUNTRY COU on ORG.COU_ID = COU.COU_ID
 left outer join ORGANIZATION_OTHERINTEREST OI on  OI.ORG_ID = ORG.ORG_ID
 left outer join INTEREST INTE on INTE.INT_ID=OI.INT_ID
 left outer join ORGANIZATION_SECTOR ORS on ORS.ORG_ID = ORG.ORG_ID
@@ -93,52 +170,145 @@ AND ISNULL(RES_END_DATE,DATEADD(D,1,GETDATE())) >= GETDATE()
 AND LEFT(SEC.SEC_CODE,1) ='Z'
 AND LEFT(SECTYPE.SEC_CODE,1) = 'Y'
 ORDER BY 2,3";
-  $result = weforum_f21_query($sql);
-  $queue = DrupalQueue::get('socialentrepreneurs');
-  $count = 0;
-  
-  $areas_of_impact = array();
-  $sectors = array();
-  $models = array();
-  
-  foreach ($result as $key => $value) {
-    $person = array();
-    $person = array(
-      'full_name' => $value['FULL_NAME'],
-      'per_id' => $value['PER_ID'],
-      'last_name' => $value['PER_LAST_NAME'],
-      'first_name' => $value['PER_FIRST_NAME'],
-      'org_public_name' => $value['ORG_PUBLIC_NAME'],
-      'org_id' => $value['ORG_ID'],
-    );
-    // Making sure we have one array per person, with distinct values
-    $areas_of_impact[$person['per_id']][$value['AREA_OF_IMPACT']] = TRUE;
-    $sectors[$person['per_id']][$value['SECTOR']] = TRUE;
-    $models[$person['per_id']][$value['MODEL']] = TRUE;
-    
-    $person['areas_of_impact'] = $areas_of_impact[$person['per_id']];
-    $person['sectors'] = $sectors[$person['per_id']];
-    $person['models'] = $models[$person['per_id']];
-    
-    if ($queue->createItem($person)) {
-      $count++;
-      //Marking this person as handled
-      $handled[$person['per_id']] = TRUE; 
+    $result = weforum_f21_query($sql);
+    $queue = DrupalQueue::get('socialentrepreneurs');
+    $count = 0;
+
+    $areas_of_impact = array();
+    $sectors = array();
+    $models = array();
+
+    foreach ($result as $key => $value) {
+        $person = array();
+        $person = array(
+            'full_name' => $value['FULL_NAME'],
+            'per_id' => $value['PER_ID'],
+            'last_name' => $value['PER_LAST_NAME'],
+            'first_name' => $value['PER_FIRST_NAME'],
+            'org_public_name' => $value['ORG_PUBLIC_NAME'],
+            'org_id' => $value['ORG_ID'],
+            'body' => $value['ORG_COMMENTS'],
+            'year_founded' => $value['YEAR_FOUNDED'],
+            'website' => $value['WEBSITE'],
+            'country' => $value['COUNTRY'],
+            'pho_id' => $value['PHO_ID']
+        );
+        // Making sure we have one array per person, with distinct values
+        $areas_of_impact[$person['per_id']][$value['AREA_OF_IMPACT']] = TRUE;
+        $sectors[$person['per_id']][$value['SECTOR']] = TRUE;
+        $models[$person['per_id']][$value['MODEL']] = TRUE;
+
+        $person['areas_of_impact'] = $areas_of_impact[$person['per_id']];
+        $person['sectors'] = $sectors[$person['per_id']];
+        $person['models'] = $models[$person['per_id']];
+
+        if ($queue->createItem($person)) {
+            $count++;
+            //Marking this person as handled
+            $handled[$person['per_id']] = TRUE;
+        }
     }
-  }
-  
-  // Searching and deleting persons not in the DB anymore
-  $result = new EntityFieldQuery();
-  $result->entityCondition('entity_type', 'node')
-          ->EntityCondition('bundle', 'social_entrepreneur')
-          ->fieldCondition('field_per_id', 'value', array_keys($handled), 'NOT IN')
-          ->execute();
-  if(!empty($result->ordered_results)) {
-    foreach($result->ordered_results as $key => $value) {
-      node_delete($value->entity_id);
-      watchdog('weforum_schwabfoundation', 'Social entrepreneur removed', array(), WATCHDOG_INFO);
+
+    // Searching and deleting persons not in the DB anymore
+    $result = new EntityFieldQuery();
+    $result->entityCondition('entity_type', 'node')
+            ->EntityCondition('bundle', 'social_entrepreneur')
+            ->fieldCondition('field_per_id', 'value', array_keys($handled), 'NOT IN')
+            ->execute();
+    if (!empty($result->ordered_results)) {
+        foreach ($result->ordered_results as $key => $value) {
+            node_delete($value->entity_id);
+            watchdog('weforum_schwabfoundation', 'Social entrepreneur removed', array(), WATCHDOG_INFO);
+        }
     }
-  }
-  return $count;
+    return $count;
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function getAgoraPhotoLastModification($pho_id) {
+    $result = new DateTime();
+
+    if (!empty($pho_id)) {
+        $t_row = weforum_f21_query("SELECT TOP 1 PHO_DATE FROM PHOTO WHERE PHO_ID = " . intval($pho_id));
+        if ($t_row) {
+//            foreach ($t_row as $key => $value) {
+//                drush_log('Photo Key: '.$key.', value: ', print_r($value));
+//            }
+            $result = new DateTime($t_row[0]['PHO_DATE']);
+//            drush_log('Agora date SET: '.$result->format('Y-m-d H:i:s'));
+        }
+    }
+    return $result;
+}
+
+function getAgoraRawPhoto($pho_id) {
+    $result = NULL;
+    if (!empty($pho_id)) {
+        $t_row = weforum_f21_query("SELECT TOP 1 PHO_PHOTO FROM PHOTO WHERE PHO_ID = " . intval($pho_id));
+//        foreach ($t_row as $key => $value) {
+//            drush_log('Key: '.$key.', value: ', print_r($value));
+//        }
+        $result = $t_row ? $t_row[0]['PHO_PHOTO'] : NULL;
+    }
+    return $result;
+}
+
+function getDrupalPhotoLastModification($file) {
+    $result = NULL;
+    
+    if (!empty($file)) {
+        // Check to see if the file really exists in the fs
+        if (file_exists($file['uri'])) {
+//            drush_log('Found file in the FS, getting dates');
+            $result = new DateTime(date('Y-m-d H:i:s', $file['timestamp']));
+        }
+        else {
+            drush_log('File '.$file['filename'].' not found, forcing import');
+        }
+                
+//        drush_log('Drupal date SET: '.$result->format('Y-m-d H:i:s'));
+    }
+
+    return $result;
+}
+
+function hasPhotoChanged($per_id, $pho_id, $file) {
+    // returns also true if the photo does not exist yet...
+    $result = true;
+
+//    drush_log('Agora date: '.$last_photo_changed->format('Y-m-d H:i:s').', Drupal date: '.$last_file_changed->format('Y-m-d H:i:s'));
+    $last_photo_changed = getAgoraPhotoLastModification($pho_id);
+    $last_file_changed = getDrupalPhotoLastModification($file);
+    if (!empty($last_photo_changed) && !empty($last_file_changed)) {
+        $interval = $last_photo_changed->diff($last_file_changed);
+        $result = $interval->invert == 1 ? true : false;
+    }
+    return $result;
+}
+
+/**
+ * Implements hook_jcarousel_options_alter().
+ */
+function weforum_schwabfoundation_jcarousel_options_alter(&$options) {
+  // We will use our own custom button for navigation, so remove the
+  // default ones.
+  $options += array(
+        'buttonNextHTML' => NULL,
+        'buttonPrevHTML' => NULL
+  );
+}
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function weforum_schwabfoundation_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'ctools') {
+    return 'plugins/' . $plugin;
+  }
+  if ($module == 'panels' && $plugin == 'layouts') {
+    return 'plugins/layouts';
+  }
+}

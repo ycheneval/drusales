@@ -27,25 +27,34 @@
         </div>
       <?php endif; ?>
 
-      <?php if ($logo): ?>
-        <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo">
-          <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
-        </a>
-      <?php endif; ?>
 
-      <?php if ($site_name || $site_slogan): ?>
+      <?php if ($site_name || $site_slogan) { ?>
+        <div class="line-height-110">
+        <?php if ($logo) { ?>
+          <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo">
+            <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
+          </a>
+        <?php } ?>
         <hgroup id="name-and-slogan">
-          <?php if ($site_name): ?>
+          <?php if ($site_name){ ?>
             <h1 id="site-name">
-              <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home"><span><?php print $site_name; ?></span></a>
+                <div class="line-height-110"><a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home"><span><?php print $site_name; ?></span></a></div>
             </h1>
-          <?php endif; ?>
+          <?php } ?>
 
           <?php if ($site_slogan): ?>
-            <h2 id="site-slogan"><?php print $site_slogan; ?></h2>
+            <h4 id="site-slogan"><?php print $site_slogan; ?></h4>
           <?php endif; ?>
-        </hgroup> <!-- /#name-and-slogan -->
-      <?php endif; ?>
+        </hgroup>
+        </div><!-- /#name-and-slogan -->
+      <?php } 
+      else { ?>
+        <?php if ($logo) { ?>
+          <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo">
+            <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
+          </a>
+        <?php } ?>
+    <?php } ?>
 
       <?php print render($page['header']); ?>
 

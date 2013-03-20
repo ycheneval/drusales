@@ -1,0 +1,17 @@
+@import 'compass'
+@import 'breakpoint'
+@import 'modular-scale'
+@import 'partials/01-variables/all'
+@import 'partials/05-grids/singularitygs'
+
+.weforum-layout
+  +pie-clearfix
+  .weforum
+    &.main
+      +grid-span(1, 1, $desk-columns, $desk-gutter, 0)
+    &.sidebar
+      +grid-span(1, 2, $desk-columns, $desk-gutter, 0)
+    +breakpoint($bp-wide)
+      &.main, &.sidebar, [dir="rtl"] &.main, [dir="rtl"] &.sidebar
+        float: none
+        width: 100%

@@ -1,0 +1,94 @@
+<?php
+
+/**
+ * Implements hook_menu
+ */
+function weforum_schwabfoundation_search_menu() {
+    $items = array();
+    return $items;
+}
+
+/**
+ * Implements hook_cron_queue_info
+ */
+function weforum_schwabfoundation_search_cron_queue_info() {
+    $queues = array();
+    $queues['socialentrepreneurs'] = array(
+        'worker callback' => 'weforum_schwabfoundation_search_worker',
+        'time' => 360,
+    );
+    return $queues;
+}
+
+function weforum_schwabfoundation_search_getNodes($type)
+{ 
+    $nodes = NULL;
+    $query = new EntityFieldQuery();
+
+    $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', $type)
+    ->propertyCondition('status', 1)
+//    ->fieldCondition('field_news_types', 'value', 'spotlight', '=')
+//    ->fieldCondition('field_photo', 'fid', 'NULL', '!=')
+//    ->fieldCondition('field_faculty_tag', 'tid', $value)
+//    ->fieldCondition('field_news_publishdate', 'value', $year. '%', 'like')
+//    ->range(0, 10)
+    ->addMetaData('account', user_load(1)); // Run the query as user 1.
+
+    $result = $query->execute();
+
+    if (isset($result['node'])) {
+        $items_nids = array_keys($result['node']);
+        $nodes = node_load_multiple($items_nids, array('type' => $type));
+    }
+    return $nodes;
+}
+
+function weforum_schwabfoundation_search_listAOI()
+{
+//    $nodes = weforum_schwabfoundation_search_getNodes('social_entrepreneur');
+    $result = db_query('SELECT DISTINCT f.field_area_of_impact_value as value FROM {field_data_field_area_of_impact} f INNER JOIN {node} n ON n.vid = f.revision_id ORDER BY f.field_area_of_impact_value');
+//    foreach ($result as $record) {
+//        // Perform operations on $record->title, etc. here.
+//    }
+    return $result;
+}
+
+function weforum_schwabfoundation_search_listSectors()
+{
+    $result = db_query('SELECT DISTINCT f.field_sector_value as value FROM {field_data_field_sector} f INNER JOIN {node} n ON n.vid = f.revision_id ORDER BY f.field_sector_value');
+    return $result;
+}
+
+
+function weforum_schwabfoundation_search_listModels()
+{
+    $result = db_query('SELECT DISTINCT f.field_model_value as value FROM {field_data_field_model} f INNER JOIN {node} n ON n.vid = f.revision_id ORDER BY f.field_model_value');
+    return $result;
+}
+
+function populate_dropdown(&$form, $form_field, $records)
+{
+    $options = array(
+            '' => 'All'
+        );
+    foreach ($records as $aRecord) {
+        $options[$aRecord->value] = $aRecord->value;
+    }
+
+    $form[$form_field] = array(
+        '#type' => 'select',
+        '#options' => $options,
+        '#default_value' => '',
+    );
+}
+
+function weforum_schwabfoundation_search_form_views_exposed_form_alter(&$form, &$form_state, $form_id)
+{
+    if ($form['#id'] == 'views-exposed-form-test-page') {
+//        var_dump($form);
+        populate_dropdown($form, 'field_area_of_impact_value', weforum_schwabfoundation_search_listAOI());
+        populate_dropdown($form, 'field_sector_value', weforum_schwabfoundation_search_listSectors());
+        populate_dropdown($form, 'field_model_value', weforum_schwabfoundation_search_listModels());
+    }
+}
