@@ -1,4 +1,10 @@
 <?php
+/**
+ * @file
+ * Code for the Schwab Foundation feature.
+ */
+
+include_once 'weforum_schwabfoundation.features.inc';
 
 /**
  * Implements hook_menu
