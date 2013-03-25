@@ -8,18 +8,6 @@ function weforum_schwabfoundation_search_menu() {
     return $items;
 }
 
-/**
- * Implements hook_cron_queue_info
- */
-function weforum_schwabfoundation_search_cron_queue_info() {
-    $queues = array();
-    $queues['socialentrepreneurs'] = array(
-        'worker callback' => 'weforum_schwabfoundation_search_worker',
-        'time' => 360,
-    );
-    return $queues;
-}
-
 function weforum_schwabfoundation_search_getNodes($type)
 { 
     $nodes = NULL;

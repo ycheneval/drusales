@@ -766,6 +766,7 @@ h4, .view-number-of-initatives-in-a-hub .views-field-group-audience,
 img {
   height: auto;
   vertical-align: bottom;
+  margin-left: 12px;
 }
 img.left {
   float: left;
@@ -1094,8 +1095,11 @@ label {
 }
 
 .field .field-label {
-  font-weight: normal;
-  font-family: "HelveticaNeue65Medium", "HelveticaNeue55Roman", "HelveticaNeue45Light", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: bold;
+  color: #555555;
+  font-family: "HelveticaNeue45Light", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+/*font-family: "HelveticaNeue65Medium", "HelveticaNeue55Roman", "HelveticaNeue45Light", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/
+  margin-left: 12px;
 }
 
 input[type=email], input[type=url], input[type=tel], input[type=text], input[type=date], input[type=datetime], input[type=datetime-local], input[type=month], input[type=week], input[type=time], input[type=number], input[type=range], input[type=search], input[type=color] {
@@ -2169,7 +2173,7 @@ ul.large-bullets li:before {
 }
 
 .field-label {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .weforum-icon {
@@ -2367,15 +2371,27 @@ ul.large-bullets li:before {
   clear: both;
 }
 
+/*////////////// Multi-level menus CSS YCH ////////////////////////*/
+#block-menu-menu-utility-menu{
+overflow: hidden;
+display:none;
+}
+
+#block-menu-block-3 div.content div ul{
+margin: 0;
+padding: 0;
+float: left;
+width: 100%;
+font: bold 13px Arial;
+background: #002b5b  center center repeat-x; /*default background of menu bar*/
+}
+
 #block-menu-menu-utility-menu ul.menu {
   margin: 0;
   padding: 5px 0 0 0;
 }
-#block-menu-menu-utility-menu ul.menu li {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
+
+
 .ie8 #block-menu-menu-utility-menu ul.menu li, .ie7 #block-menu-menu-utility-menu ul.menu li {
   display: inline;
 }
@@ -2390,13 +2406,15 @@ ul.large-bullets li:before {
   text-align: left;
 }
 #block-menu-menu-utility-menu ul.menu li.first:after {
-  content: "|";
+  content: "";
+  color: white;
 }
 #block-menu-menu-utility-menu ul.menu li.last a {
   text-align: right;
 }
 #block-menu-menu-utility-menu ul.menu li.last:before {
-  content: "|";
+  content: "";
+  color: white;
 }
 
 #block-lang-dropdown-language {
@@ -2528,10 +2546,10 @@ ul.large-bullets li:before {
 
 h1#page-title {
   border: 1px #dddddd solid;
-  font-size: 74px;
+  font-size: 40px;
   letter-spacing: -2px;
   line-height: 1;
-  min-height: 90px;
+  min-height: 55px;
   padding: 4px;
   text-transform: none;
 }
@@ -2633,7 +2651,7 @@ h1#page-title a:visited {
   margin-left: 0%;
 }
 #main-menu li:nth-of-type(2) {
-  width: 20%;
+  width: 27%;
   float: left;
   margin-right: 0%;
 }
@@ -4616,4 +4634,72 @@ ul.tabs.secondary li a:hover {
 .line-height-110
 {
     line-height:110px;
+}
+
+
+
+#block-menu-block-3 div.content div ul li{
+display: inline;
+}
+
+#block-menu-block-3 div.content div ul li a{
+float: left;
+color: white;
+padding: 9px 11px;
+text-decoration: none;
+}
+
+#block-menu-block-3 div.content div ul li a:visited{
+color: white;
+}
+
+#block-menu-block-3 div.content div ul li a:hover, #block-menu-block-3 div.content div ul li .current{ /*background of main menu bar links onMouseover*/
+color: #409ed2;
+background: transparent  center center repeat-x;
+}
+
+/* Sub level menus*/
+#block-menu-block-3 div.content div ul li ul{
+position: absolute;
+z-index: 100;
+left: 0;
+top: 0;
+background: #002b5b; /*sub menu background color */
+visibility: hidden;
+}
+
+/* Sub level menu links style */
+#block-menu-block-3 div.content div ul li ul li a{
+font: normal 13px Verdana;
+padding: 6px;
+padding-right: 8px;
+margin: 0;
+border-bottom: 1px solid navy;
+}
+
+#block-menu-block-3 div.content div ul li ul li a:hover{ /*sub menu links' background color onMouseover */
+/*background: #ff2b5b;*/
+color: #409ed2;
+}
+
+.downarrowclass
+{
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
+#site-slogan
+{
+    font-size: 16px;
+    /*font-style: italic;*/
+}
+
+#block-menu-menu-utility-menu ul.menu li {
+  margin: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+  list-style: none;
+  float:left;
+  height:auto;
+ /*display: table;*/
 }

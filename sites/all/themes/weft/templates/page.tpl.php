@@ -42,11 +42,11 @@
             </h1>
           <?php } ?>
 
-          <?php if ($site_slogan): ?>
-            <h4 id="site-slogan"><?php print $site_slogan; ?></h4>
-          <?php endif; ?>
         </hgroup>
         </div><!-- /#name-and-slogan -->
+        <?php if ($site_slogan): ?>
+          <p id="site-slogan"><?php print $site_slogan; ?></p>
+        <?php endif; ?>
       <?php } 
       else { ?>
         <?php if ($logo) { ?>

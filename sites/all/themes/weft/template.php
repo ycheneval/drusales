@@ -56,17 +56,23 @@ function weft_preprocess_page(&$variables) {
   $theme_path = drupal_get_path('theme', 'weft');
 
   // Add placeholder plugin
+  drupal_add_css($theme_path . '/css/tablesorter/tablesorter.theme.blue.css');
   drupal_add_js($theme_path . '/js/libs/jquery.html5-placeholder-shim.js');
   drupal_add_js($theme_path . '/js/ios-orientationchange-fix.js');
 
   drupal_add_js($theme_path . '/js/script.js');
   drupal_add_js($theme_path . '/js/ss-standard.js');
   drupal_add_js($theme_path . '/js/modernizr.custom.37877.js');
+  drupal_add_js($theme_path . '/js/droplinemenu.js', array('type' => 'file', 'scope' => 'footer', 'weight' => 5));
   
 //  if (strcmp(strtolower(current_path()),'entrepreneurs') == 0) {
   if (strcmp(strtolower(current_path()),'entrepreneurs') == 0) {
+      drupal_add_css($theme_path . '/css/diQuery-collapsiblePanel.css');
+      drupal_add_js($theme_path . '/js/diQuery-collapsiblePanel.js');
       drupal_add_css($theme_path . '/css/tablesorter/tablesorter.theme.blue.css');
       drupal_add_js($theme_path . '/js/libs/tablesorter/jquery.tablesorter.min.js');
+      drupal_add_js($theme_path . '/js/libs/tablesorter/jquery.tablesorter.min.js');
+      drupal_add_js($theme_path . '/js/libs/tablesorter/jquery.tablesorter.widgets.min.js');
       drupal_add_js($theme_path . '/js/libs/tablesorter/jquery.tablesorter.widgets.min.js');
       drupal_add_js($theme_path . '/js/search_tablesorter.js', array('type' => 'file', 'scope' => 'footer', 'weight' => 5));
   }

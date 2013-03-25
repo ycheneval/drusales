@@ -42,6 +42,12 @@ function fire_search() {
             fire_search();
         });
 
+        // Add a small open/close thing
+//        $( ".views-exposed-form" ).attr("title", "Filters");
+        $(".views-exposed-form").attr("title", "Hide filters list");
+        $(".views-exposed-form").collapsiblePanel();
+//        $(".views-exposed-form").slideToggle();
+
 
 })(jQuery);
 
