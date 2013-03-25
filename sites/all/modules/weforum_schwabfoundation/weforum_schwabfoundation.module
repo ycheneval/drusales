@@ -11,7 +11,15 @@ include_once 'weforum_schwabfoundation.features.inc';
  */
 function weforum_schwabfoundation_menu() {
     $items = array();
-    return $items;
+    $items['admin/config/schwabfoundation'] = array(
+    'title' => 'Schwab Foundation Import entrepreneurs from Agora',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('weforum_schwabfoundation_import_form'),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'weforum_schwabfoundation.admin.inc',
+    );
+  return $items;
 }
 
 /**
@@ -295,17 +303,6 @@ function hasPhotoChanged($per_id, $pho_id, $file) {
     return $result;
 }
 
-/**
- * Implements hook_jcarousel_options_alter().
- */
-function weforum_schwabfoundation_jcarousel_options_alter(&$options) {
-  // We will use our own custom button for navigation, so remove the
-  // default ones.
-  $options += array(
-        'buttonNextHTML' => NULL,
-        'buttonPrevHTML' => NULL
-  );
-}
 
 /**
  * Implements hook_ctools_plugin_directory().

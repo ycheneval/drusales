@@ -1,4 +1,3 @@
-dependencies = weforum_f21[]
 name = Schwab Foundation Search
 core = 7.x
 description = Search entrepreneurs functions for Schwab Foundation

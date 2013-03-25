@@ -28,6 +28,7 @@ function weforum_f21_admin_settings() {
     '#default_value' => variable_get('weforum_f21_password', ''),
     '#size' => 20,
     '#maxlength' => 64,
+    '#required' => TRUE,
     '#attributes' => array('autocomplete' => 'off'),
   );
   

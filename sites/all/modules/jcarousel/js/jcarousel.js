@@ -169,14 +169,12 @@ Drupal.jcarousel.addNavigation = function(carousel, position) {
   // Add a class to the wrapper so it can adjust CSS.
   $(carousel.list).parents('.jcarousel-container:first').addClass('jcarousel-navigation-' + position);
 
-  var divnavigation = $('<div class="weforum-slideshow-pager"></div>');
-  divnavigation.append($('<span></span>').addClass('item-prev').append('prev'));
-  var navigation = $('<divnavigationul class="jcarousel-navigation"></ul>');
+  var navigation = $('<ul class="jcarousel-navigation"></ul>');
 
   for (var i = 1; i <= carousel.pageCount; i++) {
     var pagerItem = $(Drupal.theme('jCarouselPageLink', i));
-    var listItem = $('<span></span>').attr('jcarousel-page', i).addClass('pager-button item-'+i).append(pagerItem);
-    divnavigation.append(listItem);
+    var listItem = $('<li></li>').attr('jcarousel-page', i).append(pagerItem);
+    navigation.append(listItem);
 
     // Make the first page active by default.
     if (i === 1) {
@@ -198,9 +196,8 @@ Drupal.jcarousel.addNavigation = function(carousel, position) {
       return false;
     });
   }
-//  divnavigation.append(navigation);
-  divnavigation.append($('<span></span>').addClass('item-next').append('next'));
-  $(carousel.list).parents('.jcarousel-clip:first')[position](divnavigation);
+
+  $(carousel.list).parents('.jcarousel-clip:first')[position](navigation);
 }
 
 /**
