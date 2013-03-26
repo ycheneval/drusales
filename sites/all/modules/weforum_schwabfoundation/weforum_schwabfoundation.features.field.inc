@@ -283,7 +283,7 @@ function weforum_schwabfoundation_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'inline',
           'module' => 'date',
           'settings' => array(
             'format_type' => 'long',
@@ -374,7 +374,7 @@ function weforum_schwabfoundation_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'inline',
           'module' => 'link',
           'settings' => array(),
           'type' => 'link_default',
@@ -462,7 +462,7 @@ function weforum_schwabfoundation_field_default_fields() {
           'module' => 'text',
           'settings' => array(),
           'type' => 'text_default',
-          'weight' => 0,
+          'weight' => '0',
         ),
         'teaser' => array(
           'label' => 'hidden',
@@ -491,6 +491,79 @@ function weforum_schwabfoundation_field_default_fields() {
         ),
         'type' => 'text_textarea_with_summary',
         'weight' => '31',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-page-field_attachment'.
+  $fields['node-page-field_attachment'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '-1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_attachment',
+      'foreign keys' => array(
+        'fid' => array(
+          'columns' => array(
+            'fid' => 'fid',
+          ),
+          'table' => 'file_managed',
+        ),
+      ),
+      'indexes' => array(
+        'fid' => array(
+          0 => 'fid',
+        ),
+      ),
+      'locked' => '0',
+      'module' => 'file',
+      'settings' => array(
+        'display_default' => 0,
+        'display_field' => 0,
+        'uri_scheme' => 'public',
+      ),
+      'translatable' => '0',
+      'type' => 'file',
+    ),
+    'field_instance' => array(
+      'bundle' => 'page',
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'file',
+          'settings' => array(),
+          'type' => 'file_default',
+          'weight' => '2',
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'node',
+      'field_name' => 'field_attachment',
+      'label' => 'Attachment',
+      'required' => 0,
+      'settings' => array(
+        'description_field' => 0,
+        'file_directory' => 'file_uploads',
+        'file_extensions' => 'txt pdf docx doc png jpg gif',
+        'max_filesize' => '',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'file',
+        'settings' => array(
+          'progress_indicator' => 'bar',
+        ),
+        'type' => 'file_generic',
+        'weight' => '33',
       ),
     ),
   );
@@ -535,7 +608,7 @@ function weforum_schwabfoundation_field_default_fields() {
           'module' => 'text',
           'settings' => array(),
           'type' => 'text_default',
-          'weight' => 1,
+          'weight' => '1',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -1522,6 +1595,7 @@ function weforum_schwabfoundation_field_default_fields() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Area of impact');
+  t('Attachment');
   t('Body');
   t('Country');
   t('Image');

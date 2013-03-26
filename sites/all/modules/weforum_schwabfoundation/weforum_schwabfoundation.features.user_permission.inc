@@ -10,17 +10,30 @@
 function weforum_schwabfoundation_user_default_permissions() {
   $permissions = array();
 
+  // Exported permission: Agora import.
+  $permissions['Agora import'] = array(
+    'name' => 'Agora import',
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
+    'module' => 'weforum_schwabfoundation',
+  );
+
   // Exported permission: access administration menu.
   $permissions['access administration menu'] = array(
     'name' => 'access administration menu',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'admin_menu',
   );
 
   // Exported permission: access administration pages.
   $permissions['access administration pages'] = array(
     'name' => 'access administration pages',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'system',
   );
 
@@ -37,6 +50,7 @@ function weforum_schwabfoundation_user_default_permissions() {
     'roles' => array(
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
+      'publisher' => 'publisher',
     ),
     'module' => 'node',
   );
@@ -86,7 +100,9 @@ function weforum_schwabfoundation_user_default_permissions() {
   // Exported permission: administer actions.
   $permissions['administer actions'] = array(
     'name' => 'administer actions',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'system',
   );
 
@@ -170,7 +186,9 @@ function weforum_schwabfoundation_user_default_permissions() {
   // Exported permission: administer modules.
   $permissions['administer modules'] = array(
     'name' => 'administer modules',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'system',
   );
 
@@ -184,7 +202,9 @@ function weforum_schwabfoundation_user_default_permissions() {
   // Exported permission: administer nodes.
   $permissions['administer nodes'] = array(
     'name' => 'administer nodes',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'node',
   );
 
@@ -359,20 +379,31 @@ function weforum_schwabfoundation_user_default_permissions() {
   // Exported permission: create news content.
   $permissions['create news content'] = array(
     'name' => 'create news content',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'node',
   );
 
   // Exported permission: create page content.
   $permissions['create page content'] = array(
     'name' => 'create page content',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'node',
   );
 
   // Exported permission: create social_entrepreneur content.
   $permissions['create social_entrepreneur content'] = array(
     'name' => 'create social_entrepreneur content',
+    'roles' => array(),
+    'module' => 'node',
+  );
+
+  // Exported permission: create uploads content.
+  $permissions['create uploads content'] = array(
+    'name' => 'create uploads content',
     'roles' => array(),
     'module' => 'node',
   );
@@ -394,20 +425,31 @@ function weforum_schwabfoundation_user_default_permissions() {
   // Exported permission: delete any news content.
   $permissions['delete any news content'] = array(
     'name' => 'delete any news content',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'node',
   );
 
   // Exported permission: delete any page content.
   $permissions['delete any page content'] = array(
     'name' => 'delete any page content',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'node',
   );
 
   // Exported permission: delete any social_entrepreneur content.
   $permissions['delete any social_entrepreneur content'] = array(
     'name' => 'delete any social_entrepreneur content',
+    'roles' => array(),
+    'module' => 'node',
+  );
+
+  // Exported permission: delete any uploads content.
+  $permissions['delete any uploads content'] = array(
+    'name' => 'delete any uploads content',
     'roles' => array(),
     'module' => 'node',
   );
@@ -422,14 +464,18 @@ function weforum_schwabfoundation_user_default_permissions() {
   // Exported permission: delete own news content.
   $permissions['delete own news content'] = array(
     'name' => 'delete own news content',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'node',
   );
 
   // Exported permission: delete own page content.
   $permissions['delete own page content'] = array(
     'name' => 'delete own page content',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'node',
   );
 
@@ -440,10 +486,19 @@ function weforum_schwabfoundation_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: delete own uploads content.
+  $permissions['delete own uploads content'] = array(
+    'name' => 'delete own uploads content',
+    'roles' => array(),
+    'module' => 'node',
+  );
+
   // Exported permission: delete revisions.
   $permissions['delete revisions'] = array(
     'name' => 'delete revisions',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'node',
   );
 
@@ -464,14 +519,18 @@ function weforum_schwabfoundation_user_default_permissions() {
   // Exported permission: edit any news content.
   $permissions['edit any news content'] = array(
     'name' => 'edit any news content',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'node',
   );
 
   // Exported permission: edit any page content.
   $permissions['edit any page content'] = array(
     'name' => 'edit any page content',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'node',
   );
 
@@ -482,10 +541,19 @@ function weforum_schwabfoundation_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: edit any uploads content.
+  $permissions['edit any uploads content'] = array(
+    'name' => 'edit any uploads content',
+    'roles' => array(),
+    'module' => 'node',
+  );
+
   // Exported permission: edit media.
   $permissions['edit media'] = array(
     'name' => 'edit media',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'media',
   );
 
@@ -499,20 +567,31 @@ function weforum_schwabfoundation_user_default_permissions() {
   // Exported permission: edit own news content.
   $permissions['edit own news content'] = array(
     'name' => 'edit own news content',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'node',
   );
 
   // Exported permission: edit own page content.
   $permissions['edit own page content'] = array(
     'name' => 'edit own page content',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'node',
   );
 
   // Exported permission: edit own social_entrepreneur content.
   $permissions['edit own social_entrepreneur content'] = array(
     'name' => 'edit own social_entrepreneur content',
+    'roles' => array(),
+    'module' => 'node',
+  );
+
+  // Exported permission: edit own uploads content.
+  $permissions['edit own uploads content'] = array(
+    'name' => 'edit own uploads content',
     'roles' => array(),
     'module' => 'node',
   );
@@ -527,21 +606,27 @@ function weforum_schwabfoundation_user_default_permissions() {
   // Exported permission: import facebook feeds.
   $permissions['import facebook feeds'] = array(
     'name' => 'import facebook feeds',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'feeds',
   );
 
   // Exported permission: import media.
   $permissions['import media'] = array(
     'name' => 'import media',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'media',
   );
 
   // Exported permission: import twitter feeds.
   $permissions['import twitter feeds'] = array(
     'name' => 'import twitter feeds',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'feeds',
   );
 
@@ -555,14 +640,18 @@ function weforum_schwabfoundation_user_default_permissions() {
   // Exported permission: manipulate all queues.
   $permissions['manipulate all queues'] = array(
     'name' => 'manipulate all queues',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'nodequeue',
   );
 
   // Exported permission: manipulate queues.
   $permissions['manipulate queues'] = array(
     'name' => 'manipulate queues',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'nodequeue',
   );
 
@@ -576,7 +665,9 @@ function weforum_schwabfoundation_user_default_permissions() {
   // Exported permission: revert revisions.
   $permissions['revert revisions'] = array(
     'name' => 'revert revisions',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'node',
   );
 
@@ -653,14 +744,18 @@ function weforum_schwabfoundation_user_default_permissions() {
   // Exported permission: use text format full_html.
   $permissions['use text format full_html'] = array(
     'name' => 'use text format full_html',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'filter',
   );
 
   // Exported permission: use text format simple_html.
   $permissions['use text format simple_html'] = array(
     'name' => 'use text format simple_html',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'filter',
   );
 
@@ -691,6 +786,7 @@ function weforum_schwabfoundation_user_default_permissions() {
     'roles' => array(
       'anonymous user' => 'anonymous user',
       'authenticated user' => 'authenticated user',
+      'publisher' => 'publisher',
     ),
     'module' => 'media',
   );
@@ -698,7 +794,9 @@ function weforum_schwabfoundation_user_default_permissions() {
   // Exported permission: view own unpublished content.
   $permissions['view own unpublished content'] = array(
     'name' => 'view own unpublished content',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'node',
   );
 
@@ -719,7 +817,9 @@ function weforum_schwabfoundation_user_default_permissions() {
   // Exported permission: view revisions.
   $permissions['view revisions'] = array(
     'name' => 'view revisions',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'node',
   );
 

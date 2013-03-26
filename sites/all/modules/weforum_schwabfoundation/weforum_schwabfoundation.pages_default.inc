@@ -293,7 +293,7 @@ function weforum_schwabfoundation_default_page_manager_pages() {
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'override_title' => 1,
+      'override_title' => 0,
       'override_title_text' => 'Entrepreneurs',
     );
     $pane->cache = array();

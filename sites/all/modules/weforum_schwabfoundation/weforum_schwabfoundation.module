@@ -15,12 +15,22 @@ function weforum_schwabfoundation_menu() {
     'title' => 'Schwab Foundation Import entrepreneurs from Agora',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('weforum_schwabfoundation_import_form'),
-    'access arguments' => array('administer site configuration'),
+    'access arguments' => array('Agora import'),
     'type' => MENU_NORMAL_ITEM,
     'file' => 'weforum_schwabfoundation.admin.inc',
     );
   return $items;
 }
+
+function weforum_schwabfoundation_permission() {
+  return array(
+    'Agora import' => array(
+      'title' => t('Import from Agora'),
+      'description' => t('Allows to import social entrepreneurs data from Agora.'),
+    )
+  );
+}
+
 
 /**
  * Implements hook_cron_queue_info
@@ -46,6 +56,16 @@ function cleanDate($incomingDate) {
     return $result;
 }
 
+function logMsg($msg, $drushTarget)
+{
+    if ($drushTarget) { 
+        drush_log($msg);
+    }
+    else {
+        drupal_set_message($msg);
+    }
+}
+
 function buildLink($incomingUrl) {
     $result = '';
 
@@ -66,86 +86,92 @@ function buildLink($incomingUrl) {
  * Creates or updates the node
  * 
  */
-function weforum_schwabfoundation_worker($person = FALSE) {
-    $result = new EntityFieldQuery();
-    $result->entityCondition('entity_type', 'node')
-            ->EntityCondition('bundle', 'social_entrepreneur')
-            ->fieldCondition('field_per_id', 'value', $person['per_id'])
-            ->execute();
-
-    if (empty($result->ordered_results)) {
-        $node = new stdClass();
-        $node->type = 'social_entrepreneur';
-        node_object_prepare($node);
-    } else {
-        $node = node_load((int) $result->ordered_results[0]->entity_id);
-    }
-
-    $node->field_full_name['und'][0]['value'] = $node->title = $person['full_name'];
-    $node->field_per_id['und'][0]['value'] = $person['per_id'];
-    $node->field_last_name['und'][0]['value'] = $person['last_name'];
-    $node->field_first_name['und'][0]['value'] = $person['first_name'];
-    $node->field_org_public_name['und'][0]['value'] = $person['org_public_name'];
-    $node->field_org_id['und'][0]['value'] = $person['org_id'];
-    $node->body['und'][0]['value'] = $person['body'];
-    $node->body['und'][0]['format'] = 'full_html';
-    $node->field_country['und'][0]['value'] = $person['country'];
-    $node->field_year_founded['und'][0]['value'] = cleanDate($person['year_founded']);
-    $node->field_website['und'][0]['value'] = buildLink($person['website']);
-    $node->field_website['und'][0]['format'] = 'simple_html';
-
-    // Handle photo
-    $pho_id = intval($person['pho_id']);
+function weforum_schwabfoundation_worker($person = FALSE, $coming_from_drush = TRUE) {
     $per_id = intval($person['per_id']);
-//    drush_log('Photo import for '.$per_id.', pho_id: '.$pho_id);
-    $file = isset($node->field_per_image['und']) ? $node->field_per_image['und'][0]:NULL;
-    if (!empty($pho_id)) {
-        if (hasPhotoChanged($per_id, $pho_id, $file)) {
-            // returns also true if the photo does not exist yet
-            drush_log('Photo changed, import for '.$per_id.', pho_id: '.$pho_id);
-            $buffer = getAgoraRawPhoto($pho_id);
-            if (strlen($buffer) > 0) {
-                $newfilename = 'public://per_images/'.$per_id.'_'.gmdate('Y_m_d_His');
-                drush_log('Agora data ok size '.strlen($buffer).', new filename: "'.$newfilename.'", old file uri: "'.$file['uri'].'"');
-                if (!empty($file)) {
-//                    drush_log('Trying to override an existing file');
-                    $file = file_save_data($buffer, $file['uri'], FILE_EXISTS_REPLACE);
-                    file_move($file, $newfilename, FILE_EXISTS_REPLACE);
-                } else {
-//                    drush_log('Saving a new file in Drupal');
-                    $file = file_save_data($buffer, $newfilename, FILE_EXISTS_REPLACE);            
-        //            drush_log('File saved, file is '.print_r($file));
+    
+    if ($per_id > 0) {
+        $result = new EntityFieldQuery();
+        $result->entityCondition('entity_type', 'node')
+                ->EntityCondition('bundle', 'social_entrepreneur')
+                ->fieldCondition('field_per_id', 'value', $per_id)
+                ->execute();
+
+        if (empty($result->ordered_results)) {
+            $node = new stdClass();
+            $node->type = 'social_entrepreneur';
+            node_object_prepare($node);
+        } else {
+            $node = node_load((int) $result->ordered_results[0]->entity_id);
+        }
+
+        $node->field_full_name['und'][0]['value'] = $node->title = $person['full_name'];
+        $node->field_per_id['und'][0]['value'] = $per_id;
+        $node->field_last_name['und'][0]['value'] = $person['last_name'];
+        $node->field_first_name['und'][0]['value'] = $person['first_name'];
+        $node->field_org_public_name['und'][0]['value'] = $person['org_public_name'];
+        $node->field_org_id['und'][0]['value'] = $person['org_id'];
+        $node->body['und'][0]['value'] = $person['body'];
+        $node->body['und'][0]['format'] = 'full_html';
+        $node->field_country['und'][0]['value'] = $person['country'];
+        $node->field_year_founded['und'][0]['value'] = cleanDate($person['year_founded']);
+        $node->field_website['und'][0]['value'] = buildLink($person['website']);
+        $node->field_website['und'][0]['format'] = 'simple_html';
+
+        // Handle photo
+        $pho_id = intval($person['pho_id']);
+    //    drush_log('Photo import for '.$per_id.', pho_id: '.$pho_id);
+        $file = isset($node->field_per_image['und']) ? $node->field_per_image['und'][0]:NULL;
+        if (!empty($pho_id)) {
+            if (hasPhotoChanged($per_id, $pho_id, $file)) {
+                // returns also true if the photo does not exist yet
+                logMsg('Photo changed, import for '.$per_id.', pho_id: '.$pho_id, $coming_from_drush);
+                $buffer = getAgoraRawPhoto($pho_id);
+                if (strlen($buffer) > 0) {
+                    $newfilename = 'public://per_images/'.$per_id.'_'.gmdate('Y_m_d_His');
+                    logMsg('Agora data ok size '.strlen($buffer).', new filename: "'.$newfilename.'", old file uri: "'.$file['uri'].'"', $coming_from_drush);
+                    if (!empty($file)) {
+    //                    drush_log('Trying to override an existing file');
+                        $file = file_save_data($buffer, $file['uri'], FILE_EXISTS_REPLACE);
+                        file_move($file, $newfilename, FILE_EXISTS_REPLACE);
+                    } else {
+    //                    drush_log('Saving a new file in Drupal');
+                        $file = file_save_data($buffer, $newfilename, FILE_EXISTS_REPLACE);            
+            //            drush_log('File saved, file is '.print_r($file));
+                    }
+            //        drush_log('Assigning the file to the node');
+                    $node->field_per_image['und'][0] = (array)$file;
                 }
-        //        drush_log('Assigning the file to the node');
-                $node->field_per_image['und'][0] = (array)$file;
             }
         }
+        else {
+            logMsg('Agora photo not found for per_id: '.$per_id.', replacing with stub image', $coming_from_drush);   
+            if ($file) {
+    //            file_delete($stdfile);
+    //            unset($file);
+                $node->field_per_image['und'][0] = NULL;
+            }
+        }
+
+
+        $node->field_area_of_impact['und'] = array();
+        foreach ($person['areas_of_impact'] as $key => $value) {
+            $node->field_area_of_impact['und'][] = array('value' => trim($key));
+        }
+
+        $node->field_model['und'] = array();
+        foreach ($person['models'] as $key => $value) {
+            $node->field_model['und'][] = array('value' => trim($key));
+        }
+
+        $node->field_sector['und'] = array();
+        foreach ($person['sectors'] as $key => $value) {
+            $node->field_sector['und'][] = array('value' => trim($key));
+        }
+        node_save($node);
     }
     else {
-        drush_log('Agora photo not found for per_id: '.$per_id);   
-        if ($file) {
-//            file_delete($stdfile);
-//            unset($file);
-            $node->field_per_image['und'][0] = NULL;
-        }
+        logMsg('per_id is NULL, discarding', $coming_from_drush);
     }
-
-
-    $node->field_area_of_impact['und'] = array();
-    foreach ($person['areas_of_impact'] as $key => $value) {
-        $node->field_area_of_impact['und'][] = array('value' => trim($key));
-    }
-
-    $node->field_model['und'] = array();
-    foreach ($person['models'] as $key => $value) {
-        $node->field_model['und'][] = array('value' => trim($key));
-    }
-
-    $node->field_sector['und'] = array();
-    foreach ($person['sectors'] as $key => $value) {
-        $node->field_sector['und'][] = array('value' => trim($key));
-    }
-    node_save($node);
 }
 
 function weforum_schwabfoundation_importf21() {
@@ -280,7 +306,7 @@ function getDrupalPhotoLastModification($file) {
             $result = new DateTime(date('Y-m-d H:i:s', $file['timestamp']));
         }
         else {
-            drush_log('File '.$file['filename'].' not found, forcing import');
+//            drush_log('File '.$file['filename'].' not found, forcing import');
         }
                 
 //        drush_log('Drupal date SET: '.$result->format('Y-m-d H:i:s'));
@@ -313,5 +339,133 @@ function weforum_schwabfoundation_ctools_plugin_directory($module, $plugin) {
   }
   if ($module == 'panels' && $plugin == 'layouts') {
     return 'plugins/layouts';
+  }
+}
+
+
+function weforum_schwabfoundation_batch_processF21($operation_details, &$context) {
+  // Use the $context['sandbox'] at your convenience to store the
+  // information needed to track progression between successive calls.
+    $queueName = 'socialentrepreneurs';
+    $queue = DrupalQueue::get($queueName);
+    
+    if (empty($context['sandbox'])) {
+//        drupal_set_message('Context sandbox empty, reinit values, got operation details '.$operation_details);
+        $context['sandbox'] = array();
+        $context['sandbox']['progress'] = 0;
+
+        // Save node count for the termination message.
+        $context['sandbox']['max'] = $queue->numberOfItems();
+        $context['results'][] = '';
+    }
+
+    // Get the number of items to process, normally should get through $operation_details
+    $nbItemsPerOp = $operation_details ? intval($operation_details) : 10;
+    $nbItemsPerOp = $nbItemsPerOp < 10 ? 10 : $nbItemsPerOp;
+    
+    for ($i=0; $i<$nbItemsPerOp; $i++)
+    {
+        if ($queue->numberOfItems() > 0) {
+            $queueItem = $queue->claimItem();
+            $person = $queueItem->data;
+            weforum_schwabfoundation_worker($person, FALSE);
+            $queue->deleteItem($queueItem);
+
+            // Store some results for post-processing in the 'finished' callback.
+            // The contents of 'results' will be available as $results in the
+            // 'finished' function ).
+            $context['results'][] = 'Processed item '.$person['per_id'];
+
+            // Update our progress information.
+            $context['sandbox']['progress']++;
+            $context['message'] = 'Processing '.strtoupper($person['last_name']).' '.$person['first_name'];
+        }
+    }
+
+    $context['finished'] = 1;
+}
+
+function weforum_schwabfoundation_batch_finished($success, $results, $operations) {
+  if ($success) {
+    // Here we could do something meaningful with the results.
+    // We just display the number of nodes we processed...
+    drupal_set_message(t('@count results processed.', array('@count' => count($results))));
+//    drupal_set_message(t('The final result was "%final"', array('%final' => end($results))));
+  }
+  else {
+    // An error occurred.
+    // $operations contains the operations that remained unprocessed.
+    $error_operation = reset($operations);
+    drupal_set_message(t('An error occurred while processing @operation with arguments : @args', array('@operation' => $error_operation[0], '@args' => print_r($error_operation[0], TRUE))));
+  }
+}
+
+function weforum_schwabfoundation_op_2($operation_details, &$context) {
+  // Use the $context['sandbox'] at your convenience to store the
+  // information needed to track progression between successive calls.
+  if (empty($context['sandbox'])) {
+    drupal_set_message('Context sandbox empty, reinit values, got operation details '.$operation_details);
+    $context['sandbox'] = array();
+    $context['sandbox']['progress'] = 0;
+    $context['sandbox']['current_node'] = 0;
+
+    // Save node count for the termination message.
+    $context['sandbox']['max'] = db_query('SELECT COUNT(DISTINCT nid) FROM {node}')->fetchField();
+  }
+    drupal_set_message('weforum_schwabfoundation_op_2 called, progress '.$context['sandbox']['progress'].', current node is '.$context['sandbox']['current_node']);
+
+  // Process nodes by groups of 5 (arbitrary value).
+  // When a group of five is processed, the batch update engine determines
+  // whether it should continue processing in the same request or provide
+  // progress feedback to the user and wait for the next request.
+  // That way even though we're already processing at the operation level
+  // the operation itself is interruptible.
+  $limit = 5;
+
+  // Retrieve the next group of nids.
+  $result = db_select('node', 'n')->fields('n', array('nid'))->orderBy('n.nid', 'ASC')->where('n.nid > :nid', array(':nid' => $context['sandbox']['current_node']))->extend('PagerDefault')->limit($limit)->execute();
+  foreach ($result as $row) {
+    // Here we actually perform our dummy 'processing' on the current node.
+    $node = node_load($row->nid, NULL, TRUE);
+
+    // Store some results for post-processing in the 'finished' callback.
+    // The contents of 'results' will be available as $results in the
+    // 'finished' function (in this example, batch_example_finished()).
+    $context['results'][] = $node->nid . ' : ' . check_plain($node->title) . ' ' . $operation_details;
+
+    // Update our progress information.
+    $context['sandbox']['progress']++;
+    $context['sandbox']['current_node'] = $node->nid;
+    $context['message'] = 'Progress '.$context['sandbox']['progress'].', node: '.check_plain($node->title);
+  }
+
+  // Inform the batch engine that we are not finished,
+  // and provide an estimation of the completion level we reached.
+  if ($context['sandbox']['progress'] != $context['sandbox']['max']) {
+    $context['finished'] = ($context['sandbox']['progress'] >= $context['sandbox']['max']);
+  }
+  _weforum_schwabfoundation_update_http_requests();
+}
+
+function _weforum_schwabfoundation_get_http_requests() {
+  return !empty($_SESSION['http_request_count']) ? $_SESSION['http_request_count'] : 0;
+}
+
+function _weforum_schwabfoundation_update_http_requests() {
+  $_SESSION['http_request_count']++;
+}
+
+function weforum_schwabfoundation_finished($success, $results, $operations) {
+  if ($success) {
+    // Here we could do something meaningful with the results.
+    // We just display the number of nodes we processed...
+    drupal_set_message(t('@count results processed in @requests HTTP requests.', array('@count' => count($results), '@requests' => _weforum_schwabfoundation_get_http_requests())));
+    drupal_set_message(t('The final result was "%final"', array('%final' => end($results))));
+  }
+  else {
+    // An error occurred.
+    // $operations contains the operations that remained unprocessed.
+    $error_operation = reset($operations);
+    drupal_set_message(t('An error occurred while processing @operation with arguments : @args', array('@operation' => $error_operation[0], '@args' => print_r($error_operation[0], TRUE))));
   }
 }

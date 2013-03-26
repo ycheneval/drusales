@@ -121,7 +121,6 @@ function weforum_schwabfoundation_views_default_views() {
 
   /* Display: Block */
   $handler = $view->new_display('block', 'Block', 'block_1');
-  $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $export['carousel_'] = $view;
 
   $view = new view();
@@ -217,13 +216,11 @@ function weforum_schwabfoundation_views_default_views() {
   $handler = $view->new_display('panel_pane', 'Global Twitter', 'panel_pane_1');
   $handler->display->display_options['defaults']['css_class'] = FALSE;
   $handler->display->display_options['css_class'] = 'twitter-stream-display';
-  $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
 
   /* Display: Global Facebook */
   $handler = $view->new_display('panel_pane', 'Global Facebook', 'panel_pane_2');
   $handler->display->display_options['defaults']['css_class'] = FALSE;
   $handler->display->display_options['css_class'] = 'facebook-stream-display';
-  $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $handler->display->display_options['defaults']['header'] = FALSE;
   /* Header: Global: Text area */
   $handler->display->display_options['header']['area']['id'] = 'area';
@@ -278,7 +275,6 @@ function weforum_schwabfoundation_views_default_views() {
   $handler->display->display_options['pager']['options']['items_per_page'] = '5';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['pager']['options']['id'] = '0';
-  $handler->display->display_options['pager']['options']['quantity'] = '9';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'fields';
   /* Field: Global: Custom text */
@@ -415,7 +411,6 @@ function weforum_schwabfoundation_views_default_views() {
 
   /* Display: Block */
   $handler = $view->new_display('block', 'Block', 'block');
-  $handler->display->display_options['defaults']['hide_admin_links'] = FALSE;
   $export['news_items'] = $view;
 
   return $export;
