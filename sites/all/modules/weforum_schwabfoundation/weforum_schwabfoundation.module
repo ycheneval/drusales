@@ -12,7 +12,7 @@ include_once 'weforum_schwabfoundation.features.inc';
 function weforum_schwabfoundation_menu() {
     $items = array();
     $items['admin/config/schwabfoundation'] = array(
-    'title' => 'Schwab Foundation Import entrepreneurs from Agora',
+    'title' => 'Entrepreneurs Agora import',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('weforum_schwabfoundation_import_form'),
     'access arguments' => array('Agora import'),
@@ -22,11 +22,22 @@ function weforum_schwabfoundation_menu() {
   return $items;
 }
 
+function weforum_schwabfoundation_menu_alter(&$items)
+{
+    $items['admin/config/Feeds'] = $items['import'];
+    $items['admin/config/Feeds']['title'] = 'Feeds import';
+    $items['admin/config/Feeds']['access arguments'] = array('Feeds import');
+}
+
 function weforum_schwabfoundation_permission() {
   return array(
     'Agora import' => array(
       'title' => t('Import from Agora'),
       'description' => t('Allows to import social entrepreneurs data from Agora.'),
+    ),
+    'Feeds import' => array(
+      'title' => t('Import Feeds'),
+      'description' => t('Allows to import Facebook & Twitter feeds.'),
     )
   );
 }
@@ -344,11 +355,11 @@ function weforum_schwabfoundation_ctools_plugin_directory($module, $plugin) {
 
 
 function weforum_schwabfoundation_batch_processF21($operation_details, &$context) {
-  // Use the $context['sandbox'] at your convenience to store the
-  // information needed to track progression between successive calls.
+    // Use the $context['sandbox'] at your convenience to store the
+    // information needed to track progression between successive calls.
     $queueName = 'socialentrepreneurs';
     $queue = DrupalQueue::get($queueName);
-    
+
     if (empty($context['sandbox'])) {
 //        drupal_set_message('Context sandbox empty, reinit values, got operation details '.$operation_details);
         $context['sandbox'] = array();
@@ -360,11 +371,9 @@ function weforum_schwabfoundation_batch_processF21($operation_details, &$context
     }
 
     // Get the number of items to process, normally should get through $operation_details
-    $nbItemsPerOp = $operation_details ? intval($operation_details) : 10;
-    $nbItemsPerOp = $nbItemsPerOp < 10 ? 10 : $nbItemsPerOp;
-    
-    for ($i=0; $i<$nbItemsPerOp; $i++)
-    {
+    $nbItemsPerOp = max($operation_details ? intval($operation_details) : 10, 10);
+
+    for ($i = 0; $i < $nbItemsPerOp; $i++) {
         if ($queue->numberOfItems() > 0) {
             $queueItem = $queue->claimItem();
             $person = $queueItem->data;
@@ -374,11 +383,11 @@ function weforum_schwabfoundation_batch_processF21($operation_details, &$context
             // Store some results for post-processing in the 'finished' callback.
             // The contents of 'results' will be available as $results in the
             // 'finished' function ).
-            $context['results'][] = 'Processed item '.$person['per_id'];
+            $context['results'][] = 'Processed item ' . $person['per_id'];
 
             // Update our progress information.
             $context['sandbox']['progress']++;
-            $context['message'] = 'Processing '.strtoupper($person['last_name']).' '.$person['first_name'];
+            $context['message'] = 'Processing ' . strtoupper($person['last_name']) . ' ' . $person['first_name'];
         }
     }
 
@@ -386,86 +395,13 @@ function weforum_schwabfoundation_batch_processF21($operation_details, &$context
 }
 
 function weforum_schwabfoundation_batch_finished($success, $results, $operations) {
-  if ($success) {
-    // Here we could do something meaningful with the results.
-    // We just display the number of nodes we processed...
-    drupal_set_message(t('@count results processed.', array('@count' => count($results))));
+    if ($success) {
+        drupal_set_message(t('@count results processed.', array('@count' => count($results))));
 //    drupal_set_message(t('The final result was "%final"', array('%final' => end($results))));
-  }
-  else {
-    // An error occurred.
-    // $operations contains the operations that remained unprocessed.
-    $error_operation = reset($operations);
-    drupal_set_message(t('An error occurred while processing @operation with arguments : @args', array('@operation' => $error_operation[0], '@args' => print_r($error_operation[0], TRUE))));
-  }
-}
-
-function weforum_schwabfoundation_op_2($operation_details, &$context) {
-  // Use the $context['sandbox'] at your convenience to store the
-  // information needed to track progression between successive calls.
-  if (empty($context['sandbox'])) {
-    drupal_set_message('Context sandbox empty, reinit values, got operation details '.$operation_details);
-    $context['sandbox'] = array();
-    $context['sandbox']['progress'] = 0;
-    $context['sandbox']['current_node'] = 0;
-
-    // Save node count for the termination message.
-    $context['sandbox']['max'] = db_query('SELECT COUNT(DISTINCT nid) FROM {node}')->fetchField();
-  }
-    drupal_set_message('weforum_schwabfoundation_op_2 called, progress '.$context['sandbox']['progress'].', current node is '.$context['sandbox']['current_node']);
-
-  // Process nodes by groups of 5 (arbitrary value).
-  // When a group of five is processed, the batch update engine determines
-  // whether it should continue processing in the same request or provide
-  // progress feedback to the user and wait for the next request.
-  // That way even though we're already processing at the operation level
-  // the operation itself is interruptible.
-  $limit = 5;
-
-  // Retrieve the next group of nids.
-  $result = db_select('node', 'n')->fields('n', array('nid'))->orderBy('n.nid', 'ASC')->where('n.nid > :nid', array(':nid' => $context['sandbox']['current_node']))->extend('PagerDefault')->limit($limit)->execute();
-  foreach ($result as $row) {
-    // Here we actually perform our dummy 'processing' on the current node.
-    $node = node_load($row->nid, NULL, TRUE);
-
-    // Store some results for post-processing in the 'finished' callback.
-    // The contents of 'results' will be available as $results in the
-    // 'finished' function (in this example, batch_example_finished()).
-    $context['results'][] = $node->nid . ' : ' . check_plain($node->title) . ' ' . $operation_details;
-
-    // Update our progress information.
-    $context['sandbox']['progress']++;
-    $context['sandbox']['current_node'] = $node->nid;
-    $context['message'] = 'Progress '.$context['sandbox']['progress'].', node: '.check_plain($node->title);
-  }
-
-  // Inform the batch engine that we are not finished,
-  // and provide an estimation of the completion level we reached.
-  if ($context['sandbox']['progress'] != $context['sandbox']['max']) {
-    $context['finished'] = ($context['sandbox']['progress'] >= $context['sandbox']['max']);
-  }
-  _weforum_schwabfoundation_update_http_requests();
-}
-
-function _weforum_schwabfoundation_get_http_requests() {
-  return !empty($_SESSION['http_request_count']) ? $_SESSION['http_request_count'] : 0;
-}
-
-function _weforum_schwabfoundation_update_http_requests() {
-  $_SESSION['http_request_count']++;
-}
-
-function weforum_schwabfoundation_finished($success, $results, $operations) {
-  if ($success) {
-    // Here we could do something meaningful with the results.
-    // We just display the number of nodes we processed...
-    drupal_set_message(t('@count results processed in @requests HTTP requests.', array('@count' => count($results), '@requests' => _weforum_schwabfoundation_get_http_requests())));
-    drupal_set_message(t('The final result was "%final"', array('%final' => end($results))));
-  }
-  else {
-    // An error occurred.
-    // $operations contains the operations that remained unprocessed.
-    $error_operation = reset($operations);
-    drupal_set_message(t('An error occurred while processing @operation with arguments : @args', array('@operation' => $error_operation[0], '@args' => print_r($error_operation[0], TRUE))));
-  }
+    } else {
+        // An error occurred.
+        // $operations contains the operations that remained unprocessed.
+        $error_operation = reset($operations);
+        drupal_set_message(t('An error occurred while processing @operation with arguments : @args', array('@operation' => $error_operation[0], '@args' => print_r($error_operation[0], TRUE))));
+    }
 }

@@ -19,6 +19,15 @@ function weforum_schwabfoundation_user_default_permissions() {
     'module' => 'weforum_schwabfoundation',
   );
 
+  // Exported permission: Feeds import.
+  $permissions['Feeds import'] = array(
+    'name' => 'Feeds import',
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
+    'module' => 'weforum_schwabfoundation',
+  );
+
   // Exported permission: access administration menu.
   $permissions['access administration menu'] = array(
     'name' => 'access administration menu',
@@ -100,9 +109,7 @@ function weforum_schwabfoundation_user_default_permissions() {
   // Exported permission: administer actions.
   $permissions['administer actions'] = array(
     'name' => 'administer actions',
-    'roles' => array(
-      'publisher' => 'publisher',
-    ),
+    'roles' => array(),
     'module' => 'system',
   );
 
@@ -186,9 +193,7 @@ function weforum_schwabfoundation_user_default_permissions() {
   // Exported permission: administer modules.
   $permissions['administer modules'] = array(
     'name' => 'administer modules',
-    'roles' => array(
-      'publisher' => 'publisher',
-    ),
+    'roles' => array(),
     'module' => 'system',
   );
 
