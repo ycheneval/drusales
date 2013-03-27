@@ -53,7 +53,7 @@ function weforum_schwabfoundation_views_default_views() {
   $handler->display->display_options['fields']['field_per_image']['empty'] = '<img src="/sites/default/files/logo_large_whiter.png" width="800">';
   $handler->display->display_options['fields']['field_per_image']['click_sort_column'] = 'fid';
   $handler->display->display_options['fields']['field_per_image']['settings'] = array(
-    'image_style' => 'large',
+    'image_style' => 'img700-400',
     'image_link' => '',
   );
   /* Field: Opening tags */
