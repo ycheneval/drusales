@@ -158,28 +158,6 @@ function weforum_schwabfoundation_views_default_views() {
   $handler->display->display_options['header']['area']['content'] = '<h2>Twitter</h2>
 <a href="https://twitter.com/schwabfound">Follow us ></a>';
   $handler->display->display_options['header']['area']['format'] = 'full_html';
-  /* Field: Content: Body */
-  $handler->display->display_options['fields']['body']['id'] = 'body';
-  $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
-  $handler->display->display_options['fields']['body']['field'] = 'body';
-  $handler->display->display_options['fields']['body']['label'] = '';
-  $handler->display->display_options['fields']['body']['alter']['max_length'] = '200';
-  $handler->display->display_options['fields']['body']['alter']['word_boundary'] = FALSE;
-  $handler->display->display_options['fields']['body']['alter']['html'] = TRUE;
-  $handler->display->display_options['fields']['body']['element_label_colon'] = FALSE;
-  /* Field: Feeds item: Item URL */
-  $handler->display->display_options['fields']['url']['id'] = 'url';
-  $handler->display->display_options['fields']['url']['table'] = 'feeds_item';
-  $handler->display->display_options['fields']['url']['field'] = 'url';
-  $handler->display->display_options['fields']['url']['label'] = '';
-  $handler->display->display_options['fields']['url']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['url']['alter']['text'] = 'Link';
-  $handler->display->display_options['fields']['url']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['url']['alter']['path'] = '[url]';
-  $handler->display->display_options['fields']['url']['alter']['external'] = TRUE;
-  $handler->display->display_options['fields']['url']['alter']['target'] = '_blank';
-  $handler->display->display_options['fields']['url']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['url']['display_as_link'] = FALSE;
   /* Field: Content: Post date */
   $handler->display->display_options['fields']['created']['id'] = 'created';
   $handler->display->display_options['fields']['created']['table'] = 'node';
@@ -187,6 +165,18 @@ function weforum_schwabfoundation_views_default_views() {
   $handler->display->display_options['fields']['created']['label'] = '';
   $handler->display->display_options['fields']['created']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['created']['date_format'] = 'time ago';
+  /* Field: Content: Body */
+  $handler->display->display_options['fields']['body']['id'] = 'body';
+  $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
+  $handler->display->display_options['fields']['body']['field'] = 'body';
+  $handler->display->display_options['fields']['body']['label'] = '';
+  $handler->display->display_options['fields']['body']['alter']['max_length'] = '1000';
+  $handler->display->display_options['fields']['body']['alter']['trim'] = TRUE;
+  $handler->display->display_options['fields']['body']['alter']['html'] = TRUE;
+  $handler->display->display_options['fields']['body']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['body']['settings'] = array(
+    'trim_length' => '600',
+  );
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
@@ -204,13 +194,8 @@ function weforum_schwabfoundation_views_default_views() {
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
-    'feed_post' => 'feed_post',
+    'twitter_oauth' => 'twitter_oauth',
   );
-  /* Filter criterion: Feeds item: Importer ID */
-  $handler->display->display_options['filters']['id']['id'] = 'id';
-  $handler->display->display_options['filters']['id']['table'] = 'feeds_item';
-  $handler->display->display_options['filters']['id']['field'] = 'id';
-  $handler->display->display_options['filters']['id']['value'] = 'twitter';
 
   /* Display: Global Twitter */
   $handler = $view->new_display('panel_pane', 'Global Twitter', 'panel_pane_1');
@@ -299,7 +284,7 @@ function weforum_schwabfoundation_views_default_views() {
   $handler->display->display_options['fields']['field_per_image']['empty'] = '<img src="/sites/all/themes/weft/logo.png" width="100" height="100">';
   $handler->display->display_options['fields']['field_per_image']['click_sort_column'] = 'fid';
   $handler->display->display_options['fields']['field_per_image']['settings'] = array(
-    'image_style' => 'thumbnail',
+    'image_style' => 'img150-90',
     'image_link' => '',
   );
   /* Field: Global: Custom text */

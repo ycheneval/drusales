@@ -61,3 +61,45 @@ function batch_importf21() {
     return $batch;
 }
 
+////////////////////////////////////////////////////////////////////
+//////// Twitter import ////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+
+function weforum_schwabfoundation_twitter_import_form() {
+  $form['weforum_schwabfoundation_host'] = array(
+    '#markup' => 'Clicking on Import will import the Twitter feed [oAuth enabled]<br>'
+  );
+  
+  $form['weforum_schwabfoundation_twitter_import'] = array(
+    '#type' => 'submit',
+    '#value' => t('Import'),
+  );
+  
+  return $form;
+}
+
+function weforum_schwabfoundation_twitter_import_form_submit($form, &$form_state)
+{
+    weforum_schwabfoundation_import_twitter_feeds();
+}
+
+////////////////////////////////////////////////////////////////////
+//////// Blog import ///////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////
+
+function weforum_schwabfoundation_blog_import_form() {
+  $form['weforum_schwabfoundation_host'] = array(
+    '#markup' => 'Clicking on Import will import the social entrepreneurs Blog feed from forumbblog.org<br>'
+  );
+  
+  $form['weforum_schwabfoundation_blog_import'] = array(
+    '#type' => 'submit',
+    '#value' => t('Import'),
+  );
+  
+  return $form;
+}
+
+function weforum_schwabfoundation_blog_import_form_submit($form, &$form_state)
+{
+}

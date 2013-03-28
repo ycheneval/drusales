@@ -30,6 +30,61 @@ function weforum_schwabfoundation_views_api() {
 }
 
 /**
+ * Implements hook_image_default_styles().
+ */
+function weforum_schwabfoundation_image_default_styles() {
+  $styles = array();
+
+  // Exported image style: img150-90.
+  $styles['img150-90'] = array(
+    'name' => 'img150-90',
+    'effects' => array(
+      3 => array(
+        'label' => 'Scale',
+        'help' => 'Scaling will maintain the aspect-ratio of the original image. If only a single dimension is specified, the other dimension will be calculated.',
+        'effect callback' => 'image_scale_effect',
+        'dimensions callback' => 'image_scale_dimensions',
+        'form callback' => 'image_scale_form',
+        'summary theme' => 'image_scale_summary',
+        'module' => 'image',
+        'name' => 'image_scale',
+        'data' => array(
+          'width' => '150',
+          'height' => '90',
+          'upscale' => 1,
+        ),
+        'weight' => '1',
+      ),
+    ),
+  );
+
+  // Exported image style: img700-400.
+  $styles['img700-400'] = array(
+    'name' => 'img700-400',
+    'effects' => array(
+      2 => array(
+        'label' => 'Scale',
+        'help' => 'Scaling will maintain the aspect-ratio of the original image. If only a single dimension is specified, the other dimension will be calculated.',
+        'effect callback' => 'image_scale_effect',
+        'dimensions callback' => 'image_scale_dimensions',
+        'form callback' => 'image_scale_form',
+        'summary theme' => 'image_scale_summary',
+        'module' => 'image',
+        'name' => 'image_scale',
+        'data' => array(
+          'width' => '700',
+          'height' => '400',
+          'upscale' => 1,
+        ),
+        'weight' => '2',
+      ),
+    ),
+  );
+
+  return $styles;
+}
+
+/**
  * Implements hook_node_info().
  */
 function weforum_schwabfoundation_node_info() {
@@ -62,6 +117,14 @@ function weforum_schwabfoundation_node_info() {
       'name' => t('Social Entrepreneur'),
       'base' => 'node_content',
       'description' => '',
+      'has_title' => '1',
+      'title_label' => t('Title'),
+      'help' => '',
+    ),
+    'twitter_oauth' => array(
+      'name' => t('Twitter oAuth'),
+      'base' => 'node_content',
+      'description' => t('Used now to connect to Twitter to fetch tweets'),
       'has_title' => '1',
       'title_label' => t('Title'),
       'help' => '',

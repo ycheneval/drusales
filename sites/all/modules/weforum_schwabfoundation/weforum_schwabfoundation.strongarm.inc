@@ -136,6 +136,26 @@ function weforum_schwabfoundation_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'field_bundle_settings_node__twitter_oauth';
+  $strongarm->value = array(
+    'view_modes' => array(),
+    'extra_fields' => array(
+      'form' => array(
+        'title' => array(
+          'weight' => '0',
+        ),
+        'path' => array(
+          'weight' => '1',
+        ),
+      ),
+      'display' => array(),
+    ),
+  );
+  $export['field_bundle_settings_node__twitter_oauth'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'field_bundle_settings_node__uploads';
   $strongarm->value = array(
     'view_modes' => array(
@@ -210,6 +230,15 @@ function weforum_schwabfoundation_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'menu_options_twitter_oauth';
+  $strongarm->value = array(
+    0 => 'main-menu',
+  );
+  $export['menu_options_twitter_oauth'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'menu_options_uploads';
   $strongarm->value = array(
     0 => 'main-menu',
@@ -243,6 +272,13 @@ function weforum_schwabfoundation_strongarm() {
   $strongarm->name = 'menu_parent_social_entrepreneur';
   $strongarm->value = 'main-menu:0';
   $export['menu_parent_social_entrepreneur'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'menu_parent_twitter_oauth';
+  $strongarm->value = 'main-menu:0';
+  $export['menu_parent_twitter_oauth'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
@@ -291,6 +327,16 @@ function weforum_schwabfoundation_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'node_options_twitter_oauth';
+  $strongarm->value = array(
+    0 => 'status',
+    1 => 'promote',
+  );
+  $export['node_options_twitter_oauth'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'node_options_uploads';
   $strongarm->value = array(
     0 => 'status',
@@ -328,6 +374,13 @@ function weforum_schwabfoundation_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'node_preview_twitter_oauth';
+  $strongarm->value = '1';
+  $export['node_preview_twitter_oauth'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'node_preview_uploads';
   $strongarm->value = '1';
   $export['node_preview_uploads'] = $strongarm;
@@ -359,6 +412,13 @@ function weforum_schwabfoundation_strongarm() {
   $strongarm->name = 'node_submitted_social_entrepreneur';
   $strongarm->value = 0;
   $export['node_submitted_social_entrepreneur'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'node_submitted_twitter_oauth';
+  $strongarm->value = 1;
+  $export['node_submitted_twitter_oauth'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
