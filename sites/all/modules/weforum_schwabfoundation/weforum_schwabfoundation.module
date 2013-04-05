@@ -200,8 +200,10 @@ function weforum_schwabfoundation_worker($person = FALSE, $coming_from_drush = T
 
 
         $node->field_area_of_impact['und'] = array();
+        $node->field_area_of_impact_priority['und'] = array();
         foreach ($person['areas_of_impact'] as $key => $value) {
             $node->field_area_of_impact['und'][] = array('value' => trim($key));
+            $node->field_area_of_impact_priority['und'][] = array('value' => trim($value));
         }
 
         $node->field_model['und'] = array();
@@ -224,6 +226,7 @@ function weforum_schwabfoundation_importf21() {
     $sql = "SELECT PER.PER_ID,PER.PER_LAST_NAME,PER.PER_FIRST_NAME,ORG.ORG_PUBLIC_NAME,
 FULL_NAME =PER.PER_LAST_NAME + ' ' +isnull(PER.PER_FIRST_NAME,''), ORG.ORG_ID ,
 INT_NAME AS 'AREA_OF_IMPACT',
+OI.PRI_ID as 'AREA_PRIORITY', 
 SEC.SEC_NAME AS 'SECTOR',
 SECTYPE.SEC_NAME AS 'MODEL',
 ORG.Org_comments as 'ORG_COMMENTS',
@@ -280,7 +283,7 @@ ORDER BY 2,3";
             'pho_id' => $value['PHO_ID']
         );
         // Making sure we have one array per person, with distinct values
-        $areas_of_impact[$person['per_id']][$value['AREA_OF_IMPACT']] = TRUE;
+        $areas_of_impact[$person['per_id']][$value['AREA_OF_IMPACT']] = $value['AREA_PRIORITY'];
         $sectors[$person['per_id']][$value['SECTOR']] = TRUE;
         $models[$person['per_id']][$value['MODEL']] = TRUE;
 
