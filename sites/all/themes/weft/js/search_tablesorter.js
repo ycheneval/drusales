@@ -48,6 +48,11 @@ function fire_search() {
         $(".views-exposed-form").collapsiblePanel();
 //        $(".views-exposed-form").slideToggle();
 
+        // Make the visible area of impacts comma separated.
+        // We need a client-side solution since some AoI will be in the HTML
+        // but kept hidden (for filtering purpose)
+        $('.view-test .views-field-field-area-of-impact span[data-priority-name="High"]').prevAll('span[data-priority-name="High"]').append(', ');
+
 
 })(jQuery);
 

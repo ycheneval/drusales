@@ -591,7 +591,9 @@ function weforum_schwabfoundation_user_default_permissions() {
   // Exported permission: edit any uploads content.
   $permissions['edit any uploads content'] = array(
     'name' => 'edit any uploads content',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'node',
   );
 

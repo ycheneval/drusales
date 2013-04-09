@@ -398,5 +398,198 @@ function weforum_schwabfoundation_views_default_views() {
   $handler = $view->new_display('block', 'Block', 'block');
   $export['news_items'] = $view;
 
+  $view = new view();
+  $view->name = 'test';
+  $view->description = 'Entrepreneurs table with search';
+  $view->tag = 'default';
+  $view->base_table = 'node';
+  $view->human_name = 'Entrepreneurs';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'Entrepreneurs';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'title' => 'title',
+    'field_org_public_name' => 'field_org_public_name',
+    'field_area_of_impact' => 'field_area_of_impact',
+    'field_sector' => 'field_sector',
+    'field_model' => 'field_model',
+  );
+  $handler->display->display_options['style_options']['default'] = 'field_org_public_name';
+  $handler->display->display_options['style_options']['info'] = array(
+    'title' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_org_public_name' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_area_of_impact' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_sector' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_model' => array(
+      'align' => 'views-align-left',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Field: Content: full_name */
+  $handler->display->display_options['fields']['field_full_name']['id'] = 'field_full_name';
+  $handler->display->display_options['fields']['field_full_name']['table'] = 'field_data_field_full_name';
+  $handler->display->display_options['fields']['field_full_name']['field'] = 'field_full_name';
+  $handler->display->display_options['fields']['field_full_name']['label'] = '';
+  $handler->display->display_options['fields']['field_full_name']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_full_name']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['field_full_name']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_full_name']['element_default_classes'] = FALSE;
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = 'Name';
+  $handler->display->display_options['fields']['title']['alter']['alter_text'] = TRUE;
+  $handler->display->display_options['fields']['title']['alter']['text'] = '[field_full_name]';
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
+  /* Field: Content: Organization */
+  $handler->display->display_options['fields']['field_org_public_name']['id'] = 'field_org_public_name';
+  $handler->display->display_options['fields']['field_org_public_name']['table'] = 'field_data_field_org_public_name';
+  $handler->display->display_options['fields']['field_org_public_name']['field'] = 'field_org_public_name';
+  /* Field: Content: Area of impact */
+  $handler->display->display_options['fields']['field_area_of_impact']['id'] = 'field_area_of_impact';
+  $handler->display->display_options['fields']['field_area_of_impact']['table'] = 'field_data_field_area_of_impact';
+  $handler->display->display_options['fields']['field_area_of_impact']['field'] = 'field_area_of_impact';
+  $handler->display->display_options['fields']['field_area_of_impact']['delta_offset'] = '0';
+  $handler->display->display_options['fields']['field_area_of_impact']['separator'] = ' ';
+  /* Field: Content: Sector */
+  $handler->display->display_options['fields']['field_sector']['id'] = 'field_sector';
+  $handler->display->display_options['fields']['field_sector']['table'] = 'field_data_field_sector';
+  $handler->display->display_options['fields']['field_sector']['field'] = 'field_sector';
+  $handler->display->display_options['fields']['field_sector']['delta_offset'] = '0';
+  /* Field: Content: Model */
+  $handler->display->display_options['fields']['field_model']['id'] = 'field_model';
+  $handler->display->display_options['fields']['field_model']['table'] = 'field_data_field_model';
+  $handler->display->display_options['fields']['field_model']['field'] = 'field_model';
+  $handler->display->display_options['fields']['field_model']['delta_offset'] = '0';
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'social_entrepreneur' => 'social_entrepreneur',
+  );
+  $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filter criterion: Content: full_name (field_full_name) */
+  $handler->display->display_options['filters']['field_full_name_value']['id'] = 'field_full_name_value';
+  $handler->display->display_options['filters']['field_full_name_value']['table'] = 'field_data_field_full_name';
+  $handler->display->display_options['filters']['field_full_name_value']['field'] = 'field_full_name_value';
+  $handler->display->display_options['filters']['field_full_name_value']['operator'] = 'contains';
+  $handler->display->display_options['filters']['field_full_name_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_full_name_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_full_name_value']['expose']['operator_id'] = 'field_full_name_value_op';
+  $handler->display->display_options['filters']['field_full_name_value']['expose']['label'] = 'Name';
+  $handler->display->display_options['filters']['field_full_name_value']['expose']['operator'] = 'field_full_name_value_op';
+  $handler->display->display_options['filters']['field_full_name_value']['expose']['identifier'] = 'field_full_name_value';
+  $handler->display->display_options['filters']['field_full_name_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+  );
+  /* Filter criterion: Content: Organization (field_org_public_name) */
+  $handler->display->display_options['filters']['field_org_public_name_value']['id'] = 'field_org_public_name_value';
+  $handler->display->display_options['filters']['field_org_public_name_value']['table'] = 'field_data_field_org_public_name';
+  $handler->display->display_options['filters']['field_org_public_name_value']['field'] = 'field_org_public_name_value';
+  $handler->display->display_options['filters']['field_org_public_name_value']['operator'] = 'contains';
+  $handler->display->display_options['filters']['field_org_public_name_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_org_public_name_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_org_public_name_value']['expose']['operator_id'] = 'field_org_public_name_value_op';
+  $handler->display->display_options['filters']['field_org_public_name_value']['expose']['label'] = 'Organization';
+  $handler->display->display_options['filters']['field_org_public_name_value']['expose']['operator'] = 'field_org_public_name_value_op';
+  $handler->display->display_options['filters']['field_org_public_name_value']['expose']['identifier'] = 'field_org_public_name_value';
+  $handler->display->display_options['filters']['field_org_public_name_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+  );
+  /* Filter criterion: Content: Area of impact (field_area_of_impact) */
+  $handler->display->display_options['filters']['field_area_of_impact_value']['id'] = 'field_area_of_impact_value';
+  $handler->display->display_options['filters']['field_area_of_impact_value']['table'] = 'field_data_field_area_of_impact';
+  $handler->display->display_options['filters']['field_area_of_impact_value']['field'] = 'field_area_of_impact_value';
+  $handler->display->display_options['filters']['field_area_of_impact_value']['operator'] = 'contains';
+  $handler->display->display_options['filters']['field_area_of_impact_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_area_of_impact_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_area_of_impact_value']['expose']['operator_id'] = 'field_area_of_impact_value_op';
+  $handler->display->display_options['filters']['field_area_of_impact_value']['expose']['label'] = 'Area of impact';
+  $handler->display->display_options['filters']['field_area_of_impact_value']['expose']['operator'] = 'field_area_of_impact_value_op';
+  $handler->display->display_options['filters']['field_area_of_impact_value']['expose']['identifier'] = 'field_area_of_impact_value';
+  $handler->display->display_options['filters']['field_area_of_impact_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+  );
+  /* Filter criterion: Content: Sector (field_sector) */
+  $handler->display->display_options['filters']['field_sector_value']['id'] = 'field_sector_value';
+  $handler->display->display_options['filters']['field_sector_value']['table'] = 'field_data_field_sector';
+  $handler->display->display_options['filters']['field_sector_value']['field'] = 'field_sector_value';
+  $handler->display->display_options['filters']['field_sector_value']['operator'] = 'contains';
+  $handler->display->display_options['filters']['field_sector_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_sector_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_sector_value']['expose']['operator_id'] = 'field_sector_value_op';
+  $handler->display->display_options['filters']['field_sector_value']['expose']['label'] = 'Sector';
+  $handler->display->display_options['filters']['field_sector_value']['expose']['operator'] = 'field_sector_value_op';
+  $handler->display->display_options['filters']['field_sector_value']['expose']['identifier'] = 'field_sector_value';
+  $handler->display->display_options['filters']['field_sector_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+  );
+  /* Filter criterion: Content: Model (field_model) */
+  $handler->display->display_options['filters']['field_model_value']['id'] = 'field_model_value';
+  $handler->display->display_options['filters']['field_model_value']['table'] = 'field_data_field_model';
+  $handler->display->display_options['filters']['field_model_value']['field'] = 'field_model_value';
+  $handler->display->display_options['filters']['field_model_value']['operator'] = 'contains';
+  $handler->display->display_options['filters']['field_model_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_model_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_model_value']['expose']['operator_id'] = 'field_model_value_op';
+  $handler->display->display_options['filters']['field_model_value']['expose']['label'] = 'Model';
+  $handler->display->display_options['filters']['field_model_value']['expose']['operator'] = 'field_model_value_op';
+  $handler->display->display_options['filters']['field_model_value']['expose']['identifier'] = 'field_model_value';
+  $handler->display->display_options['filters']['field_model_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+  );
+
+  /* Display: Page */
+  $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['path'] = 'entrepreneurs';
+  $export['test'] = $view;
+
   return $export;
 }

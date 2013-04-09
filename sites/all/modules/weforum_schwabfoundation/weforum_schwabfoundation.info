@@ -240,4 +240,5 @@ features[variable][] = node_submitted_uploads
 features[views_view][] = carousel_
 features[views_view][] = feeds
 features[views_view][] = news_items
+features[views_view][] = test
 features[wysiwyg][] = full_html
