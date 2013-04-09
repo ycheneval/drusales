@@ -496,9 +496,9 @@ dfn, b {
   font-weight: bold;
 }
 
-.weforum.sidebar .hub-curator-welcome .hub-welcome {
+/*.weforum.sidebar .hub-curator-welcome .hub-welcome {
   font-family: handsean, cursive;
-}
+}*/
 
 pre, code, kbd, tt {
   font-family: Consolas, Menlo, "Courier New", monospace, monospace;
@@ -531,10 +531,10 @@ h1 .amp, h2 .amp, h3 .amp, h4 .amp, h5 .amp, h6 .amp {
 }
 
 /* import font files using @font-face, if not using a service such as typekit */
-@font-face {
+/*@font-face {
   font-family: "handsean";
   src: url('../fonts/handsean.woff') format('woff'), url('../fonts/handsean.ttf') format('truetype'), url('../fonts/handsean.otf') format('opentype');
-}
+}*/
 
 @font-face {
   font-family: "HelveticaNeue45Light";
@@ -738,7 +738,7 @@ h2, .node-page.view-mode-full .field-name-field-page-title, .stream-display .vie
 .stream-display .view-feeds .view-empty a, .stream-display .view-feeds .views-field-field-tibbr-twitter a,
 .stream-display .view-feeds .views-field-field-tibbr-facebook a, .page-node-651 #webform-component-hub label {
   color: #002b5b;
-  font-family: handsean, cursive;
+/*  font-family: handsean, cursive;*/
   font-size: 18px;
   margin-top:18px;
   line-height: 28px;
@@ -747,7 +747,7 @@ h2, .node-page.view-mode-full .field-name-field-page-title, .stream-display .vie
 
 h3 {
   color: #002b5b;
-  font-family: handsean, cursive;
+/*  font-family: handsean, cursive; */
   font-size: 16px;
   line-height: 28px;
   padding: 16px 0;
@@ -756,7 +756,7 @@ h3 {
 h4, .view-number-of-initatives-in-a-hub .views-field-group-audience,
 .view-number-of-initatives-in-a-hub .views-field-group-audience-1, h5, h6 {
   color: #002b5b;
-  font-family: handsean, cursive;
+/*  font-family: handsean, cursive; */
   font-size: 14px;
   line-height: 24px;
   padding: 16px 0;
@@ -3187,7 +3187,7 @@ ul.tabs.secondary li a:hover {
   padding: 0 0.5em;
 }
 #touch-menu .touch-pane-weforum-hub-search .title-choose-hub {
-  font-family: handsean, cursive;
+/*  font-family: handsean, cursive; */
   display: block;
 }
 #touch-menu .touch-pane-weforum-hub-search .pane-content a {
@@ -3866,7 +3866,7 @@ ul.tabs.secondary li a:hover {
   top: -45px;
   left: 0;
   z-index: 2;
-  font-family: handsean, cursive;
+/*  font-family: handsean, cursive; */
   color: white;
   line-height: 28px;
   padding-top: 0;
@@ -4710,4 +4710,11 @@ color: #409ed2;
   /* Hide Area of impacts of None priority but keep them in the code so we can
      filter on them */
   display: none;
+}
+
+/**
+ * Social entrepreneurs node
+ */
+.node-social-entrepreneur .field-name-field-per-image {
+  margin: 12px;
 }

@@ -1353,7 +1353,7 @@ function weforum_schwabfoundation_field_default_fields() {
           'module' => 'image',
           'settings' => array(
             'image_link' => '',
-            'image_style' => 'thumbnail',
+            'image_style' => 'medium',
           ),
           'type' => 'image',
           'weight' => '5',

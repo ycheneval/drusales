@@ -9,7 +9,7 @@ function weforum_schwabfoundation_search_menu() {
 }
 
 function weforum_schwabfoundation_search_getNodes($type)
-{ 
+{
     $nodes = NULL;
     $query = new EntityFieldQuery();
 
@@ -36,10 +36,12 @@ function weforum_schwabfoundation_search_listAOI()
 {
 //    $nodes = weforum_schwabfoundation_search_getNodes('social_entrepreneur');
     $result = db_query('SELECT DISTINCT f.field_area_of_impact_value as value FROM {field_data_field_area_of_impact} f INNER JOIN {node} n ON n.vid = f.revision_id ORDER BY f.field_area_of_impact_value');
-//    foreach ($result as $record) {
-//        // Perform operations on $record->title, etc. here.
-//    }
-    return $result;
+    $values = array();
+    foreach ($result as $record) {
+      $record->value = filter_xss($record->value, array());
+      $values[] = $record;
+    }
+    return $values;
 }
 
 function weforum_schwabfoundation_search_listSectors()

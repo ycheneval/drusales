@@ -459,6 +459,47 @@ function media_get_file_without_label($file, $view_mode, $settings = array()) {
     }
   }
 
+  // Fix for issue #1411340 "Resizing images in WYSIWYG".
+  if (isset($element['#attributes']) && isset($element['#attributes']['width'])) {
+    $element['#width'] = $element['#attributes']['width'];
+  }
+  if (isset($element['#attributes']) && isset($element['#attributes']['height'])) {
+    $element['#height'] = $element['#attributes']['height'];
+  }
+  if (isset($element['#height']) && isset($element['#width'])) {
+    // Find existing styles
+    $style = isset($element['#attributes']['style']) ? explode(';', $element['#attributes']['style']) : array();
+    $css = array();
+
+    // Build an array of CSS declarations.
+    foreach ($style as $k => $v) {
+      if (empty($v)) {
+        continue;
+      }
+
+      $v = explode(':', $v);
+      $css[trim($v[0])] = $v[1];
+    }
+
+    // Standardize image width and height
+    foreach (array('height', 'width') as $prop) {
+      if (isset($css[$prop])) {
+        // Override property with CSS values
+        $element["#$prop"] = floatval($css[$prop]);
+      }
+      else {
+        // Copy property value to CSS
+        $css[$prop] = $element["#$prop"] . 'px';
+      }
+    }
+
+    $element['#attributes']['style'] = '';
+
+    // Rebuild element style with updated values
+    foreach ($css as $k => $v) {
+      $element['#attributes']['style'] .= "$k:$v;";
+    }
+  }
   return $element;
 }
 

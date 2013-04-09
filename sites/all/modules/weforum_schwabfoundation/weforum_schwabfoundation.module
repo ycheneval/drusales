@@ -8,7 +8,33 @@ include_once 'weforum_schwabfoundation.features.inc';
 include_once 'sites/all/libraries/twitteroauth/twitteroauth.php';
 
 /**
- * Implements hook_menu
+ * Implements hook_block_info().
+ */
+function weforum_schwabfoundation_block_info() {
+  $blocks['partnership'] = array(
+    'info' => t('WEF Partnership logo'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function weforum_schwabfoundation_block_view($delta = '') {
+  if ($delta == 'partnership') {
+    $block = array(
+      'content' => array(
+        '#theme' => 'image',
+        '#path' => drupal_get_path('theme', 'weft') . '/images/partnership.jpg',
+      ),
+    );
+    return $block;
+  }
+}
+
+/**
+ * Implements hook_menu().
  */
 function weforum_schwabfoundation_menu() {
     $items = array();
