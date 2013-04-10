@@ -19,24 +19,24 @@ function weforum_schwabfoundation_filter_default_formats() {
     'weight' => '0',
     'filters' => array(
       'filter_autop' => array(
-        'weight' => '0',
+        'weight' => '-48',
         'status' => '1',
         'settings' => array(),
       ),
       'filter_url' => array(
-        'weight' => '0',
+        'weight' => '-47',
         'status' => '1',
         'settings' => array(
           'filter_url_length' => '72',
         ),
       ),
       'media_filter' => array(
-        'weight' => '2',
+        'weight' => '-45',
         'status' => '1',
         'settings' => array(),
       ),
       'filter_htmlcorrector' => array(
-        'weight' => '10',
+        'weight' => '-43',
         'status' => '1',
         'settings' => array(),
       ),

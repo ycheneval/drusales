@@ -35,12 +35,18 @@ function weforum_schwabfoundation_search_getNodes($type)
 function weforum_schwabfoundation_search_listAOI()
 {
 //    $nodes = weforum_schwabfoundation_search_getNodes('social_entrepreneur');
-    $result = db_query('SELECT DISTINCT f.field_area_of_impact_value as value FROM {field_data_field_area_of_impact} f INNER JOIN {node} n ON n.vid = f.revision_id ORDER BY f.field_area_of_impact_value');
+    $result = db_query('SELECT DISTINCT f.field_area_of_impact_value as value FROM {field_data_field_area_of_impact} f INNER JOIN {node} n ON n.vid = f.revision_id');
     $values = array();
     foreach ($result as $record) {
+      // Values contain HTML but we don't want it to appear in the select list.
       $record->value = filter_xss($record->value, array());
       $values[] = $record;
     }
+
+    // We can't sort results at the query level since values are enclosed
+    // in HTML tags.
+    sort($values);
+
     return $values;
 }
 

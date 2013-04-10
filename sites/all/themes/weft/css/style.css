@@ -4706,8 +4706,10 @@ color: #409ed2;
 /**
  * Social entrepreneurs landing page
  */
-.view-test .views-field-field-area-of-impact span[data-priority-name="None"] {
-  /* Hide Area of impacts of None priority but keep them in the code so we can
+.view-test .views-field-field-area-of-impact span[data-priority-name="None"],
+.view-test .views-field-field-area-of-impact span[data-priority-name="Low"],
+.view-test .views-field-field-area-of-impact span[data-priority-name="Medium"] {
+  /* Hide Area of impacts not of High priority but keep them in the code so we can
      filter on them */
   display: none;
 }
