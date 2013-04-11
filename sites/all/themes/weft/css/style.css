@@ -2362,6 +2362,7 @@ ul.large-bullets li:before {
   *zoom: 1;
   min-height: 28px;
   padding: 0 4px 0 6px;
+  position: relative;
 }
 #utility:after {
   content: "";
@@ -2458,6 +2459,9 @@ background: #002b5b  center center repeat-x; /*default background of menu bar*/
 
 #block-weforum-social-weforum-social-links,
 #block-weforum-social-weforum-social-links-footer {
+  bottom: 0;
+  position: absolute;
+  right: 0;
   text-align: right;
 }
 #block-weforum-social-weforum-social-links .social-links,
@@ -3239,7 +3243,9 @@ ul.tabs.secondary li a:hover {
   border-bottom: none;
 }
 #block-weforum-social-weforum-social-links-footer .follow {
+  color: white;
   float: left;
+  font-weight: bold;
   margin-right: 3px;
 }
 .ie7 #block-weforum-social-weforum-social-links-footer {

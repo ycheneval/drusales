@@ -1,0 +1,4 @@
+name = weforum_social
+description = Weforum social module.
+core = 7.x
+package = weforum

@@ -37,6 +37,9 @@ function weforum_schwabfoundation_wysiwyg_default_profiles() {
         'advimage' => array(
           'advimage' => 1,
         ),
+        'inlinepopups' => array(
+          'inlinepopups' => 1,
+        ),
         'drupal' => array(
           'media' => 1,
         ),

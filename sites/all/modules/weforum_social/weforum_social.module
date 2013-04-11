@@ -1,0 +1,88 @@
+<?php
+/**
+ * @file
+ * Social plugins and such module.
+ */
+
+/**
+ * Implements hook_block_info().
+ */
+function weforum_social_block_info() {
+  $block = array();
+  $blocks['weforum_social_links_footer'] = array(
+    'info' => t('Weforum social links footer'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function weforum_social_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 'weforum_social_links_footer':
+      $block['content'] = array(
+        'follow' => array(
+          '#type' => 'container',
+          '#children' => t('Follow us') . ': ',
+          '#attributes' => array(
+            'class' => array(
+              'follow',
+            ),
+          ),
+        ),
+      );
+      $block['content'] += weforum_social_social_links_block_content();
+      break;
+  }
+  return $block;
+}
+
+/**
+ * Block callback for utility bar that appears at the top of a page.
+ */
+function weforum_social_social_links_block_content() {
+  $networks = array(
+    'twitter' => array(
+      'name' => 'twitter',
+      'url' => 'http://twitter.com/schwabfound',
+    ),
+    'facebook' => array(
+      'name' => 'facebook',
+      'url' => 'http://www.facebook.com/schwabfound',
+    ),
+    'paper.li' => array(
+      'name' => 'paper.li',
+      'url' => 'http://paper.li/schwabfound/schwabfoundnetwork',
+    ),
+  );
+
+  $path = drupal_get_path('theme', 'weft');
+  $image_path = base_path() . $path . '/images/social-icons/';
+  foreach ($networks as $network) {
+    $output[$network['name']] = array(
+      '#type' => 'container',
+      '#attributes' => array(
+        'class' => array(
+          'social-links',
+        ),
+      ),
+      'link' => array(
+        '#theme' => 'link',
+        '#text' => '<img src="' . $image_path . $network['name'] . '.png" alt="' . $network['name'] . ' link">',
+        '#path' => $network['url'],
+        '#options' => array(
+          'attributes' => array(
+            'id' => array(
+              'twitter',
+            ),
+          ),
+          'html' => TRUE,
+        ),
+      ),
+    );
+  }
+  return $output;
+}
