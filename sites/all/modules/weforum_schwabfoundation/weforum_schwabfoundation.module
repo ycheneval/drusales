@@ -200,7 +200,7 @@ function weforum_schwabfoundation_worker($person = FALSE, $coming_from_drush = T
                 logMsg('Photo changed, import for '.$per_id.', pho_id: '.$pho_id, $coming_from_drush);
                 $buffer = getAgoraRawPhoto($pho_id);
                 if (strlen($buffer) > 0) {
-                    $newfilename = 'public://per_images/'.$per_id.'_'.gmdate('Y_m_d_His');
+                    $newfilename = 'public://per_images/'.$per_id.'_'.gmdate('Y_m_d_His').'.jpg';
                     logMsg('Agora data ok size '.strlen($buffer).', new filename: "'.$newfilename.'", old file uri: "'.$file['uri'].'"', $coming_from_drush);
                     if (!empty($file)) {
     //                    drush_log('Trying to override an existing file');

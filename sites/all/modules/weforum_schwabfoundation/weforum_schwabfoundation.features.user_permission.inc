@@ -191,7 +191,9 @@ function weforum_schwabfoundation_user_default_permissions() {
   // Exported permission: administer media.
   $permissions['administer media'] = array(
     'name' => 'administer media',
-    'roles' => array(),
+    'roles' => array(
+      'publisher' => 'publisher',
+    ),
     'module' => 'media',
   );
 
