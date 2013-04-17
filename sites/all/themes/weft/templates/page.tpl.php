@@ -35,18 +35,17 @@
             <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
           </a>
         <?php } ?>
+        </div><!-- /#name-and-slogan -->
         <hgroup id="name-and-slogan">
-          <?php if ($site_name){ ?>
+        <?php if ($site_slogan) { ?>
+          <p id="site-slogan"><?php print $site_slogan; ?></p>
+        <?php } ?>
+          <?php if ($site_name && false){ ?>
             <h1 id="site-name">
                 <div class="line-height-110"><a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home"><span><?php print $site_name; ?></span></a></div>
             </h1>
           <?php } ?>
-
         </hgroup>
-        </div><!-- /#name-and-slogan -->
-        <?php if ($site_slogan): ?>
-          <p id="site-slogan"><?php print $site_slogan; ?></p>
-        <?php endif; ?>
       <?php } 
       else { ?>
         <?php if ($logo) { ?>

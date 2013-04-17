@@ -2576,7 +2576,7 @@ h1#page-title {
   border-right: 4px solid #00529b;
   border-left: 4px solid #00529b;*/
   background-color: white;
-  color: #00529b;
+  color: #ffcc00;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#dddddd', endColorstr='#ffffff',GradientType=0 );
   background-image: -webkit-linear-gradient(top, #dddddd 15%, #ffffff 85%);
   background-image: -moz-linear-gradient(top, #dddddd 15%, #ffffff 85%);
