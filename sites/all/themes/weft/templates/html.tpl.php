@@ -82,6 +82,7 @@ global $base_url;
       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
-  </script>
+</script>
+<?php echo '<!-- Gen:' .rand(1, 65535). ' -->' ?>
 </body>
 </html>
