@@ -475,6 +475,7 @@ function weforum_schwabfoundation_batch_finished($success, $results, $operations
 function weforum_schwabfoundation_cron()
 {
     weforum_schwabfoundation_import_twitter_feeds();
+    weforum_schwabfoundation_import_blog_feeds();
 }
 
 function weforum_schwabfoundation_import_twitter_feeds()
@@ -484,7 +485,8 @@ function weforum_schwabfoundation_import_twitter_feeds()
     $conn = new TwitterOAuth(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_OAUTH_TOKEN, TWITTER_OAUTH_SECRET);
 
     try {
-        $result = $conn->get('favorites/list', Array('screen_name' => 'schwabfound'), TRUE);
+//        $result = $conn->get('statuses/user_timeline', Array('screen_name' => 'schwabfound', 'count' => '50'), TRUE);
+        $result = $conn->get('statuses/user_timeline', Array('screen_name' => 'schwabfound'), TRUE);
 
         if (!empty($result->errors)) {
             $error = array_shift($result->errors);
@@ -492,7 +494,7 @@ function weforum_schwabfoundation_import_twitter_feeds()
             $data['favorites'] = FALSE;
         } else {
             $data['favorites'] = $result;
-//            drupal_set_message('We have got '.count($result).' tweets to handle');
+            drupal_set_message('We have got '.count($result).' tweets to handle');
         }
     } catch (Exception $e) {
         watchdog('schwabfoundation_events', t('Unable to get posts from favorites/list [%msg]'), array('%msg' => $e->getMessage()), WATCHDOG_ERROR);
@@ -537,8 +539,11 @@ function weforum_schwabfoundation_import_twitter_feeds()
                 $node = new stdClass();
                 $node->type = 'twitter_oauth';
                 node_object_prepare($node);
+                drupal_set_message('Node not found, creating a new one');
+
             } else {
                 $node = node_load((int) $result->ordered_results[0]->entity_id);
+                drupal_set_message('Node found, loading existing one');
             }
 
             // Do not overwrite published status
@@ -599,9 +604,160 @@ function weforum_schwabfoundation_import_twitter_feeds()
 //            $node = node_submit($node);
 
             node_save($node);
-//            drupal_set_message('Saving node, node_id is now '.$node->nid.', node type: '.$node->type);
+            drupal_set_message('Saving node, node_id is now '.$node->nid.', node type: '.$node->type);
 
         }
     }
 }
 
+
+function fetchUrl($url, $timeout = NULL)
+{              
+//    $timeout = $timeout?$timeout:self::$timeout;
+
+    //$ch = curl_init($url);
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
+//    curl_setopt($ch, CURLOPT_COOKIEJAR, self::getCookieFileName($url) );
+//    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout-1);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    //curl_setopt($ch, CURLOPT_MAXREDIRS, -1);
+    //curl_setopt($ch, CURLOPT_REFERER, 'http://www.google.com/');
+    curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 5.1; fr; rv:1.9.1.2) Gecko/20090729 Firefox/3.6.2'); 
+    $contents = curl_exec($ch);
+    curl_close($ch);
+
+    return $contents;    
+}  
+
+function json_printerror($error) {
+
+    $result = '';
+    switch ($error) {
+        case JSON_ERROR_NONE:
+            break;
+
+        case JSON_ERROR_DEPTH:
+            $result = ' - Maximum stack depth exceeded';
+            break;
+
+        case JSON_ERROR_STATE_MISMATCH:
+            $result = ' - Underflow or the modes mismatch';
+            break;
+        
+        case JSON_ERROR_CTRL_CHAR:
+            $result = ' - Unexpected control character found';
+            break;
+        
+        case JSON_ERROR_SYNTAX:
+            $result = ' - Syntax error, malformed JSON';
+            break;
+        
+        case JSON_ERROR_UTF8:
+            $result = ' - Malformed UTF-8 characters, possibly incorrectly encoded';
+            break;
+        
+        default:
+            $result = ' - Unknown error';
+            break;
+    }
+    
+    return $result;
+}
+
+function weforum_schwabfoundation_import_blog_feeds()
+{
+    global $user;
+    // Connect to forumblog API
+    $apiUrl = 'http://forumblog.org/api/communities/social-entrepreneurs/';
+
+    try {
+        $json = fetchUrl($apiUrl);
+        $blogentries = json_decode($json, true);
+        $json_error = json_last_error();
+
+        if ($json_error != JSON_ERROR_NONE) {
+            watchdog('schwabfoundation_events', t('Malformed json from forumblog [%msg]'), array('%msg' => json_printerror($json_error)), WATCHDOG_ERROR);
+            $blogentries = Array();
+        } else {
+//            drupal_set_message('We have got '.count($result).' tweets to handle');
+        }
+    } catch (Exception $e) {
+        watchdog('schwabfoundation_events', t('Unable to get posts from forumblog [%msg]'), array('%msg' => $e->getMessage()), WATCHDOG_ERROR);
+        $blogentries = Array();
+    }
+
+    $map = array(
+            '_body' => 'body',
+            'created_at' => 'date',
+            '_id' => 'field_blog_id',
+            '_title' => 'title',
+            '_published' => 'status',
+            '_image' => 'field_per_image',
+    );
+
+    // Ensure we store valid data
+    foreach ($blogentries as $blogEntry) {
+        $item['_id'] = $blogEntry['get'];
+        drupal_set_message('Examining'.$item['_id']);
+
+        // If the node already exists, update existing one
+        $result = new EntityFieldQuery();
+        $result->entityCondition('entity_type', 'node')
+                ->EntityCondition('bundle', 'blog_entry')
+                ->fieldCondition('field_blog_id', 'value', $item['_id'])
+                ->execute();
+
+        if (empty($result->ordered_results)) {
+            $node = new stdClass();
+            $node->type = 'blog_entry';
+            node_object_prepare($node);
+        } else {
+            $node = node_load((int) $result->ordered_results[0]->entity_id);
+        }
+
+        // Do not overwrite published status, if not set publish by default
+        $item['_published'] = isset($node->status) ? $node->status : 1;
+
+        // Title is limited to 255 chars, and having newline characters
+        // creates issues with nodereference when validating the form
+        $item['_title'] = str_replace(array("\r", "\n"), '', truncate_utf8($blogEntry['title'], 255));
+        $item['_body'] = str_replace(array("\r", "\n"), '', truncate_utf8($blogEntry['excerpt'], 10000));
+        $publishedDate = new DateTime($blogEntry['date']);
+        $item['created_at'] = $publishedDate->getTimestamp();
+
+
+        // Build node info
+        foreach ($map as $source => $dest) {
+            if (array_key_exists($source, $item)) {
+                $value = $item[$source];
+            } else if (strpos($source, '][') !== FALSE) {
+                $source = explode('][', $source);
+                if (isset($source[0], $item) && array_key_exists($source[1], $item[$source[0]])) {
+                    $value = $item[$source[0]][$source[1]];
+                }
+            } else {
+                // Do not alter the possibly existing value
+                continue;
+            }
+
+            if (strpos($dest, 'field_') === 0 || strcmp($dest, 'body')==0) {
+                // Adapt for CCK field format
+                $node->{$dest}['und'][0]['value'] = $value;
+                    drupal_set_message('node dest[0] '.$dest.', value '.$value);
+            } else {
+                $node->{$dest} = $value;
+                    drupal_set_message('node dest '.$dest.', value '.$value);
+            }
+        }
+        $node->body['und'][0]['format'] = 'full_html';
+
+            drupal_set_message('Submitting node '.print_r($node));
+//            $node = node_submit($node);
+
+        node_save($node);
+            drupal_set_message('Saving node, node_id is now '.$node->nid.', node type: '.$node->type);
+
+    }
+}

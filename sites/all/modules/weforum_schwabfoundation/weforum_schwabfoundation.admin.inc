@@ -89,7 +89,7 @@ function weforum_schwabfoundation_twitter_import_form_submit($form, &$form_state
 
 function weforum_schwabfoundation_blog_import_form() {
   $form['weforum_schwabfoundation_host'] = array(
-    '#markup' => 'Clicking on Import will import the social entrepreneurs Blog feed from forumbblog.org<br>'
+    '#markup' => 'Clicking on Import will import the social entrepreneurs Blog feed from forumblog.org<br>'
   );
   
   $form['weforum_schwabfoundation_blog_import'] = array(
@@ -102,4 +102,5 @@ function weforum_schwabfoundation_blog_import_form() {
 
 function weforum_schwabfoundation_blog_import_form_submit($form, &$form_state)
 {
+    weforum_schwabfoundation_import_blog_feeds();
 }
