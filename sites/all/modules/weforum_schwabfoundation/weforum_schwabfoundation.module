@@ -705,7 +705,7 @@ function weforum_schwabfoundation_import_blog_feeds()
             '_title' => 'title',
             '_published' => 'status',
             '_image' => 'field_per_image',
-            '_permalink' => 'field_blog_permalink][url'
+            '_permalink' => 'field_blog_permalink'
     );
 
     // Ensure we store valid data
