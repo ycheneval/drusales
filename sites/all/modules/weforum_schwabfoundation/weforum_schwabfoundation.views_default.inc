@@ -44,7 +44,7 @@ function weforum_schwabfoundation_views_default_views() {
   $handler->display->display_options['relationships']['nodequeue_rel']['names'] = array(
     'homepage' => 'homepage',
   );
-  /* Field: Content: per_image */
+  /* Field: Content: Image */
   $handler->display->display_options['fields']['field_per_image']['id'] = 'field_per_image';
   $handler->display->display_options['fields']['field_per_image']['table'] = 'field_data_field_per_image';
   $handler->display->display_options['fields']['field_per_image']['field'] = 'field_per_image';
@@ -113,6 +113,26 @@ function weforum_schwabfoundation_views_default_views() {
   $handler->display->display_options['fields']['nothing_1']['element_label_type'] = '0';
   $handler->display->display_options['fields']['nothing_1']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['nothing_1']['element_wrapper_type'] = '0';
+  /* Field: Content: blog_permalink */
+  $handler->display->display_options['fields']['field_blog_permalink']['id'] = 'field_blog_permalink';
+  $handler->display->display_options['fields']['field_blog_permalink']['table'] = 'field_data_field_blog_permalink';
+  $handler->display->display_options['fields']['field_blog_permalink']['field'] = 'field_blog_permalink';
+  $handler->display->display_options['fields']['field_blog_permalink']['label'] = '';
+  $handler->display->display_options['fields']['field_blog_permalink']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_blog_permalink']['hide_empty'] = TRUE;
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title_1']['id'] = 'title_1';
+  $handler->display->display_options['fields']['title_1']['table'] = 'node';
+  $handler->display->display_options['fields']['title_1']['field'] = 'title';
+  $handler->display->display_options['fields']['title_1']['label'] = '';
+  $handler->display->display_options['fields']['title_1']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['title_1']['alter']['path'] = '[field_blog_permalink]';
+  $handler->display->display_options['fields']['title_1']['alter']['external'] = TRUE;
+  $handler->display->display_options['fields']['title_1']['alter']['target'] = '_blank';
+  $handler->display->display_options['fields']['title_1']['element_type'] = 'div';
+  $handler->display->display_options['fields']['title_1']['element_class'] = 'title';
+  $handler->display->display_options['fields']['title_1']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['title_1']['link_to_node'] = FALSE;
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
@@ -171,7 +191,6 @@ function weforum_schwabfoundation_views_default_views() {
   $handler->display->display_options['fields']['body']['field'] = 'body';
   $handler->display->display_options['fields']['body']['label'] = '';
   $handler->display->display_options['fields']['body']['alter']['max_length'] = '1000';
-  $handler->display->display_options['fields']['body']['alter']['trim'] = TRUE;
   $handler->display->display_options['fields']['body']['alter']['html'] = TRUE;
   $handler->display->display_options['fields']['body']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['body']['settings'] = array(
@@ -275,7 +294,7 @@ function weforum_schwabfoundation_views_default_views() {
   $handler->display->display_options['fields']['nothing']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['nothing']['element_wrapper_type'] = '0';
   $handler->display->display_options['fields']['nothing']['element_default_classes'] = FALSE;
-  /* Field: Content: per_image */
+  /* Field: Content: Image */
   $handler->display->display_options['fields']['field_per_image']['id'] = 'field_per_image';
   $handler->display->display_options['fields']['field_per_image']['table'] = 'field_data_field_per_image';
   $handler->display->display_options['fields']['field_per_image']['field'] = 'field_per_image';
@@ -368,6 +387,25 @@ function weforum_schwabfoundation_views_default_views() {
   $handler->display->display_options['fields']['nothing_4']['element_label_colon'] = FALSE;
   $handler->display->display_options['fields']['nothing_4']['element_wrapper_type'] = '0';
   $handler->display->display_options['fields']['nothing_4']['element_default_classes'] = FALSE;
+  /* Field: Content: blog_permalink */
+  $handler->display->display_options['fields']['field_blog_permalink']['id'] = 'field_blog_permalink';
+  $handler->display->display_options['fields']['field_blog_permalink']['table'] = 'field_data_field_blog_permalink';
+  $handler->display->display_options['fields']['field_blog_permalink']['field'] = 'field_blog_permalink';
+  $handler->display->display_options['fields']['field_blog_permalink']['label'] = '';
+  $handler->display->display_options['fields']['field_blog_permalink']['exclude'] = TRUE;
+  $handler->display->display_options['fields']['field_blog_permalink']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_blog_permalink']['hide_empty'] = TRUE;
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title_1']['id'] = 'title_1';
+  $handler->display->display_options['fields']['title_1']['table'] = 'node';
+  $handler->display->display_options['fields']['title_1']['field'] = 'title';
+  $handler->display->display_options['fields']['title_1']['label'] = '';
+  $handler->display->display_options['fields']['title_1']['alter']['make_link'] = TRUE;
+  $handler->display->display_options['fields']['title_1']['alter']['path'] = '[field_blog_permalink]';
+  $handler->display->display_options['fields']['title_1']['alter']['external'] = TRUE;
+  $handler->display->display_options['fields']['title_1']['alter']['target'] = '_blank';
+  $handler->display->display_options['fields']['title_1']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['title_1']['link_to_node'] = FALSE;
   /* Sort criterion: Content: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
@@ -390,6 +428,7 @@ function weforum_schwabfoundation_views_default_views() {
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
+    'blog_entry' => 'blog_entry',
     'news' => 'news',
     'social_entrepreneur' => 'social_entrepreneur',
   );
@@ -410,7 +449,7 @@ function weforum_schwabfoundation_views_default_views() {
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'Entrepreneurs';
+  $handler->display->display_options['title'] = 'Social Entrepreneurs';
   $handler->display->display_options['use_more_always'] = FALSE;
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
@@ -457,22 +496,11 @@ function weforum_schwabfoundation_views_default_views() {
       'empty_column' => 0,
     ),
   );
-  /* Field: Content: full_name */
-  $handler->display->display_options['fields']['field_full_name']['id'] = 'field_full_name';
-  $handler->display->display_options['fields']['field_full_name']['table'] = 'field_data_field_full_name';
-  $handler->display->display_options['fields']['field_full_name']['field'] = 'field_full_name';
-  $handler->display->display_options['fields']['field_full_name']['label'] = '';
-  $handler->display->display_options['fields']['field_full_name']['exclude'] = TRUE;
-  $handler->display->display_options['fields']['field_full_name']['alter']['make_link'] = TRUE;
-  $handler->display->display_options['fields']['field_full_name']['element_label_colon'] = FALSE;
-  $handler->display->display_options['fields']['field_full_name']['element_default_classes'] = FALSE;
   /* Field: Content: Title */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = 'Name';
-  $handler->display->display_options['fields']['title']['alter']['alter_text'] = TRUE;
-  $handler->display->display_options['fields']['title']['alter']['text'] = '[field_full_name]';
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = FALSE;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = FALSE;
   /* Field: Content: Organization */
@@ -484,7 +512,6 @@ function weforum_schwabfoundation_views_default_views() {
   $handler->display->display_options['fields']['field_area_of_impact']['table'] = 'field_data_field_area_of_impact';
   $handler->display->display_options['fields']['field_area_of_impact']['field'] = 'field_area_of_impact';
   $handler->display->display_options['fields']['field_area_of_impact']['delta_offset'] = '0';
-  $handler->display->display_options['fields']['field_area_of_impact']['separator'] = ' ';
   /* Field: Content: Sector */
   $handler->display->display_options['fields']['field_sector']['id'] = 'field_sector';
   $handler->display->display_options['fields']['field_sector']['table'] = 'field_data_field_sector';

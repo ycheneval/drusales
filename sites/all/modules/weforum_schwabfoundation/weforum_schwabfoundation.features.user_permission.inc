@@ -271,6 +271,13 @@ function weforum_schwabfoundation_user_default_permissions() {
     'module' => 'user',
   );
 
+  // Exported permission: administer redirects.
+  $permissions['administer redirects'] = array(
+    'name' => 'administer redirects',
+    'roles' => array(),
+    'module' => 'redirect',
+  );
+
   // Exported permission: administer search.
   $permissions['administer search'] = array(
     'name' => 'administer search',
@@ -383,11 +390,11 @@ function weforum_schwabfoundation_user_default_permissions() {
     'module' => 'feeds',
   );
 
-  // Exported permission: clear twitter feeds.
-  $permissions['clear twitter feeds'] = array(
-    'name' => 'clear twitter feeds',
+  // Exported permission: create blog_entry content.
+  $permissions['create blog_entry content'] = array(
+    'name' => 'create blog_entry content',
     'roles' => array(),
-    'module' => 'feeds',
+    'module' => 'node',
   );
 
   // Exported permission: create feed_post content.
@@ -443,6 +450,13 @@ function weforum_schwabfoundation_user_default_permissions() {
     'module' => 'path',
   );
 
+  // Exported permission: delete any blog_entry content.
+  $permissions['delete any blog_entry content'] = array(
+    'name' => 'delete any blog_entry content',
+    'roles' => array(),
+    'module' => 'node',
+  );
+
   // Exported permission: delete any feed_post content.
   $permissions['delete any feed_post content'] = array(
     'name' => 'delete any feed_post content',
@@ -485,6 +499,13 @@ function weforum_schwabfoundation_user_default_permissions() {
   // Exported permission: delete any uploads content.
   $permissions['delete any uploads content'] = array(
     'name' => 'delete any uploads content',
+    'roles' => array(),
+    'module' => 'node',
+  );
+
+  // Exported permission: delete own blog_entry content.
+  $permissions['delete own blog_entry content'] = array(
+    'name' => 'delete own blog_entry content',
     'roles' => array(),
     'module' => 'node',
   );
@@ -551,6 +572,13 @@ function weforum_schwabfoundation_user_default_permissions() {
     'module' => 'admin_menu',
   );
 
+  // Exported permission: edit any blog_entry content.
+  $permissions['edit any blog_entry content'] = array(
+    'name' => 'edit any blog_entry content',
+    'roles' => array(),
+    'module' => 'node',
+  );
+
   // Exported permission: edit any feed_post content.
   $permissions['edit any feed_post content'] = array(
     'name' => 'edit any feed_post content',
@@ -606,6 +634,13 @@ function weforum_schwabfoundation_user_default_permissions() {
       'publisher' => 'publisher',
     ),
     'module' => 'media',
+  );
+
+  // Exported permission: edit own blog_entry content.
+  $permissions['edit own blog_entry content'] = array(
+    'name' => 'edit own blog_entry content',
+    'roles' => array(),
+    'module' => 'node',
   );
 
   // Exported permission: edit own feed_post content.
@@ -679,15 +714,6 @@ function weforum_schwabfoundation_user_default_permissions() {
     'module' => 'media',
   );
 
-  // Exported permission: import twitter feeds.
-  $permissions['import twitter feeds'] = array(
-    'name' => 'import twitter feeds',
-    'roles' => array(
-      'publisher' => 'publisher',
-    ),
-    'module' => 'feeds',
-  );
-
   // Exported permission: manage features.
   $permissions['manage features'] = array(
     'name' => 'manage features',
@@ -746,13 +772,6 @@ function weforum_schwabfoundation_user_default_permissions() {
   // Exported permission: unlock facebook feeds.
   $permissions['unlock facebook feeds'] = array(
     'name' => 'unlock facebook feeds',
-    'roles' => array(),
-    'module' => 'feeds',
-  );
-
-  // Exported permission: unlock twitter feeds.
-  $permissions['unlock twitter feeds'] = array(
-    'name' => 'unlock twitter feeds',
     'roles' => array(),
     'module' => 'feeds',
   );

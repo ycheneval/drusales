@@ -13,6 +13,29 @@ function weforum_schwabfoundation_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'field_bundle_settings_node__blog_entry';
+  $strongarm->value = array(
+    'view_modes' => array(),
+    'extra_fields' => array(
+      'form' => array(
+        'title' => array(
+          'weight' => '-5',
+        ),
+        'path' => array(
+          'weight' => '30',
+        ),
+        'redirect' => array(
+          'weight' => '30',
+        ),
+      ),
+      'display' => array(),
+    ),
+  );
+  $export['field_bundle_settings_node__blog_entry'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'field_bundle_settings_node__news';
   $strongarm->value = array(
     'view_modes' => array(
@@ -125,10 +148,10 @@ function weforum_schwabfoundation_strongarm() {
     'extra_fields' => array(
       'form' => array(
         'title' => array(
-          'weight' => '-5',
+          'weight' => '0',
         ),
         'path' => array(
-          'weight' => '30',
+          'weight' => '3',
         ),
       ),
       'display' => array(),
@@ -201,6 +224,15 @@ function weforum_schwabfoundation_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'menu_options_blog_entry';
+  $strongarm->value = array(
+    0 => 'main-menu',
+  );
+  $export['menu_options_blog_entry'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'menu_options_feed_post';
   $strongarm->value = array();
   $export['menu_options_feed_post'] = $strongarm;
@@ -251,6 +283,13 @@ function weforum_schwabfoundation_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'menu_parent_blog_entry';
+  $strongarm->value = 'main-menu:0';
+  $export['menu_parent_blog_entry'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'menu_parent_feed_post';
   $strongarm->value = 'main-menu:0';
   $export['menu_parent_feed_post'] = $strongarm;
@@ -289,6 +328,16 @@ function weforum_schwabfoundation_strongarm() {
   $strongarm->name = 'menu_parent_uploads';
   $strongarm->value = 'main-menu:0';
   $export['menu_parent_uploads'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'node_options_blog_entry';
+  $strongarm->value = array(
+    0 => 'status',
+    1 => 'promote',
+  );
+  $export['node_options_blog_entry'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
@@ -349,6 +398,13 @@ function weforum_schwabfoundation_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'node_preview_blog_entry';
+  $strongarm->value = '1';
+  $export['node_preview_blog_entry'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'node_preview_feed_post';
   $strongarm->value = '1';
   $export['node_preview_feed_post'] = $strongarm;
@@ -387,6 +443,13 @@ function weforum_schwabfoundation_strongarm() {
   $strongarm->name = 'node_preview_uploads';
   $strongarm->value = '1';
   $export['node_preview_uploads'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'node_submitted_blog_entry';
+  $strongarm->value = 1;
+  $export['node_submitted_blog_entry'] = $strongarm;
 
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */

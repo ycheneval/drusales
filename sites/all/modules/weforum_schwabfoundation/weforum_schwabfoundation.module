@@ -505,7 +505,6 @@ function weforum_schwabfoundation_import_twitter_feeds()
         'favorites' => array(
             'provider' => 'field_twitter_provider',
             '_body' => 'body',
-            'created_at' => 'date',
             '_id' => 'field_twitter_id',
             '_title' => 'title',
             '_published' => 'status',
@@ -529,6 +528,7 @@ function weforum_schwabfoundation_import_twitter_feeds()
             }
 
             // If the node already exists, update existing one
+            $has_changed = false;
             $result = new EntityFieldQuery();
             $result->entityCondition('entity_type', 'node')
                     ->EntityCondition('bundle', 'twitter_oauth')
@@ -540,6 +540,7 @@ function weforum_schwabfoundation_import_twitter_feeds()
                 $node->type = 'twitter_oauth';
                 node_object_prepare($node);
                 drupal_set_message('Node not found, creating a new one');
+                $has_changed = true;
 
             } else {
                 $node = node_load((int) $result->ordered_results[0]->entity_id);
@@ -591,10 +592,17 @@ function weforum_schwabfoundation_import_twitter_feeds()
 
                 if (strpos($dest, 'field_') === 0 || strcmp($dest, 'body')==0) {
                     // Adapt for CCK field format
-                    $node->{$dest}['und'][0]['value'] = $value;
+                    if ($node->{$dest}['und'][0]['value'] != $value) {
+                        $node->{$dest}['und'][0]['value'] = $value;
+                        $has_changed = true;
+                    }
 //                    drupal_set_message('node dest[0] '.$dest.', value '.$value);
                 } else {
-                    $node->{$dest} = $value;
+                    if ($node->{$dest} != $value) {
+                        $node->{$dest} = $value;
+                        $has_changed = true;
+
+                    };
 //                    drupal_set_message('node dest '.$dest.', value '.$value);
                 }
             }
@@ -603,8 +611,10 @@ function weforum_schwabfoundation_import_twitter_feeds()
 //            drupal_set_message('Submitting node '.print_r($node));
 //            $node = node_submit($node);
 
-            node_save($node);
-            drupal_set_message('Saving node, node_id is now '.$node->nid.', node type: '.$node->type);
+            if ($has_changed) {
+                node_save($node);
+                drupal_set_message('Saving node, node_id is now '.$node->nid.', node type: '.$node->type);
+            }
 
         }
     }
@@ -695,11 +705,14 @@ function weforum_schwabfoundation_import_blog_feeds()
             '_title' => 'title',
             '_published' => 'status',
             '_image' => 'field_per_image',
+            '_permalink' => 'field_blog_permalink][url'
     );
 
     // Ensure we store valid data
     foreach ($blogentries as $blogEntry) {
         $item['_id'] = $blogEntry['get'];
+        $item['_permalink'] = $blogEntry['permalink'];
+        
         drupal_set_message('Examining'.$item['_id']);
 
         // If the node already exists, update existing one
@@ -727,6 +740,33 @@ function weforum_schwabfoundation_import_blog_feeds()
         $publishedDate = new DateTime($blogEntry['date']);
         $item['created_at'] = $publishedDate->getTimestamp();
 
+        
+        
+        
+        // Handle photo
+        $buffer = fetchUrl($blogEntry['image']);
+        $fName = basename($blogEntry['image']);
+//        $extension = substr($blogEntry['image'], strrpos($blogEntry['image'], '.')+1);
+        $file = isset($node->field_per_image['und']) ? $node->field_per_image['und'][0]:NULL;
+        if (strlen($buffer) > 0) {
+            $newfilename = 'public://blog/'.$fName;
+            drupal_set_message('Found an image for blog entry, $file is  '.$file);
+            if (!empty($file)) {
+                $file = file_save_data($buffer, $file['uri'], FILE_EXISTS_REPLACE);
+                file_move($file, $newfilename, FILE_EXISTS_REPLACE);
+            } else {
+                $file = file_save_data($buffer, $newfilename, FILE_EXISTS_REPLACE);
+            }
+            $node->field_per_image['und'][0] = (array)$file;
+        }
+        else {
+            if ($file) {
+                $node->field_per_image['und'][0] = NULL;
+            }
+        }
+        
+        
+        
 
         // Build node info
         foreach ($map as $source => $dest) {
@@ -759,5 +799,15 @@ function weforum_schwabfoundation_import_blog_feeds()
         node_save($node);
             drupal_set_message('Saving node, node_id is now '.$node->nid.', node type: '.$node->type);
 
+    }
+}
+
+function weforum_schwabfoundation_preprocess_views_view_fields(&$vars)
+{
+    if (strcmp($vars['view']->name, 'news_items') == 0 || strcmp($vars['view']->name, 'carousel_') == 0) {
+        if (strcmp($vars['row']->_field_data['nid']['entity']->type,'blog_entry') == 0) {
+            $vars['fields']['title']->content = $vars['fields']['title_1']->content;
+        }
+        unset($vars['fields']['title_1']);
     }
 }
