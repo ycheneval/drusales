@@ -62,7 +62,6 @@ features[field][] = node-page-field_attachment
 features[field][] = node-page-field_page_title
 features[field][] = node-social_entrepreneur-body
 features[field][] = node-social_entrepreneur-field_area_of_impact
-features[field][] = node-social_entrepreneur-field_area_of_impact_priority
 features[field][] = node-social_entrepreneur-field_country
 features[field][] = node-social_entrepreneur-field_first_name
 features[field][] = node-social_entrepreneur-field_full_name

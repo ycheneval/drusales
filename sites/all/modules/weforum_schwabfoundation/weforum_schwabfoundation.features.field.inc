@@ -1055,7 +1055,7 @@ function weforum_schwabfoundation_field_default_fields() {
       'label' => 'Area of impact',
       'required' => 0,
       'settings' => array(
-        'text_processing' => '0',
+        'text_processing' => '1',
         'user_register_form' => FALSE,
       ),
       'widget' => array(
@@ -1066,62 +1066,6 @@ function weforum_schwabfoundation_field_default_fields() {
         ),
         'type' => 'text_textfield',
         'weight' => '8',
-      ),
-    ),
-  );
-
-  // Exported field: 'node-social_entrepreneur-field_area_of_impact_priority'.
-  $fields['node-social_entrepreneur-field_area_of_impact_priority'] = array(
-    'field_config' => array(
-      'active' => '1',
-      'cardinality' => '-1',
-      'deleted' => '0',
-      'entity_types' => array(),
-      'field_name' => 'field_area_of_impact_priority',
-      'foreign keys' => array(),
-      'indexes' => array(),
-      'locked' => '0',
-      'module' => 'number',
-      'settings' => array(),
-      'translatable' => '0',
-      'type' => 'number_integer',
-    ),
-    'field_instance' => array(
-      'bundle' => 'social_entrepreneur',
-      'default_value' => NULL,
-      'deleted' => '0',
-      'description' => '',
-      'display' => array(
-        'default' => array(
-          'label' => 'hidden',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => '81',
-        ),
-        'teaser' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => 0,
-        ),
-      ),
-      'entity_type' => 'node',
-      'field_name' => 'field_area_of_impact_priority',
-      'label' => 'Area of impact - priority',
-      'required' => 0,
-      'settings' => array(
-        'max' => '5',
-        'min' => '0',
-        'prefix' => '',
-        'suffix' => '',
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'active' => 0,
-        'module' => 'number',
-        'settings' => array(),
-        'type' => 'number',
-        'weight' => '9',
       ),
     ),
   );
@@ -1700,7 +1644,7 @@ function weforum_schwabfoundation_field_default_fields() {
           'module' => 'image',
           'settings' => array(
             'image_link' => '',
-            'image_style' => 'thumbnail',
+            'image_style' => 'medium',
           ),
           'type' => 'image',
           'weight' => '5',
@@ -2217,7 +2161,7 @@ function weforum_schwabfoundation_field_default_fields() {
         'description_field' => 1,
         'file_directory' => 'file_uploads',
         'file_extensions' => 'txt pdf docx doc png jpg gif epub',
-        'max_filesize' => '',
+        'max_filesize' => '10 MB',
         'user_register_form' => FALSE,
       ),
       'widget' => array(
@@ -2235,7 +2179,6 @@ function weforum_schwabfoundation_field_default_fields() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Area of impact');
-  t('Area of impact - priority');
   t('Attachment');
   t('Attachments');
   t('Body');

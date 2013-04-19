@@ -153,6 +153,9 @@ function weforum_schwabfoundation_strongarm() {
         'path' => array(
           'weight' => '3',
         ),
+        'redirect' => array(
+          'weight' => '30',
+        ),
       ),
       'display' => array(),
     ),
@@ -213,6 +216,9 @@ function weforum_schwabfoundation_strongarm() {
           'weight' => '-5',
         ),
         'path' => array(
+          'weight' => '30',
+        ),
+        'redirect' => array(
           'weight' => '30',
         ),
       ),
