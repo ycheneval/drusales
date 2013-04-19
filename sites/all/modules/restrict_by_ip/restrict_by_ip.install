@@ -5,20 +5,20 @@
  * Creates a table of the variables that will be needed to use this module
  */
 function restrict_by_ip_install() {
-  $ret = drupal_install_schema('restrict_by_ip');
-
-  $failed = array();
-  foreach ($ret as $query) {
-    if (!$query['success']) {
-      $failed[] = $query['query'];
-    }
-  }
-  if (empty($failed)) {
-    drupal_set_message(t('Restrict Logon By IP module installed successfully.'));
-  }
-  else {
-    drupal_set_message(t('Table installation for the Restrict Logon By IP module was unsuccessful. The following queries failed: !queries', array('!queries' => theme('item_list', $failed))), 'error');
-  }
+//  $ret = drupal_install_schema('restrict_by_ip');
+//
+//  $failed = array();
+//  foreach ($ret as $query) {
+//    if (!$query['success']) {
+//      $failed[] = $query['query'];
+//    }
+//  }
+//  if (empty($failed)) {
+//    drupal_set_message(t('Restrict Logon By IP module installed successfully.'));
+//  }
+//  else {
+//    drupal_set_message(t('Table installation for the Restrict Logon By IP module was unsuccessful. The following queries failed: !queries', array('!queries' => theme('item_list', $failed))), 'error');
+//  }
 }
 
 /**
