@@ -93,8 +93,8 @@ function weforum_schwabfoundation_permission() {
       'description' => t('Allows to import Facebook feed.'),
     ),
     'Twitter import' => array(
-      'title' => t('Import Facebook Feed'),
-      'description' => t('Allows to import Twitter feed.'),
+      'title' => t('Import Twitter Feed'),
+      'description' => t('Allows to import Twitter oAuth feed.'),
     ),
     'Blog import' => array(
       'title' => t('Import Blog Feed'),
