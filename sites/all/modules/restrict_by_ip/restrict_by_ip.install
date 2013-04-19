@@ -1,0 +1,113 @@
+<?php
+
+/**
+ * Implementation of hook_install().
+ * Creates a table of the variables that will be needed to use this module
+ */
+function restrict_by_ip_install() {
+  $ret = drupal_install_schema('restrict_by_ip');
+
+  $failed = array();
+  foreach ($ret as $query) {
+    if (!$query['success']) {
+      $failed[] = $query['query'];
+    }
+  }
+  if (empty($failed)) {
+    drupal_set_message(t('Restrict Logon By IP module installed successfully.'));
+  }
+  else {
+    drupal_set_message(t('Table installation for the Restrict Logon By IP module was unsuccessful. The following queries failed: !queries', array('!queries' => theme('item_list', $failed))), 'error');
+  }
+}
+
+/**
+* Implementation of hook_schema().
+*/
+function restrict_by_ip_schema() {
+  $schema['restrict_by_ip']    = array(
+    'description'              => t('The Restrict By IP Table'),
+    'fields'                   => array(
+      'uid'                    => array(
+        'type'                 => 'int',
+        'unsigned'             => TRUE
+      ),
+      'restrict_by_ip_address' => array(
+        'type'                 => 'varchar',
+        'length'               => 256,
+      ),
+    ),
+    'primary key' => array('uid'),
+  );
+  return $schema;
+} 
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function restrict_by_ip_uninstall() {
+  drupal_uninstall_schema('restrict_by_ip');
+  // Drop variables.
+  $variables = array(
+    'restrict_by_ip_user_registration',
+    'restrict_by_ip_error_page',
+    'restrict_by_ip_login_range',
+    'restrict_by_ip_header',
+  );
+  foreach ($variables as $variable) {
+    variable_del($variable);
+  }
+  // Clean up role-based variables
+  db_query("DELETE FROM {variable} WHERE name LIKE 'restrict_by_ip_role%'");
+
+  drupal_set_message(t('Restrict Logon By IP module uninstalled successfully.'));
+}
+
+/**
+ * Implementation of hook_update_N().
+ */
+function restrict_by_ip_update_6300() {
+  // Upgrade path for role settings previously stored in {restrict_by_ip} now stored in variable table.
+  $results = db_query("SELECT rid, restrict_by_ip_address FROM {restrict_by_ip} WHERE restrict_by_ip_type=1 AND rid IS NOT NULL");
+  while ($row = db_fetch_object($results)) {
+    variable_set('restrict_by_ip_role' . $row->rid, $row->restrict_by_ip_address);
+  }
+  // Remove old role entries in table
+  db_query("DELETE FROM {restrict_by_ip} WHERE uid IS NULL OR uid=0");
+
+  // Removal of all entries in {restrict_by_ip} with restrict_by_ip_type set to 0 (no longer storing inactive restrictions)
+  db_query("DELETE FROM {restrict_by_ip} WHERE restrict_by_ip_type=0");
+
+
+  // Database updates
+  $ret = array();
+
+  switch ($GLOBALS['db_type']) {
+    case 'mysqli':
+    case 'mysql':
+      // Alteration of table to remove rid and restrict_by_ip_type columns.
+      $ret[] = update_sql("ALTER TABLE {restrict_by_ip} DROP rid");
+      $ret[] = update_sql("ALTER TABLE {restrict_by_ip} DROP restrict_by_ip_type");
+      // Increase size of IP textfield per bug reported @ http://drupal.org/node/1121334
+      $ret[] = update_sql("ALTER TABLE {restrict_by_ip} MODIFY restrict_by_ip_address varchar(256)");
+      // Addition of primary key
+      $ret[] = update_sql("ALTER TABLE {restrict_by_ip} ADD PRIMARY KEY uid (uid) ");
+      // Flat this module for bootstrap in system table
+      $ret[] = update_sql("UPDATE {system} SET bootstrap=1 WHERE name='restrict_by_ip'");
+      break;
+    case 'pgsql':
+      // Alteration of table to remove rid and restrict_by_ip_type columns.
+      $ret[] = update_sql("ALTER TABLE {restrict_by_ip} DROP rid");
+      $ret[] = update_sql("ALTER TABLE {restrict_by_ip} DROP restrict_by_ip_type");
+      // Increase size of IP textfield per bug reported @ http://drupal.org/node/1121334
+      $ret = update_sql("ALTER TABLE {restrict_by_ip} ALTER COLUMN restrict_by_ip_address TYPE VARCHAR(256)");
+      // Addition of primary key
+      $ret[] = update_sql("ALTER TABLE {restrict_by_ip} ADD PRIMARY KEY uid (uid) ");
+      // Flat this module for bootstrap in system table
+      $ret[] = update_sql("UPDATE {system} SET bootstrap=1 WHERE name='restrict_by_ip'");
+      break;
+  }
+  return $ret;
+}
+
+

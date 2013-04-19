@@ -1,0 +1,6 @@
+name = Restrict By IP
+package = Access control
+description = Enables limiting user login and role access to specific IP Addresses.
+version = "7.x-1.0"
+project = "restrict_by_ip"
+core = 7.x
