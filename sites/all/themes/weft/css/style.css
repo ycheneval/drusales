@@ -2497,8 +2497,8 @@ background: #002b5b  center center repeat-x; /*default background of menu bar*/
   background-size: 100% 100%;
 }
 .inlinesvg #logo img {
-  opacity: 0;
 }
+
 @media (max-width: 47.8125em) {
   #logo {
     width: 24.994%;
