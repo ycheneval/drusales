@@ -1,0 +1,121 @@
+<?php
+/**
+ * Implements hook_menu().
+ *
+ */
+function salesforce_og_chatter_menu() {
+  $items['salesforce_og_chatter'] = array(
+    'title' => 'Page Example',
+    'page callback' => 'salesforce_og_chatter_callback',
+    'access callback' => 'salesforce_og_chatter_callback_access',
+  );
+  return $items;
+}
+
+/**
+ * Access callback for salesforce_og_chatter in salesforce_og_chatter_menu
+ *
+ */
+function salesforce_og_chatter_callback_access() {
+  return TRUE;
+}
+
+/**
+ * Performs a call to the Chatter REST API and handling
+ * paginated results
+ *
+ * @param $query
+ * @param $entity
+ * @return array
+ */
+function salesforce_og_chatter_paginated_call($query, $entity) {
+  $instance = salesforce_get_api();
+  $results = array();
+  $results_paginated = $instance->apiCall($query);
+  $results = array_merge($results, $results_paginated[$entity]);
+  while ($next_page = $results_paginated['nextPageUrl']) {
+    $next_page = substr($next_page, 21); //@todo : More clever filter
+    $results_paginated = $instance->apiCall($next_page);
+    $results = array_merge($results, $results_paginated[$entity]);
+    break;
+  }
+  return $results;
+}
+
+/**
+ * Get all Chatter groups
+ *
+ * @return array
+ */
+function salesforce_og_chatter_get_groups() {
+  return salesforce_og_chatter_paginated_call('chatter/groups', 'groups');
+}
+
+/**
+ * Get members of a group
+ *
+ * @param $group
+ * @return array
+ */
+function salesforce_og_chatter_get_group_members($group) {
+  return salesforce_og_chatter_paginated_call('chatter/groups/' . $group['id'] . '/members', 'members');
+}
+
+/**
+ * Callback for salesforce_og_chatter in salesforce_og_chatter_menu
+ * @todo After dev, remove this function
+ */
+function salesforce_og_chatter_callback() {
+  $instance = salesforce_get_api();
+  $query = urlencode("SELECT Id from Account LIMIT 1");
+  $results = $instance->query($query);
+  $accounts = array();
+  foreach ($results['records'] as $key => $item) {
+    $accounts[] = $item['Id'];
+
+  }
+  $query = urlencode("SELECT Id from Account LIMIT 1");
+  $results = $instance->query($query);
+  //var_dump($results);
+
+  //var_dump($accounts);
+  $result = salesforce_og_chatter_paginated_call('chatter/groups', 'groups');
+  foreach ($result as $$key => $item) {
+    //var_dump($item['name']);
+    $members = salesforce_og_chatter_get_group_members($item);
+    var_dump($members);
+  }
+  return 'yeah';
+
+  //var_dump($result);
+  /*
+      foreach($accounts as $key => $value) {
+        $result = $this->apiCall('chatter/users/' . $value);
+        var_dump($result['photo']['largePhotoUrl']);
+
+      }
+      var_dump($result);
+  */
+
+  //$url = "$instance_url/services/data/v20.0/query?q=" . urlencode($query);
+  /*
+      $curl = curl_init($url);
+      curl_setopt($curl, CURLOPT_HEADER, false);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      curl_setopt($curl, CURLOPT_HTTPHEADER,
+        array("Authorization: OAuth $access_token"));
+
+      $json_response = curl_exec($curl);
+      curl_close($curl);
+
+      $response = json_decode($json_response, true);
+
+      $total_size = $response['totalSize'];
+
+      echo "$total_size record(s) returned<br/><br/>";
+      foreach ((array) $response['records'] as $record) {
+        echo $record['Id'] . ", " . $record['Name'] . "<br/>";
+      }
+      echo "<br/>";
+      */
+}
