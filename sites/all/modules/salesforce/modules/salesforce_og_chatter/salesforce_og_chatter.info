@@ -1,0 +1,9 @@
+name = Organic Groups - Chatter mapping
+description = Map Organic groups  to Chatter groups.
+package = Salesforce
+core = 7.x
+
+configure = admin/salesforce/salesforce_og_chatter
+
+dependencies[] = salesforce
+dependencies[] = entity
