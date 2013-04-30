@@ -1,0 +1,11 @@
+name = Organic Groups Chatter Synchronization
+description = Synchronizes OG with the Chatter REST API.
+package = Salesforce
+core = 7.x
+
+configure = admin/config/og_chatter_sync
+
+files[] = includes/chatter.inc
+
+php = 5.3
+
