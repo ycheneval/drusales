@@ -1,0 +1,161 @@
+<?php
+/**
+ * Implements hook_menu().
+ *
+ */
+function chatter_og_mapping_menu() {
+  $items['admin/config/salesforce/chatter_og_mapping'] = array(
+    'title' => 'OG Chatter synchronization',
+    'description' => 'Configure the details of the sync',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('chatter_og_mapping_admin'),
+    'access arguments' => array('administer salesforce'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+
+/**
+ * Admin page
+ *
+ * @return array
+ */
+function chatter_og_mapping_admin() {
+  $form = array();
+  $form['chatter_og_mapping_group_type'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Target OG group content type'),
+    '#default_value' => NULL,
+    '#size' => 10,
+    '#description' => t('The content type used to synchronize'),
+    '#required' => FALSE,
+  );
+
+  return system_settings_form($form);
+}
+
+/**
+ * Performs a call to the Chatter REST API and handle
+ * paginated results
+ *
+ * @param $query
+ * @param $entity
+ * @return array
+ */
+function chatter_og_mapping_paginated_call($query, $entity) {
+  $results_temp = $results = array();
+  $results_paginated = chatter_og_mapping_single_call($query);
+  $results_temp = array_merge($results_temp, $results_paginated[$entity]);
+  while ($next_page = $results_paginated['nextPageUrl']) {
+    $next_page = substr($next_page, 21); //@todo : More clever filter
+    $results_paginated = chatter_og_mapping_single_call($next_page);
+    $results_temp = array_merge($results_temp, $results_paginated[$entity]);
+    break;
+  }
+
+  foreach ($results_temp as $key => $item) {
+    $results[$item['id']] = $item;
+  }
+
+  return $results;
+}
+
+function chatter_og_mapping_single_call($query, $params = NULL, $method = NULL) {
+  static $instance;
+  if (!isset($instance)) {
+    $instance = salesforce_get_api();
+  }
+  $results = $instance->apiCall($query);
+  return $results;
+}
+
+/**
+ * Get all Chatter groups
+ *
+ * @return array
+ */
+function chatter_og_mapping_get_groups() {
+  return chatter_og_mapping_paginated_call('chatter/groups', 'groups');
+}
+
+/**
+ * Get members of a group
+ *
+ * @param $group
+ * @return array
+ */
+function chatter_og_mapping_get_group_members($group) {
+  return chatter_og_mapping_paginated_call('chatter/groups/' . $group['id'] . '/members', 'members');
+}
+
+function chatter_og_mapping_post_group($group, $text) {
+  $message = array(
+    'body' => array(
+      'messageSegments' => array(
+        array(
+          'type' => 'Text',
+          'text' => $text,
+        ),
+      ),
+    ),
+  );
+  return chatter_og_mapping_single_call('chatter/feeds/record/' . $group['id'] . '/feed-items', $message, 'POST');
+}
+
+/**
+ * 
+ * Subscribes a user to a group
+ * @param $user
+ * @param $group
+ * @return array
+ */
+function chatter_og_mapping_subscribe_member_to_group($user, $group) {
+  return $answer = array();
+}
+
+/**
+ * get feeds
+ * @return array
+ */
+function chatter_og_mapping_get_feeds() {
+  $results = chatter_og_mapping_single_call('chatter/feeds');
+  return $results;
+}
+
+/**
+ * Get records
+ *
+ * @param $record
+ * @return array
+ */
+function chatter_og_mapping_get_records($record) {
+  $results = chatter_og_mapping_single_call('chatter/feeds/record/' . $record);
+  return $results;
+}
+
+/**
+ * Get all posts for a group
+ *
+ * @param $group
+ * @return array
+ */
+function chatter_og_mapping_get_group_posts($group) {
+  $result = chatter_og_mapping_paginated_call("chatter/feeds/record/" . $group['id'] . "/feed-items", 'items');
+  return $result;
+}
+
+function chatter_og_mapping_post_comment($item, $text) {
+  $message = array(
+    'body' => array(
+      'messageSegments' => array(
+        array(
+          'type' => 'Text',
+          'text' => $text,
+        ),
+      ),
+    ),
+  );
+  $results = chatter_og_mapping_single_call('chatter/feed-items/' . $item . '/comments', $message, 'POST');
+  return $results;
+}
+
