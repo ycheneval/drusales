@@ -65,7 +65,7 @@ function chatter_og_mapping_single_call($query, $params = NULL, $method = NULL) 
   if (!isset($instance)) {
     $instance = salesforce_get_api();
   }
-  $results = $instance->apiCall($query);
+  $results = $instance->apiCall($query, $params, $method);
   return $results;
 }
 
@@ -144,7 +144,7 @@ function chatter_og_mapping_get_group_posts($group) {
   return $result;
 }
 
-function chatter_og_mapping_post_comment($item, $text) {
+function chatter_og_mapping_post_comment($post, $text) {
   $message = array(
     'body' => array(
       'messageSegments' => array(
@@ -155,7 +155,7 @@ function chatter_og_mapping_post_comment($item, $text) {
       ),
     ),
   );
-  $results = chatter_og_mapping_single_call('chatter/feed-items/' . $item . '/comments', $message, 'POST');
+  $results = chatter_og_mapping_single_call('chatter/feed-items/' . $post['id'] . '/comments', $message, 'POST');
   return $results;
 }
 
