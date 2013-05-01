@@ -60,7 +60,7 @@ function chatter_og_mapping_paginated_call($query, $entity) {
   return $results;
 }
 
-function chatter_og_mapping_single_call($query, $params = NULL, $method = NULL) {
+function chatter_og_mapping_single_call($query, $params = array(), $method = 'GET') {
   static $instance;
   if (!isset($instance)) {
     $instance = salesforce_get_api();
@@ -103,7 +103,7 @@ function chatter_og_mapping_post_group($group, $text) {
 }
 
 /**
- * 
+ *
  * Subscribes a user to a group
  * @param $user
  * @param $group
@@ -144,6 +144,17 @@ function chatter_og_mapping_get_group_posts($group) {
   return $result;
 }
 
+function chatter_og_mapping_get_comments($post) {
+  $results = chatter_og_mapping_paginated_call('chatter/feed-items/' . $post['id'] . '/comments', 'comments');
+  return $results;
+}
+/**
+ * Post a comment
+ *
+ * @param $post
+ * @param $text
+ * @return array
+ */
 function chatter_og_mapping_post_comment($post, $text) {
   $message = array(
     'body' => array(

@@ -19,15 +19,14 @@ function chatter_og_mapping_drush_command() {
 }
 
 function drush_chatter_og_mapping_soc_test() {
+
   $groups = chatter_og_mapping_get_groups();
   $group = (array_pop($groups));
-  $result = chatter_og_mapping_post_group($group, 'yeah http://www.example.com');
-  $results = chatter_og_mapping_get_group_members($group);
-  while($post = array_pop($results)){
-  var_dump($post);
-    break;
-  }
-  
+  $posts = chatter_og_mapping_get_group_posts($group);
+  $post = array_pop($posts);
+  $comments = chatter_og_mapping_get_comments($post);
+
+
 
 return 'yeah';
 }
