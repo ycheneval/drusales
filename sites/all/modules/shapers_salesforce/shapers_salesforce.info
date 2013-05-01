@@ -1,0 +1,9 @@
+name = Shapers SF synchronization
+description = Salesforce synchronization for Hubs and Shapers
+package = Salesforce
+core = 7.x
+version = 0.1
+
+configure = admin/config/salesforce/shapers_salesforce
+
+dependencies[] = salesforce
