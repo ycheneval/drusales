@@ -33,11 +33,13 @@ function salesforce_og_chatter_paginated_call($query, $entity) {
   $results = array();
   $results_paginated = $instance->apiCall($query);
   $results = array_merge($results, $results_paginated[$entity]);
-  while ($next_page = $results_paginated['nextPageUrl']) {
-    $next_page = substr($next_page, 21); //@todo : More clever filter
-    $results_paginated = $instance->apiCall($next_page);
-    $results = array_merge($results, $results_paginated[$entity]);
-    break;
+  if (key_exists('nextPageUrl', $results_paginated)) {
+      while ($next_page = $results_paginated['nextPageUrl']) {
+        $next_page = substr($next_page, 21); //@todo : More clever filter
+        $results_paginated = $instance->apiCall($next_page);
+        $results = array_merge($results, $results_paginated[$entity]);
+        break;
+      }
   }
   return $results;
 }
@@ -118,4 +120,13 @@ function salesforce_og_chatter_callback() {
       }
       echo "<br/>";
       */
+}
+
+/**
+ * Get all Chatter feeds
+ *
+ * @return array
+ */
+function salesforce_og_chatter_get_feeds() {
+  return salesforce_og_chatter_paginated_call('chatter/feeds', 'feeds');
 }

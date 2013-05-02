@@ -87,6 +87,7 @@ class Salesforce {
       default:
         // We have problem and no specific Salesforce error provided.
         if (empty($this->response->data)) {
+            var_dump($this->response);
           throw new SalesforceException($this->response->error, $this->response->code);
         }
     }

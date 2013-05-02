@@ -1,6 +1,0 @@
-name = Schwab Foundation Search
-core = 7.x
-description = Search entrepreneurs functions for Schwab Foundation
-package = WEForum
-version = dev
-

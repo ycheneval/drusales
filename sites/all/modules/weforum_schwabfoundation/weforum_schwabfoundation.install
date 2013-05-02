@@ -1,9 +1,0 @@
-<?php
-
-/**
- * Creates files/blog subdir if it doesn't exist.
- */
-function weforum_schwabfoundation_update_7000() {
-    drupal_mkdir('public://blog', 0777);
-}
-
