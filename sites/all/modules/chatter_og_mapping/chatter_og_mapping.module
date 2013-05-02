@@ -60,6 +60,14 @@ function chatter_og_mapping_paginated_call($query, $entity) {
   return $results;
 }
 
+/**
+ * Calls the API for a single page of results
+ *
+ * @param $query
+ * @param array $params
+ * @param string $method
+ * @return array
+ */
 function chatter_og_mapping_single_call($query, $params = array(), $method = 'GET') {
   static $instance;
   if (!isset($instance)) {
@@ -84,10 +92,17 @@ function chatter_og_mapping_get_groups() {
  * @param $group
  * @return array
  */
-function chatter_og_mapping_get_group_members($group) {
+function chatter_og_mapping_get_members($group) {
   return chatter_og_mapping_paginated_call('chatter/groups/' . $group['id'] . '/members', 'members');
 }
 
+/**
+ * Create a post in a group
+ *
+ * @param $group
+ * @param $text
+ * @return array
+ */
 function chatter_og_mapping_post_group($group, $text) {
   $message = array(
     'body' => array(
@@ -114,11 +129,23 @@ function chatter_og_mapping_subscribe_member_to_group($user, $group) {
 }
 
 /**
- * get feeds
+ * Get all available feeds
+ *
  * @return array
  */
 function chatter_og_mapping_get_feeds() {
   $results = chatter_og_mapping_single_call('chatter/feeds');
+  return $results;
+}
+
+/**
+ * Get the feed items for a given feed
+ *
+ * @param $feed
+ * @return array
+ */
+function chatter_og_mapping_get_feed_items($feed) {
+  $results = chatter_og_mapping_single_call('chatter/feeds/record/' . $feed['id'] . '/feed-items');
   return $results;
 }
 
@@ -128,8 +155,8 @@ function chatter_og_mapping_get_feeds() {
  * @param $record
  * @return array
  */
-function chatter_og_mapping_get_records($record) {
-  $results = chatter_og_mapping_single_call('chatter/feeds/record/' . $record);
+function chatter_og_mapping_get_record($record) {
+  $results = chatter_og_mapping_single_call('chatter/feeds/record/' . $record['id']);
   return $results;
 }
 
@@ -139,15 +166,22 @@ function chatter_og_mapping_get_records($record) {
  * @param $group
  * @return array
  */
-function chatter_og_mapping_get_group_posts($group) {
+function chatter_og_mapping_get_posts($group) {
   $result = chatter_og_mapping_paginated_call("chatter/feeds/record/" . $group['id'] . "/feed-items", 'items');
   return $result;
 }
 
+/**
+ * Get the three first comments of a post
+ *
+ * @param $post
+ * @return array
+ */
 function chatter_og_mapping_get_comments($post) {
   $results = chatter_og_mapping_paginated_call('chatter/feed-items/' . $post['id'] . '/comments', 'comments');
   return $results;
 }
+
 /**
  * Post a comment
  *
@@ -169,4 +203,25 @@ function chatter_og_mapping_post_comment($post, $text) {
   $results = chatter_og_mapping_single_call('chatter/feed-items/' . $post['id'] . '/comments', $message, 'POST');
   return $results;
 }
+
+/**
+ * Get Chatter communities
+ *
+ * @return array
+ */
+function chatter_og_mapping_get_communities() {
+  $results = chatter_og_mapping_single_call('connect/communities', 'communities');
+  return $results;
+}
+
+/**
+ * Get a single community
+ *
+ * @param $community
+ * @return array
+ */
+function chatter_og_mapping_get_community($community) {
+  return chatter_og_mapping_single_call('connect/communities/' . $community['id']);
+}
+
 

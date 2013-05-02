@@ -1,0 +1,57 @@
+<?php
+/**
+ * Implements hook_menu().
+ *
+ */
+function shapers_salesforce_menu() {
+  $items['admin/config/salesforce/shapers_salesforce'] = array(
+    'title' => 'SF Synchronization',
+    'description' => 'Configure the details of the sync',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('shapers_salesforce_admin'),
+    'access arguments' => array('administer salesforce'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+
+/**
+ * Admin page
+ *
+ * @return array
+ */
+function shapers_salesforce_admin() {
+  $form = array();
+  $form['shapers_salesforce_group_type'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Target OG group content type'),
+    '#default_value' => NULL,
+    '#size' => 10,
+    '#description' => t('The content type used to synchronize'),
+    '#required' => FALSE,
+  );
+
+  return system_settings_form($form);
+}
+
+/**
+ * Performs a SOQL Query on the SF Instance
+ *
+ * @param $query
+ * @return array
+ */
+function shapers_salesforce_query($query) {
+  $instance = salesforce_get_api();
+  $sfquery = new SalesforceSelectQuery();
+  $results = $instance->query($sfquery);
+  return $results;
+}
+/**
+ * Get all hubs (forum community)
+ *
+ * @return array
+ */
+function shapers_salesforce_get_hubs() {
+
+  return array();
+}
