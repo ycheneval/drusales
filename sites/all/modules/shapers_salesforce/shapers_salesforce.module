@@ -1,4 +1,18 @@
 <?php
+
+class shapers_salesforce_query extends SalesforceSelectQuery {
+  private $query = '';
+
+  public function setQuery($query) {
+    $this->query = ($query);
+  }
+
+  public function __toString() {
+    return ($this->query);
+  }
+
+}
+
 /**
  * Implements hook_menu().
  *
@@ -30,6 +44,13 @@ function shapers_salesforce_admin() {
     '#description' => t('The content type used to synchronize'),
     '#required' => FALSE,
   );
+  $form['shapers_salesforce_main_shapers_group'] = array(
+    '#type' => 'select',
+    '#title' => t('Parent community of the Hubs'),
+    '#options' => array(0 => 'None') + shapers_salesforce_get_parent_communities(),
+    '#default_value' => variable_get('shapers_salesforce_main_shapers_group', 0),
+    '#description' => t('Select the Forum Community holding the Hubs'),
+  );
 
   return system_settings_form($form);
 }
@@ -42,16 +63,64 @@ function shapers_salesforce_admin() {
  */
 function shapers_salesforce_query($query) {
   $instance = salesforce_get_api();
-  $sfquery = new SalesforceSelectQuery();
-  $results = $instance->query($sfquery);
+  $results = $instance->query($query);
   return $results;
 }
+
 /**
- * Get all hubs (forum community)
+ * Get the communities of a parent community id
  *
+ * @param $parent_id
  * @return array
  */
-function shapers_salesforce_get_hubs() {
+function shapers_salesforce_get_sub_communities($parent_id) {
+  if (!preg_match('/^[a-zA-Z0-9]+$/', $parent_id)) {
+    watchdog('shapers_salesforce', 'Not a valid id format: %string', array('%string' => $parent_id), WATCHDOG_ALERT);
+    return array();
+  }
+  $query = new shapers_salesforce_query();
+  $query->setQuery("SELECT+Id,+Name+FROM+ForumCommunity__c+WHERE+ParentGroupId__c+=+'$parent_id'");
+  $results = shapers_salesforce_query($query);
+  $output = array();
+  if ($results['done'] AND ($results['totalSize'] > 0)) {
+    foreach ($results['records'] as $item) {
+      $output[$item['Id']] = $item;
+    }
+  }
+  return $output;
+}
 
-  return array();
+function shapers_salesforce_validate_sf_id(&$id) {
+  if (!preg_match('/^[a-zA-Z0-9]+$/', $id)) {
+    watchdog('shapers_salesforce', 'Not a valid id format: %string', array('%string' => $id), WATCHDOG_ALERT);
+    $id = ''; // Kill it
+  }
+}
+
+function shapers_salesforce_get_parent_communities() {
+  $query = new shapers_salesforce_query();
+  $query->setQuery("SELECT+GroupId__c,+Name+FROM+ForumCommunity__c+WHERE+GroupId__c+!=NULL");
+  $results = shapers_salesforce_query($query);
+  $output = array();
+  if ($results['done'] AND ($results['totalSize'] > 0)) {
+    foreach ($results['records'] as $item) {
+      $output[$item['GroupId__c']] = $item['Name'];
+    }
+  }
+  return $output;
+}
+
+function shapers_salesforce_get_shapers($parent_group_id) {
+  $output = array();
+  shapers_salesforce_validate_sf_id($parent_group_id);
+  $query = new shapers_salesforce_query();
+  $sql = "SELECT+Community__c,+Contract__c,+CreatedById,+CreatedDate,+CurrencyIsoCode,+CurrentOrganization__c,+CurrentOrganizationRegion__c,+CurrentOrganizationSegment__c,+CurrentPosition__c,+DateMemberwillleavetheCommunity__c,+IsDeleted,+ForumNetwork__c,+GS_About_Me__c,+GS_Current_Work__c,+GS_Expertise__c,+GS_Inspiration__c,+GS_Interests__c,+GS_Local_Challenges__c,+GS_Member_Role__c,+Gatekeeper__c,+JoiningDate__c,+LastModifiedById,+LastModifiedDate,+Link_to_AutoShare_Group__c,+Main_Industry_Sector__c,+Main_Regional_Area_Of_Operation__c,+Name,+MemberName__c,+Primary_Engagement_Manager__c,+PrimaryOrganization__c,+PrimaryPosition__c,+Id,+RecordTypeId,+Member_Status__c,+SystemModstamp,+TECH_Account_Tibbr_Id__c,+TECH_ChatterGroupId__c,+TECH_Community_Tibbr_Id__c,+Tech_CommunityGroupId__c,+MembershipType__c,+UserId__c,+MemberName__r.LastName,+MemberName__r.CurrencyIsoCode,+MemberName__r.Description,+MemberName__r.Fax,+MemberName__r.Id,+MemberName__r.Name,+MemberName__r.Phone,+MemberName__r.Type,+MemberName__r.Age__c,+MemberName__r.Agora_ID__c,+MemberName__r.TECH_LegacyWPEID__c,+MemberName__r.Airport__c,+MemberName__r.AnnualRevenue,+MemberName__r.PersonAssistantName,+MemberName__r.PersonAssistantPhone,+MemberName__r.BillingCity,+MemberName__r.BillingCountry,+MemberName__r.BillingState,+MemberName__r.BillingStreet,+MemberName__r.BillingPostalCode,+MemberName__r.PersonBirthdate,+MemberName__r.CV_Comments_Internal__c,+MemberName__r.CV_Details_for_publication__c,+MemberName__r.CV_Received__c,+MemberName__r.ShippingCity,+MemberName__r.City1__c,+MemberName__r.Cluster__c,+MemberName__r.CompanyName__c,+MemberName__r.PersonContactId,+MemberName__r.Copy_Profile_From_Parent__c,+MemberName__r.Corporate_Name__c,+MemberName__r.Country__c,+MemberName__r.ShippingCountry,+MemberName__r.Country1__c,+MemberName__r.CountryOfOrigin__c,+MemberName__r.CreatedById,+MemberName__r.CreatedDate,+MemberName__r.IsCustomerPortal,+MemberName__r.IsDeleted,+MemberName__r.PersonDepartment,+MemberName__r.DeskLocation__c,+MemberName__r.Development_Status__c,+MemberName__r.DirectManager__c,+MemberName__r.EducationandWorkExperience__c,+MemberName__r.PersonEmail,+MemberName__r.PersonEmailBouncedDate,+MemberName__r.PersonEmailBouncedReason,+MemberName__r.NumberOfEmployees,+MemberName__r.Expertises__c,+MemberName__r.Expertise__c,+MemberName__r.Extension__c,+MemberName__r.FirstName,+MemberName__r.Picture__c,+MemberName__r.ForumResponsibility__c,+MemberName__r.FunctionalLead__c,+MemberName__r.GatekeeperTmp__c,+MemberName__r.GatekeeperOwnerOnly__c,+MemberName__r.Gender__c,+MemberName__r.Grade__c,+MemberName__r.Greeting1__c,+MemberName__r.Greeting2__c,+MemberName__r.Handle__c,+MemberName__r.Industry,+MemberName__r.Initials__c,+MemberName__r.InterestsHobbiesSports__c,+MemberName__r.Internal_Comments__c,+MemberName__r.TECH_isActive__c,+MemberName__r.IsPersonAccount,+MemberName__r.JoiningDate__c,+MemberName__r.KSCFlag__c,+MemberName__r.LastActivityDate,+MemberName__r.LastModifiedById,+MemberName__r.LastModifiedDate,+MemberName__r.Last_Reviewed_Annual_Report__c,+MemberName__r.PersonLastCURequestDate,+MemberName__r.PersonLastCUUpdateDate,+MemberName__r.PersonLeadSource,+MemberName__r.Level__c,+MemberName__r.City__c,+MemberName__r.MaidenName__c,+MemberName__r.PersonMailingCity,+MemberName__r.PersonMailingCountry,+MemberName__r.PersonMailingState,+MemberName__r.PersonMailingStreet,+MemberName__r.PersonMailingPostalCode,+MemberName__r.Main_Industry_Sector__c,+MemberName__r.Main_Regional_Area_of_Operation__c,+MemberName__r.Marital_Status__c,+MemberName__r.MasterRecordId,+MemberName__r.Membership_Type__c,+MemberName__r.NR_Email__c,+MemberName__r.NR_Fax__c,+MemberName__r.Nationality__c,+MemberName__r.NationalityTmp__c,+MemberName__r.Nickname__c,+MemberName__r.PersonOtherCity,+MemberName__r.PersonOtherCountry,+MemberName__r.PersonOtherPhone,+MemberName__r.PersonOtherState,+MemberName__r.PersonOtherStreet,+MemberName__r.PersonOtherPostalCode,+MemberName__r.OwnerId,+MemberName__r.Ownership_Type__c,+MemberName__r.P_O_Box__c,+MemberName__r.ParentId,+MemberName__r.Passport__c,+MemberName__r.PersonHomePhone,+MemberName__r.PersonMobilePhone,+MemberName__r.PhoneticName__c,+MemberName__r.Position__c,+MemberName__r.PostalCode__c,+MemberName__r.Primary_Engagement_Manager_Name__c,+MemberName__r.Primary_Organisation__c,+MemberName__r.Primary_Organization_Region__c,+MemberName__r.Primary_Organization_Segment__c,+MemberName__r.Primary_Position__c,+MemberName__r.PrivateAreaEmail__c,+MemberName__r.PrivateAreaUsername__c,+MemberName__r.Profile__c,+MemberName__r.ProfileCompleteness__c,+MemberName__r.Publication_Birthdate__c,+MemberName__r.Publication_Nationality__c,+MemberName__r.Publication_Passport__c,+MemberName__r.RecordTypeId,+MemberName__r.Regional_Area_Of__c,+MemberName__r.Salutation,+MemberName__r.Sectors__c,+MemberName__r.Segment__c,+MemberName__r.StaffCategory__c,+MemberName__r.State__c,+MemberName__r.ShippingState,+MemberName__r.Status__c,+MemberName__r.Street__c,+MemberName__r.ShippingStreet,+MemberName__r.Street_2__c,+MemberName__r.Street_3__c,+MemberName__r.SubTeam__c,+MemberName__r.Support_Staff__c,+MemberName__r.SystemModstamp,+MemberName__r.TECH_Birthdate__c,+MemberName__r.TECH_IsEducationandworkexpblank__c,+MemberName__r.TECH_IsExpertiseBlank__c,+MemberName__r.TECH_IsInterestsHobbiesSportsBlank__c,+MemberName__r.TECH_IsResposabilityBlank__c,+MemberName__r.TECH_NumberOfLanguages__c,+MemberName__r.TECH_NumberOfSocialAccount__c,+MemberName__r.TECH_ProfileProgressScore__c,+MemberName__r.TECH_SalesforceUser__c,+MemberName__r.TECH_Tibbr_Id__c,+MemberName__r.Team__c,+MemberName__r.TickerSymbol,+MemberName__r.PersonTitle,+MemberName__r.Title1__c,+MemberName__r.Title2__c,+MemberName__r.Title3__c,+MemberName__r.ViewSocialProfile__c,+MemberName__r.Website,+MemberName__r.ShippingPostalCode,+Community__r.AutoShare_Group_Ref__c,+Community__r.Chatter_Group_ID__c,+Community__r.Chatter_Group_Name__c,+Community__r.Chatter_Group_Provisioning__c,+Community__r.Chatter_Group_Type__c,+Community__r.Community_Membership_Duration__c,+Community__r.CreatedById,+Community__r.CreatedDate,+Community__r.CuratorStatus__c,+Community__r.CuratorStatus_del_del_del_del__c,+Community__r.CurrencyIsoCode,+Community__r.Date_Archived__c,+Community__r.DateFormed__c,+Community__r.IsDeleted,+Community__r.Description__c,+Community__r.DiversityStatus__c,+Community__r.EmailAddress__c,+Community__r.FacebookFeedURL__c,+Community__r.FacebookURL__c,+Community__r.ForumNetwork__c,+Community__r.Forum_Network__c,+Community__r.GroupId__c,+Community__r.GroupName__c,+Community__r.HasElectedIncomingCurator__c,+Community__r.HasImplementedGoverningStructure__c,+Community__r.HasMediaCampaign__c,+Community__r.HasProvidedListOfMembers__c,+Community__r.HasSelectionProcess__c,+Community__r.HostCity__c,+Community__r.HostCountry__c,+Community__r.HostCountryHDI__c,+Community__r.Id__c,+Community__r.LastActivityDate,+Community__r.LastModifiedById,+Community__r.LastModifiedDate,+Community__r.Latitude__c,+Community__r.Link_to_AutoShare_Group__c,+Community__r.Link_to_Chatter_Group__c,+Community__r.Longitude__c,+Community__r.Main_Community__c,+Community__r.MeetingStatus__c,+Community__r.Name,+Community__r.Number_Of_Active_Members__c,+Community__r.NumberOfMembers__c,+Community__r.NumberOfMembersinExternalSystem__c,+Community__r.ObtainedLegalStatus__c,+Community__r.OwnerId,+Community__r.ParentGroupId__c,+Community__r.ParticipatedInForumEventThisyear__c,+Community__r.Picture__c,+Community__r.PopulationofHostCity__c,+Community__r.Id,+Community__r.RecordTypeId,+Community__r.Region__c,+Community__r.Regions__c,+Community__r.RegisteredInExternalSystem__c,+Community__r.SecondaryRegion__c,+Community__r.SelectedMembers__c,+Community__r.Short_Description__c,+Community__r.SolicitedApplications_del__c,+Community__r.SolicitedApplications__c,+Community__r.CommunityStatus__c,+Community__r.StrategicImportance__c,+Community__r.SystemModstamp,+Community__r.TECH_CommunityName__c,+Community__r.TECH_Tibbr_Id__c,+Community__r.TwitterURL__c,+Community__r.CommunityType__c,+Community__r.Web_Access__c,+Community__r.AdditionalWebsite__c+FROM+Membership__c+WHERE+Community__r.ParentGroupId__c+='$parent_group_id'";
+  $query->setQuery($sql);
+  $results = shapers_salesforce_query($query);
+  if ($results['done'] AND ($results['totalSize'] > 0)) {
+    foreach ($results['records'] as $item) {
+      $output[$item['Id']] = $item;
+    }
+  }
+  return $output;
 }
