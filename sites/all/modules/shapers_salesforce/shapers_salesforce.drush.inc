@@ -15,6 +15,7 @@ function shapers_salesforce_drush_command() {
  * Test function
  */
 function drush_shapers_salesforce_gsf() {
-  shapers_salesforce_query('test');
+  $results = shapers_salesforce_get_shapers(variable_get('shapers_salesforce_main_shapers_group', 0));
+  var_dump($results);
 }
 
