@@ -36,14 +36,6 @@ function shapers_salesforce_menu() {
  */
 function shapers_salesforce_admin() {
   $form = array();
-  $form['shapers_salesforce_group_type'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Target OG group content type'),
-    '#default_value' => NULL,
-    '#size' => 10,
-    '#description' => t('The content type used to synchronize'),
-    '#required' => FALSE,
-  );
   $form['shapers_salesforce_main_shapers_group'] = array(
     '#type' => 'select',
     '#title' => t('Parent community of the Hubs'),
@@ -68,28 +60,10 @@ function shapers_salesforce_query($query) {
 }
 
 /**
- * Get the communities of a parent community id
+ * Validates a Salesforce ID
  *
- * @param $parent_id
- * @return array
+ * @param $id
  */
-function shapers_salesforce_get_sub_communities($parent_id) {
-  if (!preg_match('/^[a-zA-Z0-9]+$/', $parent_id)) {
-    watchdog('shapers_salesforce', 'Not a valid id format: %string', array('%string' => $parent_id), WATCHDOG_ALERT);
-    return array();
-  }
-  $query = new shapers_salesforce_query();
-  $query->setQuery("SELECT+Id,+Name+FROM+ForumCommunity__c+WHERE+ParentGroupId__c+=+'$parent_id'");
-  $results = shapers_salesforce_query($query);
-  $output = array();
-  if ($results['done'] AND ($results['totalSize'] > 0)) {
-    foreach ($results['records'] as $item) {
-      $output[$item['Id']] = $item;
-    }
-  }
-  return $output;
-}
-
 function shapers_salesforce_validate_sf_id(&$id) {
   if (!preg_match('/^[a-zA-Z0-9]+$/', $id)) {
     watchdog('shapers_salesforce', 'Not a valid id format: %string', array('%string' => $id), WATCHDOG_ALERT);
@@ -111,77 +85,62 @@ function shapers_salesforce_get_parent_communities() {
 }
 
 function shapers_salesforce_get_shapers($parent_group_id) {
-  $output = array();
   shapers_salesforce_validate_sf_id($parent_group_id);
   $query = new shapers_salesforce_query();
-  $sql = "SELECT+Community__c,+Contract__c,+CreatedById,+CreatedDate,+CurrencyIsoCode,+CurrentOrganization__c,";
+  $sql = "SELECT+Community__c,+Contract__c,+CreatedDate,+CurrentOrganization__c,";
   $sql .= "+CurrentOrganizationRegion__c,+CurrentOrganizationSegment__c,+CurrentPosition__c,";
   $sql .= "+IsDeleted,+ForumNetwork__c,+GS_About_Me__c,+GS_Current_Work__c,+GS_Expertise__c,+GS_Inspiration__c,+GS_Interests__c,";
-  $sql .= "+GS_Local_Challenges__c,+GS_Member_Role__c,+Gatekeeper__c,+JoiningDate__c,+LastModifiedDate,";
+  $sql .= "+GS_Local_Challenges__c,+GS_Member_Role__c,+LastModifiedDate,";
   $sql .= "+Main_Industry_Sector__c,+Main_Regional_Area_Of_Operation__c,+Name,+MemberName__c,";
   $sql .= "+PrimaryOrganization__c,+PrimaryPosition__c,+Id,+RecordTypeId,+Member_Status__c,";
   $sql .= "+MembershipType__c,+UserId__c,+MemberName__r.LastName,+MemberName__r.Description,";
-  $sql .= "+MemberName__r.Fax,+MemberName__r.Id,+MemberName__r.Name,+MemberName__r.Type,";
-  $sql .= "+MemberName__r.BillingCity,";
-  $sql .= "+MemberName__r.BillingCountry,+MemberName__r.BillingState,+MemberName__r.BillingStreet,+MemberName__r.BillingPostalCode,";
-  $sql .= "+MemberName__r.PersonBirthdate,+MemberName__r.ShippingCity,+MemberName__r.City1__c,+MemberName__r.Cluster__c,";
-  $sql .= "+MemberName__r.CompanyName__c,+MemberName__r.PersonContactId,+MemberName__r.Copy_Profile_From_Parent__c,";
-  $sql .= "+MemberName__r.Corporate_Name__c,+MemberName__r.Country__c,+MemberName__r.ShippingCountry,+MemberName__r.Country1__c,";
+  $sql .= "+MemberName__r.Id,+MemberName__r.Name,+MemberName__r.Type,";
+  $sql .= "+MemberName__r.ShippingCity,+MemberName__r.City1__c,+MemberName__r.Cluster__c,+MemberName__r.CompanyName__c,";
+  $sql .= "+MemberName__r.Corporate_Name__c,+MemberName__r.Country__c,+MemberName__r.Country1__c,";
   $sql .= "+MemberName__r.CreatedDate,+MemberName__r.IsDeleted,";
   $sql .= "+MemberName__r.EducationandWorkExperience__c,+MemberName__r.PersonEmail,";
   $sql .= "+MemberName__r.Expertises__c,+MemberName__r.Expertise__c,+MemberName__r.Extension__c,+MemberName__r.FirstName,";
   $sql .= "+MemberName__r.Picture__c,+MemberName__r.Handle__c,+MemberName__r.Industry,";
-  $sql .= "+MemberName__r.Initials__c,+MemberName__r.InterestsHobbiesSports__c,+MemberName__r.Internal_Comments__c,";
-  $sql .= "+MemberName__r.IsPersonAccount,+MemberName__r.JoiningDate__c,";
-  $sql .= "+MemberName__r.KSCFlag__c,+MemberName__r.LastActivityDate,+MemberName__r.LastModifiedById,";
-  $sql .= "+MemberName__r.LastModifiedDate,+MemberName__r.Last_Reviewed_Annual_Report__c,";
-  $sql .= "+MemberName__r.City__c,+MemberName__r.PersonMailingCity,+MemberName__r.PersonMailingCountry,";
-  $sql .= "+MemberName__r.PersonMailingState,+MemberName__r.PersonMailingStreet,+MemberName__r.PersonMailingPostalCode,";
+  $sql .= "+MemberName__r.Initials__c,+MemberName__r.InterestsHobbiesSports__c,";
+  $sql .= "+MemberName__r.IsPersonAccount,+MemberName__r.LastModifiedDate,+MemberName__r.City__c,";
   $sql .= "+MemberName__r.Main_Industry_Sector__c,+MemberName__r.Main_Regional_Area_of_Operation__c,";
-  $sql .= "+MemberName__r.MasterRecordId,+MemberName__r.Membership_Type__c,+MemberName__r.NR_Email__c,+MemberName__r.NR_Fax__c,";
+  $sql .= "+MemberName__r.MasterRecordId,+MemberName__r.Membership_Type__c,+MemberName__r.NR_Email__c,";
   $sql .= "+MemberName__r.Nickname__c,+MemberName__r.PersonOtherCity,";
-  $sql .= "+MemberName__r.PersonOtherCountry,+MemberName__r.PersonOtherPhone,+MemberName__r.PersonOtherState,";
-  $sql .= "+MemberName__r.PersonOtherStreet,+MemberName__r.PersonOtherPostalCode,";
-  $sql .= "+MemberName__r.Ownership_Type__c,+MemberName__r.P_O_Box__c,+MemberName__r.ParentId,";
-  $sql .= "+MemberName__r.PersonHomePhone,+MemberName__r.PersonMobilePhone,+MemberName__r.PhoneticName__c,";
-  $sql .= "+MemberName__r.Position__c,+MemberName__r.PostalCode__c,";
+  $sql .= "+MemberName__r.Ownership_Type__c,+MemberName__r.ParentId,+MemberName__r.PhoneticName__c,+MemberName__r.Position__c,";
   $sql .= "+MemberName__r.Primary_Organisation__c,+MemberName__r.Primary_Organization_Region__c,";
-  $sql .= "+MemberName__r.Primary_Organization_Segment__c,+MemberName__r.Primary_Position__c,+MemberName__r.PrivateAreaEmail__c,";
-  $sql .= "+MemberName__r.PrivateAreaUsername__c,+MemberName__r.Profile__c,+MemberName__r.ProfileCompleteness__c,";
-  $sql .= "+MemberName__r.Publication_Birthdate__c,+MemberName__r.Publication_Nationality__c,+MemberName__r.Publication_Passport__c,";
+  $sql .= "+MemberName__r.Primary_Organization_Segment__c,+MemberName__r.Primary_Position__c,+";
+  $sql .= "+MemberName__r.Profile__c,+MemberName__r.ProfileCompleteness__c,";
   $sql .= "+MemberName__r.RecordTypeId,+MemberName__r.Regional_Area_Of__c,+MemberName__r.Salutation,+MemberName__r.Sectors__c,";
-  $sql .= "+MemberName__r.Segment__c,+MemberName__r.StaffCategory__c,+MemberName__r.State__c,+MemberName__r.ShippingState,";
-  $sql .= "+MemberName__r.Status__c,+MemberName__r.Street__c,+MemberName__r.ShippingStreet,+MemberName__r.Street_2__c,";
-  $sql .= "+MemberName__r.Street_3__c,+MemberName__r.SubTeam__c,+MemberName__r.Support_Staff__c,+MemberName__r.SystemModstamp,";
-  $sql .= "+MemberName__r.Team__c,+MemberName__r.TickerSymbol,+MemberName__r.PersonTitle,+MemberName__r.Title1__c,";
+  $sql .= "+MemberName__r.Segment__c,+MemberName__r.State__c,+MemberName__r.Status__c,+MemberName__r.SystemModstamp,";
+  $sql .= "+MemberName__r.Team__c,+MemberName__r.PersonTitle,+MemberName__r.Title1__c,";
   $sql .= "+MemberName__r.Title2__c,+MemberName__r.Title3__c,+MemberName__r.ViewSocialProfile__c,+MemberName__r.Website,";
-  $sql .= "+MemberName__r.ShippingPostalCode,+Community__r.AutoShare_Group_Ref__c,+Community__r.Chatter_Group_ID__c,";
+  $sql .= "+Community__r.AutoShare_Group_Ref__c,+Community__r.Chatter_Group_ID__c,";
   $sql .= "+Community__r.Chatter_Group_Name__c,+Community__r.Chatter_Group_Provisioning__c,+Community__r.Chatter_Group_Type__c,";
-  $sql .= "+Community__r.Community_Membership_Duration__c,+Community__r.CreatedById,+Community__r.CreatedDate,";
-  $sql .= "+Community__r.CuratorStatus__c,+Community__r.CuratorStatus_del_del_del_del__c,+Community__r.CurrencyIsoCode,";
-  $sql .= "+Community__r.Date_Archived__c,+Community__r.DateFormed__c,+Community__r.IsDeleted,+Community__r.Description__c,";
+  $sql .= "+Community__r.CreatedDate,+Community__r.CuratorStatus__c,+Community__r.IsDeleted,+Community__r.Description__c,";
   $sql .= "+Community__r.DiversityStatus__c,+Community__r.EmailAddress__c,+Community__r.FacebookFeedURL__c,";
   $sql .= "+Community__r.FacebookURL__c,+Community__r.ForumNetwork__c,+Community__r.Forum_Network__c,+Community__r.GroupId__c,";
-  $sql .= "+Community__r.GroupName__c,+Community__r.HasElectedIncomingCurator__c,+Community__r.HasImplementedGoverningStructure__c,";
-  $sql .= "+Community__r.HasMediaCampaign__c,+Community__r.HasProvidedListOfMembers__c,+Community__r.HasSelectionProcess__c,";
+  $sql .= "+Community__r.GroupName__c,";
   $sql .= "+Community__r.HostCity__c,+Community__r.HostCountry__c,+Community__r.HostCountryHDI__c,+Community__r.Id__c,";
-  $sql .= "+Community__r.LastActivityDate,+Community__r.LastModifiedById,+Community__r.LastModifiedDate,+Community__r.Latitude__c,";
+  $sql .= "+Community__r.LastModifiedById,+Community__r.LastModifiedDate,+Community__r.Latitude__c,";
   $sql .= "+Community__r.Link_to_AutoShare_Group__c,+Community__r.Link_to_Chatter_Group__c,+Community__r.Longitude__c,";
   $sql .= "+Community__r.Main_Community__c,+Community__r.Name,";
   $sql .= "+Community__r.Number_Of_Active_Members__c,+Community__r.NumberOfMembers__c,";
-  $sql .= "+Community__r.OwnerId,+Community__r.ParentGroupId__c,+Community__r.Picture__c,";
+  $sql .= "+Community__r.ParentGroupId__c,+Community__r.Picture__c,";
   $sql .= "+Community__r.Id,+Community__r.RecordTypeId,+Community__r.Region__c,+Community__r.Regions__c,";
   $sql .= "+Community__r.SecondaryRegion__c,+Community__r.Short_Description__c,";
   $sql .= "+Community__r.CommunityStatus__c,+Community__r.SystemModstamp,+Community__r.TwitterURL__c,";
-  $sql .= "+Community__r.CommunityType__c,+Community__r.Web_Access__c,+Community__r.AdditionalWebsite__c";
+  $sql .= "+Community__r.Web_Access__c,+Community__r.AdditionalWebsite__c";
   $sql .= "+FROM+Membership__c+WHERE+Community__r.ParentGroupId__c+='$parent_group_id'";
   $query->setQuery($sql);
+  $shapers = $hubs = array();
   $results = shapers_salesforce_query($query);
   if ($results['done'] AND ($results['totalSize'] > 0)) {
     foreach ($results['records'] as $item) {
-      $output[$item['Id']] = $item;
+      //Extract the hub
+      $hubs[$item['Community__r']['Id']] = $item['Community__r'];
+      $shapers[$item['MemberName__r']['Id']] = $item;
     }
   }
-  return $output;
+  return array('hubs' => $hubs, 'shapers' => $shapers);
 }
 

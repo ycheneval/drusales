@@ -16,6 +16,7 @@ function shapers_salesforce_drush_command() {
  */
 function drush_shapers_salesforce_gsf() {
   $results = shapers_salesforce_get_shapers(variable_get('shapers_salesforce_main_shapers_group', 0));
-  var_dump($results);
+  var_dump(count($results['shapers']). ' shapers');
+  var_dump(count($results['hubs']) . ' hubs');
 }
 
