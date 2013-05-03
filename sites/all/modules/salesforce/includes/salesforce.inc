@@ -102,6 +102,7 @@ class Salesforce {
     }
 
     if (!empty($data['errorCode'])) {
+      var_dump($this->response);
       throw new SalesforceException($data['message'], $this->response->code);
     }
 
