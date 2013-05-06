@@ -19,8 +19,8 @@ class shapers_salesforce_query extends SalesforceSelectQuery {
  */
 function shapers_salesforce_menu() {
   $items['admin/config/salesforce/shapers_salesforce'] = array(
-    'title' => 'SF Synchronization',
-    'description' => 'Configure the details of the sync',
+    'title' => 'Global Shapers SalesForce Synchronization',
+    'description' => 'Configure the details of the synchronization',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('shapers_salesforce_admin'),
     'access arguments' => array('administer salesforce'),
@@ -42,6 +42,14 @@ function shapers_salesforce_admin() {
     '#options' => array(0 => 'None') + shapers_salesforce_get_parent_communities(),
     '#default_value' => variable_get('shapers_salesforce_main_shapers_group', 0),
     '#description' => t('Select the Forum Community holding the Hubs'),
+  );
+
+  $form['shapers_salesforce_update_timeframe'] = array(
+    '#type' => 'textfield',
+    '#title' => t('How old should a change be in order to be synchronized, in days'),
+    '#default_value' => variable_get('shapers_salesforce_update_timeframe', 7),
+    '#size' => 2,
+    '#maxlength' => 2,
   );
 
   return system_settings_form($form);
@@ -87,7 +95,7 @@ function shapers_salesforce_get_parent_communities() {
 function shapers_salesforce_get_shapers($parent_group_id) {
   shapers_salesforce_validate_sf_id($parent_group_id);
   $query = new shapers_salesforce_query();
-  $sql = "SELECT+Community__c,+Contract__c,+CreatedDate,+CurrentOrganization__c,";
+  $sql = "SELECT+Community__c,+CreatedDate,+CurrentOrganization__c,";
   $sql .= "+CurrentOrganizationRegion__c,+CurrentOrganizationSegment__c,+CurrentPosition__c,";
   $sql .= "+IsDeleted,+ForumNetwork__c,+GS_About_Me__c,+GS_Current_Work__c,+GS_Expertise__c,+GS_Inspiration__c,+GS_Interests__c,";
   $sql .= "+GS_Local_Challenges__c,+GS_Member_Role__c,+LastModifiedDate,";
@@ -114,7 +122,7 @@ function shapers_salesforce_get_shapers($parent_group_id) {
   $sql .= "+MemberName__r.Segment__c,+MemberName__r.State__c,+MemberName__r.Status__c,+MemberName__r.SystemModstamp,";
   $sql .= "+MemberName__r.Team__c,+MemberName__r.PersonTitle,+MemberName__r.Title1__c,";
   $sql .= "+MemberName__r.Title2__c,+MemberName__r.Title3__c,+MemberName__r.ViewSocialProfile__c,+MemberName__r.Website,";
-  $sql .= "+Community__r.AutoShare_Group_Ref__c,+Community__r.Chatter_Group_ID__c,";
+  $sql .= "+Community__r.AutoShare_Group_Ref__c,+Community__r.Chatter_Group_ID__c,+MemberName__r.TECH_SalesforceUser__c,";
   $sql .= "+Community__r.Chatter_Group_Name__c,+Community__r.Chatter_Group_Provisioning__c,+Community__r.Chatter_Group_Type__c,";
   $sql .= "+Community__r.CreatedDate,+Community__r.CuratorStatus__c,+Community__r.IsDeleted,+Community__r.Description__c,";
   $sql .= "+Community__r.DiversityStatus__c,+Community__r.EmailAddress__c,+Community__r.FacebookFeedURL__c,";
@@ -142,5 +150,168 @@ function shapers_salesforce_get_shapers($parent_group_id) {
     }
   }
   return array('hubs' => $hubs, 'shapers' => $shapers);
+}
+
+/**
+ * Process a shaper from the queue.
+ *
+ *
+ * @param $shaper
+ */
+function shapers_salesforce_process_shaper($shaper) {
+  // check if modified recently or forced update
+  $modified = new DateTime($shaper['LastModifiedDate']);
+  $diff = date_diff($modified, new DateTime());
+  drush_log($shaper['Name']);
+  if($diff->days > 7) {
+    drush_log('too old - do not process');
+    return TRUE;
+  }
+  //var_dump(( strtotime($shaper['LastModifiedDate'])  / 1440) .  $shaper['LastModifiedDate']);
+  // add picture
+  $sfinstance = salesforce_get_api();
+  $string = 'chatter/users/' . $shaper['MemberName__r']['TECH_SalesforceUser__c'] . '/photo';
+  try {
+    $photo = $sfinstance->apiCall('chatter/users/' . $shaper['MemberName__r']['TECH_SalesforceUser__c'] . '/photo');
+    $info = $sfinstance->apiCall('chatter/users/' . $shaper['MemberName__r']['TECH_SalesforceUser__c']);
+
+  } catch (exception $e) {
+    $photo = FALSE;
+  }
+  //var_dump($info);
+
+  // fields mapping
+  $picture = $photo['largePhotoUrl'];
+
+  // sending to website
+  /*
+   * $account = XMLSimplelement, $nid = int
+    $node = isset($nid) ? node_load($nid) : entity_create('node', array('type' => 'shaper'));
+    $wrapper = entity_metadata_wrapper('node', $node);
+
+    // Populate a multiselect field with one or more values.
+    // The keys correlate to a taxonomy term id, hence the missing value for 3.
+    $expertise = array(
+      0 => 'none',
+      1 => 'arts',
+      2 => 'business',
+      4 => 'education',
+      5 => 'entrepreneur',
+      6 => 'fashion',
+      7 => 'finance',
+      8 => 'human',
+      9 => 'law',
+      10 =>'media',
+      11 => 'politics',
+      12 => 'science',
+      13 => 'social',
+      14 => 'sustainability',
+      15 => 'health'
+    );
+    // Reset the field before we start to expunge old data.
+    $wrapper->field_subject_tags = array();
+    foreach ($expertise as $tid => $exp) {
+      if ((string) $account->{"exp-$exp"} == 'true') {
+        // The elements in our $expertise array are in the same order as the tids
+        // in the database. This could break if the terms in the database change
+        // in the future.
+        try {
+          $wrapper->field_subject_tags[] = $tid;
+        }
+        catch (EntityMetadataWrapperException $e) {
+        }
+      }
+    }
+
+    // Assign the user a group audience based on the value of the hub property
+    // coming form Tibbr. $user_hub holds a string that should match the name of
+    // a hub node, which is itself a group.
+    $user_hub = (string) $account->department;
+    // Look for hubs that match $user_hub.
+    $query = new EntityFieldQuery();
+    $entities = $query->entityCondition('entity_type', 'node')
+      ->propertyCondition('type', 'hub')
+      ->propertyCondition('title', $user_hub)
+      ->execute();
+    // If we found a hub then retrive the gid and if it's not the Global group,
+    // make this shaper an audience of that group.
+    if (!empty($entities['node'])) {
+      $hub = reset($entities['node']);
+      $group = og_get_group('node', $hub->nid);
+      // @todo Figure out why this exists?
+      if ($group->label != 'Global') {
+        try {
+          $wrapper->group_audience = array($group);
+        }
+        catch (EntityMetadataWrapperException $e) {
+        }
+      }
+    }
+
+    // Because WEF's data is not sanitized and inconsistent, we need to filter out
+    // any links that aren't properly structured URLs.
+    $links = array(
+      'facebook' => (string) $account->facebook,
+      'linkedin' => (string) $account->{'linked-in'},
+      'twitter' => (string) $account->twitter,
+    );
+    // Loop through the links and replace any that don't start with http:// with a blank string.
+    foreach ($links as &$link) {
+      $link = trim($link);
+      // Ignore links not starting with http://.
+      if (!valid_url($link, TRUE)) {
+        $link = '';
+      }
+    }
+
+    // Populate other fields with Tibbr data.
+    try {
+      $wrapper->created = strtotime((string) $account->{'created-at'});
+      $wrapper->field_tibbr_about_me->value = utf8_decode(decode_entities((string) $account->description));
+      $wrapper->field_tibbr_id = (int) $account->id;
+      $wrapper->field_tibbr_first_name = decode_entities((string) $account->{'first-name'});
+      $wrapper->field_tibbr_last_name = decode_entities((string) $account->{'last-name'});
+      $wrapper->field_tibbr_nickname = decode_entities((string) $account->nickname);
+      $wrapper->field_tibbr_organization = utf8_decode((string) $account->company);
+      $wrapper->field_tibbr_email = (string) $account->email;
+      $wrapper->field_tibbr_facebook->url = $links['facebook'];
+      $wrapper->field_tibbr_twitter->url = $links['twitter'];
+      $wrapper->field_tibbr_linkedin->url = $links['linkedin'];
+      $wrapper->field_tibbr_link->url = 'https://globalshapers.weforum.org' . '/tibbr/users/' . (int) $account->id . '/profile';
+      $wrapper->field_tibbr_title = utf8_decode((string) $account->title);
+      $wrapper->field_tibbr_username = (string) $account->login;
+      $wrapper->field_joined = (string) strtotime($account->{'created-at'});
+    }
+    catch (EntityMetadataWrapperException $e) {
+    }
+
+    if ($media = (string) $account->{'media-profile'}) {
+      try {
+        $wrapper->field_video = (array) media_parse_to_file($media);
+      }
+      catch (Exception $e) {
+      }
+    }
+
+    $fullname = $account->{'first-name'} . ' ' . $account->{'last-name'};
+    $file = _weforum_tibbr_get_file((string) $account->{'profile-image-url'}, 'public://shaper-profile-images/' . strtolower(str_replace(' ', '-', $fullname)) . '-' . (string) $account->{'id'}, $fullname, FILE_EXISTS_REPLACE);
+    try {
+      if ($file) {
+        $wrapper->field_shaper_profile_image = (array) $file;
+      }
+    }
+    catch (EntityMetadataWrapperException $e) {
+    }
+
+    try {
+      $wrapper->save();
+    }
+    catch(Exception $e) {
+      watchdog('Weforum Tibbr save error', $e);
+    }
+    return $node->nid;
+  }
+
+  */
 }
 
