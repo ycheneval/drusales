@@ -1,0 +1,1879 @@
+string(11) "Hello world"
+string(21) "Trying to get entity:"
+string(16) "Yes, got entity!"
+string(76) "Calling "chatter/feeds/record/0F9g000000001HrCAI/feed-items", $entity: items"
+array(25) {
+  'parent' =>
+  array(16) {
+    'fileCount' =>
+    int(0)
+    'name' =>
+    string(24) "All World Economic Forum"
+    'owner' =>
+    array(13) {
+      'isActive' =>
+      bool(true)
+      'name' =>
+      string(7) "DB Test"
+      'title' =>
+      NULL
+      'userType' =>
+      string(8) "Internal"
+      'firstName' =>
+      string(2) "DB"
+      'lastName' =>
+      string(4) "Test"
+      'companyName' =>
+      NULL
+      'photo' =>
+      array(6) {
+        ...
+      }
+      'mySubscription' =>
+      NULL
+      'id' =>
+      string(18) "005g0000000G384AAC"
+      'motif' =>
+      array(3) {
+        ...
+      }
+      'url' =>
+      string(53) "/services/data/v27.0/chatter/users/005g0000000G384AAC"
+      'type' =>
+      string(4) "User"
+    }
+    'description' =>
+    string(53) "Get company announcements and other important updates"
+    'visibility' =>
+    string(12) "PublicAccess"
+    'memberCount' =>
+    int(5)
+    'photo' =>
+    array(6) {
+      'url' =>
+      string(60) "/services/data/v27.0/chatter/groups/0F9g000000001HrCAI/photo"
+      'largePhotoUrl' =>
+      string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PGU/F"
+      'photoVersionId' =>
+      string(18) "729g00000008PGUAA2"
+      'smallPhotoUrl' =>
+      string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PGU/T"
+      'fullEmailPhotoUrl' =>
+      string(119) "https://weforum--R4Dev.cs17.my.salesforce.com/ncsphoto/j6eG-YxH8tdmDhuP23dWqvKJsia7TZUcn5HKc3zs2-lBygSduxhw0L7SjnvQCUbM"
+      'standardEmailPhotoUrl' =>
+      string(119) "https://weforum--R4Dev.cs17.my.salesforce.com/ncsphoto/j6eG-YxH8tdmDhuP23dWqvKJsia7TZUcn5HKc3zs2-lse1fkRGMFo5zMq3No0Hhg"
+    }
+    'community' =>
+    NULL
+    'canHaveChatterGuests' =>
+    bool(false)
+    'mySubscription' =>
+    array(2) {
+      'id' =>
+      string(18) "0FBg000000008sNGAQ"
+      'url' =>
+      string(65) "/services/data/v27.0/chatter/group-memberships/0FBg000000008sNGAQ"
+    }
+    'myRole' =>
+    string(14) "StandardMember"
+    'lastFeedItemPostDate' =>
+    string(24) "2013-05-03T14:12:28.000Z"
+    'id' =>
+    string(18) "0F9g000000001HrCAI"
+    'motif' =>
+    array(3) {
+      'largeIconUrl' =>
+      string(22) "/img/icon/groups64.png"
+      'mediumIconUrl' =>
+      string(22) "/img/icon/groups32.png"
+      'smallIconUrl' =>
+      string(22) "/img/icon/groups16.png"
+    }
+    'url' =>
+    string(54) "/services/data/v27.0/chatter/groups/0F9g000000001HrCAI"
+    'type' =>
+    string(18) "CollaborationGroup"
+  }
+  'id' =>
+  string(18) "0D5g0000001SgPECA0"
+  'type' =>
+  string(8) "TextPost"
+  'clientInfo' =>
+  NULL
+  'createdDate' =>
+  string(24) "2013-05-03T14:12:28.000Z"
+  'url' =>
+  string(58) "/services/data/v27.0/chatter/feed-items/0D5g0000001SgPECA0"
+  'event' =>
+  bool(false)
+  'visibility' =>
+  string(8) "AllUsers"
+  'body' =>
+  array(2) {
+    'text' =>
+    string(9) "Test post"
+    'messageSegments' =>
+    array(1) {
+      [0] =>
+      array(2) {
+        ...
+      }
+    }
+  }
+  'modifiedDate' =>
+  string(24) "2013-05-03T14:12:28.000Z"
+  'photoUrl' =>
+  string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PLP/T"
+  'canShare' =>
+  bool(true)
+  'comments' =>
+  array(4) {
+    'total' =>
+    int(0)
+    'comments' =>
+    array(0) {
+    }
+    'currentPageUrl' =>
+    string(67) "/services/data/v27.0/chatter/feed-items/0D5g0000001SgPECA0/comments"
+    'nextPageUrl' =>
+    NULL
+  }
+  'likes' =>
+  array(5) {
+    'total' =>
+    int(0)
+    'likes' =>
+    array(0) {
+    }
+    'currentPageUrl' =>
+    string(64) "/services/data/v27.0/chatter/feed-items/0D5g0000001SgPECA0/likes"
+    'nextPageUrl' =>
+    NULL
+    'previousPageUrl' =>
+    NULL
+  }
+  'likesMessage' =>
+  NULL
+  'isBookmarkedByCurrentUser' =>
+  bool(false)
+  'isDeleteRestricted' =>
+  bool(false)
+  'isLikedByCurrentUser' =>
+  bool(false)
+  'myLike' =>
+  NULL
+  'actor' =>
+  array(13) {
+    'isActive' =>
+    bool(true)
+    'name' =>
+    string(13) "Yves Cheneval"
+    'title' =>
+    string(14) "Web Developper"
+    'userType' =>
+    string(8) "Internal"
+    'firstName' =>
+    string(4) "Yves"
+    'lastName' =>
+    string(8) "Cheneval"
+    'companyName' =>
+    string(20) "World Economic Forum"
+    'photo' =>
+    array(6) {
+      'url' =>
+      string(59) "/services/data/v27.0/chatter/users/005b0000000ECT5AAO/photo"
+      'largePhotoUrl' =>
+      string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PLP/F"
+      'photoVersionId' =>
+      string(18) "729g00000008PLPAA2"
+      'smallPhotoUrl' =>
+      string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PLP/T"
+      'fullEmailPhotoUrl' =>
+      string(119) "https://weforum--R4Dev.cs17.my.salesforce.com/ncsphoto/SUeSU40CninfwsU9XTzKH7QXYLfKcem_O3EAKA1zWHCCpPTHDHxOY1-1lDsRQjkb"
+      'standardEmailPhotoUrl' =>
+      string(119) "https://weforum--R4Dev.cs17.my.salesforce.com/ncsphoto/SUeSU40CninfwsU9XTzKH7QXYLfKcem_O3EAKA1zWHBHHJ_OVOAKJ6D6xaD5sEKe"
+    }
+    'mySubscription' =>
+    NULL
+    'id' =>
+    string(18) "005b0000000ECT5AAO"
+    'motif' =>
+    array(3) {
+      'largeIconUrl' =>
+      string(23) "/img/icon/profile64.png"
+      'mediumIconUrl' =>
+      string(23) "/img/icon/profile32.png"
+      'smallIconUrl' =>
+      string(23) "/img/icon/profile16.png"
+    }
+    'url' =>
+    string(53) "/services/data/v27.0/chatter/users/005b0000000ECT5AAO"
+    'type' =>
+    string(4) "User"
+  }
+  'attachment' =>
+  NULL
+  'originalFeedItem' =>
+  NULL
+  'originalFeedItemActor' =>
+  NULL
+  'preamble' =>
+  array(2) {
+    'text' =>
+    string(13) "Yves Cheneval"
+    'messageSegments' =>
+    array(1) {
+      [0] =>
+      array(4) {
+        ...
+      }
+    }
+  }
+  'topics' =>
+  array(2) {
+    'canAssignTopics' =>
+    bool(true)
+    'topics' =>
+    array(0) {
+    }
+  }
+}
+string(73) "Creating/updating post 0F9g000000001HrCAI,0D5g0000001SgPECA0,b: Test post"
+string(21) "Trying to get entity:"
+string(21) "Trying to get entity:"
+string(16) "Yes, got entity!"
+string(21) "Trying to get entity:"
+string(16) "Yes, got entity!"
+string(75) "Calling "chatter/feed-items/0D5g0000001SgPECA0/comments", $entity: comments"
+string(21) "Trying to get entity:"
+string(16) "Yes, got entity!"
+string(76) "Calling "chatter/feeds/record/0F9g000000001WcCAI/feed-items", $entity: items"
+array(25) {
+  'parent' =>
+  array(16) {
+    'fileCount' =>
+    int(0)
+    'name' =>
+    string(9) "Dev Group"
+    'owner' =>
+    array(13) {
+      'isActive' =>
+      bool(true)
+      'name' =>
+      string(13) "Yves Cheneval"
+      'title' =>
+      string(14) "Web Developper"
+      'userType' =>
+      string(8) "Internal"
+      'firstName' =>
+      string(4) "Yves"
+      'lastName' =>
+      string(8) "Cheneval"
+      'companyName' =>
+      string(20) "World Economic Forum"
+      'photo' =>
+      array(6) {
+        ...
+      }
+      'mySubscription' =>
+      NULL
+      'id' =>
+      string(18) "005b0000000ECT5AAO"
+      'motif' =>
+      array(3) {
+        ...
+      }
+      'url' =>
+      string(53) "/services/data/v27.0/chatter/users/005b0000000ECT5AAO"
+      'type' =>
+      string(4) "User"
+    }
+    'description' =>
+    string(33) "Group for Chatter &amp; SOQL test"
+    'visibility' =>
+    string(12) "PublicAccess"
+    'memberCount' =>
+    int(1)
+    'photo' =>
+    array(6) {
+      'url' =>
+      string(60) "/services/data/v27.0/chatter/groups/0F9g000000001WcCAI/photo"
+      'largePhotoUrl' =>
+      string(67) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/0F9/F"
+      'photoVersionId' =>
+      NULL
+      'smallPhotoUrl' =>
+      string(67) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/0F9/T"
+      'fullEmailPhotoUrl' =>
+      string(103) "https://weforum--R4Dev.cs17.my.salesforce.com/img/userprofile/default_group_profile_200.png?fromEmail=1"
+      'standardEmailPhotoUrl' =>
+      string(102) "https://weforum--R4Dev.cs17.my.salesforce.com/img/userprofile/default_group_profile_45.png?fromEmail=1"
+    }
+    'community' =>
+    NULL
+    'canHaveChatterGuests' =>
+    bool(false)
+    'mySubscription' =>
+    array(2) {
+      'id' =>
+      string(18) "0FBg000000008sSGAQ"
+      'url' =>
+      string(65) "/services/data/v27.0/chatter/group-memberships/0FBg000000008sSGAQ"
+    }
+    'myRole' =>
+    string(10) "GroupOwner"
+    'lastFeedItemPostDate' =>
+    string(24) "2013-05-10T09:29:57.000Z"
+    'id' =>
+    string(18) "0F9g000000001WcCAI"
+    'motif' =>
+    array(3) {
+      'largeIconUrl' =>
+      string(22) "/img/icon/groups64.png"
+      'mediumIconUrl' =>
+      string(22) "/img/icon/groups32.png"
+      'smallIconUrl' =>
+      string(22) "/img/icon/groups16.png"
+    }
+    'url' =>
+    string(54) "/services/data/v27.0/chatter/groups/0F9g000000001WcCAI"
+    'type' =>
+    string(18) "CollaborationGroup"
+  }
+  'id' =>
+  string(18) "0D5g0000001SoiZCAS"
+  'type' =>
+  string(8) "TextPost"
+  'clientInfo' =>
+  NULL
+  'createdDate' =>
+  string(24) "2013-05-10T09:29:57.000Z"
+  'url' =>
+  string(58) "/services/data/v27.0/chatter/feed-items/0D5g0000001SoiZCAS"
+  'event' =>
+  bool(false)
+  'visibility' =>
+  string(8) "AllUsers"
+  'body' =>
+  array(2) {
+    'text' =>
+    string(9) "Bonsoir !"
+    'messageSegments' =>
+    array(1) {
+      [0] =>
+      array(2) {
+        ...
+      }
+    }
+  }
+  'modifiedDate' =>
+  string(24) "2013-05-10T09:29:57.000Z"
+  'photoUrl' =>
+  string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PKb/T"
+  'canShare' =>
+  bool(true)
+  'comments' =>
+  array(4) {
+    'total' =>
+    int(0)
+    'comments' =>
+    array(0) {
+    }
+    'currentPageUrl' =>
+    string(67) "/services/data/v27.0/chatter/feed-items/0D5g0000001SoiZCAS/comments"
+    'nextPageUrl' =>
+    NULL
+  }
+  'likes' =>
+  array(5) {
+    'total' =>
+    int(0)
+    'likes' =>
+    array(0) {
+    }
+    'currentPageUrl' =>
+    string(64) "/services/data/v27.0/chatter/feed-items/0D5g0000001SoiZCAS/likes"
+    'nextPageUrl' =>
+    NULL
+    'previousPageUrl' =>
+    NULL
+  }
+  'likesMessage' =>
+  NULL
+  'isBookmarkedByCurrentUser' =>
+  bool(false)
+  'isDeleteRestricted' =>
+  bool(false)
+  'isLikedByCurrentUser' =>
+  bool(false)
+  'myLike' =>
+  NULL
+  'actor' =>
+  array(13) {
+    'isActive' =>
+    bool(true)
+    'name' =>
+    string(17) "Guillaume Baudoin"
+    'title' =>
+    string(24) "Senior Software Engineer"
+    'userType' =>
+    string(8) "Internal"
+    'firstName' =>
+    string(9) "Guillaume"
+    'lastName' =>
+    string(7) "Baudoin"
+    'companyName' =>
+    string(20) "World Economic Forum"
+    'photo' =>
+    array(6) {
+      'url' =>
+      string(59) "/services/data/v27.0/chatter/users/005b0000000Dy9dAAC/photo"
+      'largePhotoUrl' =>
+      string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PKb/F"
+      'photoVersionId' =>
+      string(18) "729g00000008PKbAAM"
+      'smallPhotoUrl' =>
+      string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PKb/T"
+      'fullEmailPhotoUrl' =>
+      string(119) "https://weforum--R4Dev.cs17.my.salesforce.com/ncsphoto/SUeSU40CninfwsU9XTzKH5Zre15WB42BIMUcwU0Il6J77mDBpt9k-BKzMFG2FXr9"
+      'standardEmailPhotoUrl' =>
+      string(119) "https://weforum--R4Dev.cs17.my.salesforce.com/ncsphoto/SUeSU40CninfwsU9XTzKH5Zre15WB42BIMUcwU0Il6IhBC_sf_n3liqjRYpuUa3p"
+    }
+    'mySubscription' =>
+    array(2) {
+      'id' =>
+      string(18) "0E8g00000006TGtCAM"
+      'url' =>
+      string(61) "/services/data/v27.0/chatter/subscriptions/0E8g00000006TGtCAM"
+    }
+    'id' =>
+    string(18) "005b0000000Dy9dAAC"
+    'motif' =>
+    array(3) {
+      'largeIconUrl' =>
+      string(23) "/img/icon/profile64.png"
+      'mediumIconUrl' =>
+      string(23) "/img/icon/profile32.png"
+      'smallIconUrl' =>
+      string(23) "/img/icon/profile16.png"
+    }
+    'url' =>
+    string(53) "/services/data/v27.0/chatter/users/005b0000000Dy9dAAC"
+    'type' =>
+    string(4) "User"
+  }
+  'attachment' =>
+  NULL
+  'originalFeedItem' =>
+  NULL
+  'originalFeedItemActor' =>
+  NULL
+  'preamble' =>
+  array(2) {
+    'text' =>
+    string(17) "Guillaume Baudoin"
+    'messageSegments' =>
+    array(1) {
+      [0] =>
+      array(4) {
+        ...
+      }
+    }
+  }
+  'topics' =>
+  array(2) {
+    'canAssignTopics' =>
+    bool(true)
+    'topics' =>
+    array(0) {
+    }
+  }
+}
+string(73) "Creating/updating post 0F9g000000001WcCAI,0D5g0000001SoiZCAS,b: Bonsoir !"
+string(21) "Trying to get entity:"
+string(21) "Trying to get entity:"
+string(42) "Calling "chatter/users/005b0000000Dy9dAAC""
+array(25) {
+  'address' =>
+  array(6) {
+    'state' =>
+    NULL
+    'country' =>
+    NULL
+    'street' =>
+    NULL
+    'city' =>
+    string(7) "Cologny"
+    'zip' =>
+    NULL
+    'formattedAddress' =>
+    string(9) "\nCologny "
+  }
+  'username' =>
+  string(35) "guillaume.baudoin@weforum.org.r4dev"
+  'email' =>
+  string(29) "guillaume.baudoin@weforum.org"
+  'groupCount' =>
+  int(1)
+  'phoneNumbers' =>
+  array(1) {
+    [0] =>
+    array(2) {
+      'type' =>
+      string(4) "Work"
+      'phoneNumber' =>
+      string(12) "+41228693660"
+    }
+  }
+  'chatterInfluence' =>
+  array(2) {
+    'rank' =>
+    int(3)
+    'percentile' =>
+    string(3) "0.0"
+  }
+  'managerId' =>
+  string(18) "005b0000000DieyAAC"
+  'aboutMe' =>
+  string(72) "Drupal developer for the Private Area, GlobalShapers.org and Weforum.org"
+  'isActive' =>
+  bool(true)
+  'chatterActivity' =>
+  array(4) {
+    'commentCount' =>
+    int(1)
+    'commentReceivedCount' =>
+    int(0)
+    'likeReceivedCount' =>
+    int(0)
+    'postCount' =>
+    int(1)
+  }
+  'followersCount' =>
+  int(1)
+  'followingCounts' =>
+  array(3) {
+    'total' =>
+    int(0)
+    'records' =>
+    int(0)
+    'people' =>
+    int(0)
+  }
+  'managerName' =>
+  string(17) "Abdel El Yahiaoui"
+  'name' =>
+  string(17) "Guillaume Baudoin"
+  'title' =>
+  string(24) "Senior Software Engineer"
+  'userType' =>
+  string(8) "Internal"
+  'firstName' =>
+  string(9) "Guillaume"
+  'lastName' =>
+  string(7) "Baudoin"
+  'companyName' =>
+  string(20) "World Economic Forum"
+  'photo' =>
+  array(6) {
+    'url' =>
+    string(59) "/services/data/v27.0/chatter/users/005b0000000Dy9dAAC/photo"
+    'largePhotoUrl' =>
+    string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PKb/F"
+    'photoVersionId' =>
+    string(18) "729g00000008PKbAAM"
+    'smallPhotoUrl' =>
+    string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PKb/T"
+    'fullEmailPhotoUrl' =>
+    string(119) "https://weforum--R4Dev.cs17.my.salesforce.com/ncsphoto/SUeSU40CninfwsU9XTzKH5Zre15WB42BIMUcwU0Il6J77mDBpt9k-BKzMFG2FXr9"
+    'standardEmailPhotoUrl' =>
+    string(119) "https://weforum--R4Dev.cs17.my.salesforce.com/ncsphoto/SUeSU40CninfwsU9XTzKH5Zre15WB42BIMUcwU0Il6IhBC_sf_n3liqjRYpuUa3p"
+  }
+  'mySubscription' =>
+  array(2) {
+    'id' =>
+    string(18) "0E8g00000006TGtCAM"
+    'url' =>
+    string(61) "/services/data/v27.0/chatter/subscriptions/0E8g00000006TGtCAM"
+  }
+  'id' =>
+  string(18) "005b0000000Dy9dAAC"
+  'motif' =>
+  array(3) {
+    'largeIconUrl' =>
+    string(23) "/img/icon/profile64.png"
+    'mediumIconUrl' =>
+    string(23) "/img/icon/profile32.png"
+    'smallIconUrl' =>
+    string(23) "/img/icon/profile16.png"
+  }
+  'url' =>
+  string(53) "/services/data/v27.0/chatter/users/005b0000000Dy9dAAC"
+  'type' =>
+  string(4) "User"
+}
+array(25) {
+  'address' =>
+  array(6) {
+    'state' =>
+    NULL
+    'country' =>
+    NULL
+    'street' =>
+    NULL
+    'city' =>
+    string(7) "Cologny"
+    'zip' =>
+    NULL
+    'formattedAddress' =>
+    string(9) "\nCologny "
+  }
+  'username' =>
+  string(35) "guillaume.baudoin@weforum.org.r4dev"
+  'email' =>
+  string(29) "guillaume.baudoin@weforum.org"
+  'groupCount' =>
+  int(1)
+  'phoneNumbers' =>
+  array(1) {
+    [0] =>
+    array(2) {
+      'type' =>
+      string(4) "Work"
+      'phoneNumber' =>
+      string(12) "+41228693660"
+    }
+  }
+  'chatterInfluence' =>
+  array(2) {
+    'rank' =>
+    int(3)
+    'percentile' =>
+    string(3) "0.0"
+  }
+  'managerId' =>
+  string(18) "005b0000000DieyAAC"
+  'aboutMe' =>
+  string(72) "Drupal developer for the Private Area, GlobalShapers.org and Weforum.org"
+  'isActive' =>
+  bool(true)
+  'chatterActivity' =>
+  array(4) {
+    'commentCount' =>
+    int(1)
+    'commentReceivedCount' =>
+    int(0)
+    'likeReceivedCount' =>
+    int(0)
+    'postCount' =>
+    int(1)
+  }
+  'followersCount' =>
+  int(1)
+  'followingCounts' =>
+  array(3) {
+    'total' =>
+    int(0)
+    'records' =>
+    int(0)
+    'people' =>
+    int(0)
+  }
+  'managerName' =>
+  string(17) "Abdel El Yahiaoui"
+  'name' =>
+  string(17) "Guillaume Baudoin"
+  'title' =>
+  string(24) "Senior Software Engineer"
+  'userType' =>
+  string(8) "Internal"
+  'firstName' =>
+  string(9) "Guillaume"
+  'lastName' =>
+  string(7) "Baudoin"
+  'companyName' =>
+  string(20) "World Economic Forum"
+  'photo' =>
+  array(6) {
+    'url' =>
+    string(59) "/services/data/v27.0/chatter/users/005b0000000Dy9dAAC/photo"
+    'largePhotoUrl' =>
+    string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PKb/F"
+    'photoVersionId' =>
+    string(18) "729g00000008PKbAAM"
+    'smallPhotoUrl' =>
+    string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PKb/T"
+    'fullEmailPhotoUrl' =>
+    string(119) "https://weforum--R4Dev.cs17.my.salesforce.com/ncsphoto/SUeSU40CninfwsU9XTzKH5Zre15WB42BIMUcwU0Il6J77mDBpt9k-BKzMFG2FXr9"
+    'standardEmailPhotoUrl' =>
+    string(119) "https://weforum--R4Dev.cs17.my.salesforce.com/ncsphoto/SUeSU40CninfwsU9XTzKH5Zre15WB42BIMUcwU0Il6IhBC_sf_n3liqjRYpuUa3p"
+  }
+  'mySubscription' =>
+  array(2) {
+    'id' =>
+    string(18) "0E8g00000006TGtCAM"
+    'url' =>
+    string(61) "/services/data/v27.0/chatter/subscriptions/0E8g00000006TGtCAM"
+  }
+  'id' =>
+  string(18) "005b0000000Dy9dAAC"
+  'motif' =>
+  array(3) {
+    'largeIconUrl' =>
+    string(23) "/img/icon/profile64.png"
+    'mediumIconUrl' =>
+    string(23) "/img/icon/profile32.png"
+    'smallIconUrl' =>
+    string(23) "/img/icon/profile16.png"
+  }
+  'url' =>
+  string(53) "/services/data/v27.0/chatter/users/005b0000000Dy9dAAC"
+  'type' =>
+  string(4) "User"
+}
+string(73) "Asked to create an account with sfUserId=005b0000000Dy9dAAC, result is Ok"
+class stdClass#458 (19) {
+  public $status =>
+  int(1)
+  public $mail =>
+  string(29) "guillaume.baudoin@weforum.org"
+  public $pass =>
+  string(55) "$S$DS0MrmPZMA5tL/itFcs0spL1MYQoxRUwm5PgLkTHN5gEloq2M0TG"
+  public $field_sfid =>
+  array(1) {
+    'und' =>
+    array(1) {
+      [0] =>
+      array(1) {
+        ...
+      }
+    }
+  }
+  public $name =>
+  string(17) "Guillaume Baudoin"
+  public $uid =>
+  string(2) "33"
+  public $created =>
+  int(1368443287)
+  public $theme =>
+  string(0) ""
+  public $signature =>
+  string(0) ""
+  public $access =>
+  int(0)
+  public $login =>
+  int(0)
+  public $language =>
+  string(0) ""
+  public $picture =>
+  int(0)
+  public $init =>
+  string(0) ""
+  public $roles =>
+  array(1) {
+    [2] =>
+    string(18) "authenticated user"
+  }
+  public $message_subscribe_email =>
+  array(1) {
+    'und' =>
+    array(1) {
+      [0] =>
+      array(1) {
+        ...
+      }
+    }
+  }
+  public $field_facebook_url =>
+  array(1) {
+    'und' =>
+    array(1) {
+      [0] =>
+      array(3) {
+        ...
+      }
+    }
+  }
+  public $field_linkedin_url =>
+  array(1) {
+    'und' =>
+    array(1) {
+      [0] =>
+      array(2) {
+        ...
+      }
+    }
+  }
+  public $field_twitter_url =>
+  array(1) {
+    'und' =>
+    array(1) {
+      [0] =>
+      array(3) {
+        ...
+      }
+    }
+  }
+}
+string(21) "Trying to get entity:"
+string(16) "Yes, got entity!"
+string(75) "Calling "chatter/feed-items/0D5g0000001SoiZCAS/comments", $entity: comments"
+array(25) {
+  'parent' =>
+  array(16) {
+    'fileCount' =>
+    int(0)
+    'name' =>
+    string(9) "Dev Group"
+    'owner' =>
+    array(13) {
+      'isActive' =>
+      bool(true)
+      'name' =>
+      string(13) "Yves Cheneval"
+      'title' =>
+      string(14) "Web Developper"
+      'userType' =>
+      string(8) "Internal"
+      'firstName' =>
+      string(4) "Yves"
+      'lastName' =>
+      string(8) "Cheneval"
+      'companyName' =>
+      string(20) "World Economic Forum"
+      'photo' =>
+      array(6) {
+        ...
+      }
+      'mySubscription' =>
+      NULL
+      'id' =>
+      string(18) "005b0000000ECT5AAO"
+      'motif' =>
+      array(3) {
+        ...
+      }
+      'url' =>
+      string(53) "/services/data/v27.0/chatter/users/005b0000000ECT5AAO"
+      'type' =>
+      string(4) "User"
+    }
+    'description' =>
+    string(33) "Group for Chatter &amp; SOQL test"
+    'visibility' =>
+    string(12) "PublicAccess"
+    'memberCount' =>
+    int(1)
+    'photo' =>
+    array(6) {
+      'url' =>
+      string(60) "/services/data/v27.0/chatter/groups/0F9g000000001WcCAI/photo"
+      'largePhotoUrl' =>
+      string(67) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/0F9/F"
+      'photoVersionId' =>
+      NULL
+      'smallPhotoUrl' =>
+      string(67) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/0F9/T"
+      'fullEmailPhotoUrl' =>
+      string(103) "https://weforum--R4Dev.cs17.my.salesforce.com/img/userprofile/default_group_profile_200.png?fromEmail=1"
+      'standardEmailPhotoUrl' =>
+      string(102) "https://weforum--R4Dev.cs17.my.salesforce.com/img/userprofile/default_group_profile_45.png?fromEmail=1"
+    }
+    'community' =>
+    NULL
+    'canHaveChatterGuests' =>
+    bool(false)
+    'mySubscription' =>
+    array(2) {
+      'id' =>
+      string(18) "0FBg000000008sSGAQ"
+      'url' =>
+      string(65) "/services/data/v27.0/chatter/group-memberships/0FBg000000008sSGAQ"
+    }
+    'myRole' =>
+    string(10) "GroupOwner"
+    'lastFeedItemPostDate' =>
+    string(24) "2013-05-10T09:29:57.000Z"
+    'id' =>
+    string(18) "0F9g000000001WcCAI"
+    'motif' =>
+    array(3) {
+      'largeIconUrl' =>
+      string(22) "/img/icon/groups64.png"
+      'mediumIconUrl' =>
+      string(22) "/img/icon/groups32.png"
+      'smallIconUrl' =>
+      string(22) "/img/icon/groups16.png"
+    }
+    'url' =>
+    string(54) "/services/data/v27.0/chatter/groups/0F9g000000001WcCAI"
+    'type' =>
+    string(18) "CollaborationGroup"
+  }
+  'id' =>
+  string(18) "0D5g0000001SgPYCA0"
+  'type' =>
+  string(8) "TextPost"
+  'clientInfo' =>
+  NULL
+  'createdDate' =>
+  string(24) "2013-05-03T14:13:45.000Z"
+  'url' =>
+  string(58) "/services/data/v27.0/chatter/feed-items/0D5g0000001SgPYCA0"
+  'event' =>
+  bool(false)
+  'visibility' =>
+  string(8) "AllUsers"
+  'body' =>
+  array(2) {
+    'text' =>
+    string(12) "Hello world!"
+    'messageSegments' =>
+    array(1) {
+      [0] =>
+      array(2) {
+        ...
+      }
+    }
+  }
+  'modifiedDate' =>
+  string(24) "2013-05-10T09:29:51.000Z"
+  'photoUrl' =>
+  string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PLP/T"
+  'canShare' =>
+  bool(true)
+  'comments' =>
+  array(4) {
+    'total' =>
+    int(7)
+    'comments' =>
+    array(3) {
+      [0] =>
+      array(14) {
+        ...
+      }
+      [1] =>
+      array(14) {
+        ...
+      }
+      [2] =>
+      array(14) {
+        ...
+      }
+    }
+    'currentPageUrl' =>
+    string(67) "/services/data/v27.0/chatter/feed-items/0D5g0000001SgPYCA0/comments"
+    'nextPageUrl' =>
+    string(118) "/services/data/v27.0/chatter/feed-items/0D5g0000001SgPYCA0/comments?page=2013-05-08T15%3A02%3A12Z%2C0D7g000000003tJCAQ"
+  }
+  'likes' =>
+  array(5) {
+    'total' =>
+    int(0)
+    'likes' =>
+    array(0) {
+    }
+    'currentPageUrl' =>
+    string(64) "/services/data/v27.0/chatter/feed-items/0D5g0000001SgPYCA0/likes"
+    'nextPageUrl' =>
+    NULL
+    'previousPageUrl' =>
+    NULL
+  }
+  'likesMessage' =>
+  NULL
+  'isBookmarkedByCurrentUser' =>
+  bool(false)
+  'isDeleteRestricted' =>
+  bool(false)
+  'isLikedByCurrentUser' =>
+  bool(false)
+  'myLike' =>
+  NULL
+  'actor' =>
+  array(13) {
+    'isActive' =>
+    bool(true)
+    'name' =>
+    string(13) "Yves Cheneval"
+    'title' =>
+    string(14) "Web Developper"
+    'userType' =>
+    string(8) "Internal"
+    'firstName' =>
+    string(4) "Yves"
+    'lastName' =>
+    string(8) "Cheneval"
+    'companyName' =>
+    string(20) "World Economic Forum"
+    'photo' =>
+    array(6) {
+      'url' =>
+      string(59) "/services/data/v27.0/chatter/users/005b0000000ECT5AAO/photo"
+      'largePhotoUrl' =>
+      string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PLP/F"
+      'photoVersionId' =>
+      string(18) "729g00000008PLPAA2"
+      'smallPhotoUrl' =>
+      string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PLP/T"
+      'fullEmailPhotoUrl' =>
+      string(119) "https://weforum--R4Dev.cs17.my.salesforce.com/ncsphoto/SUeSU40CninfwsU9XTzKH7QXYLfKcem_O3EAKA1zWHCCpPTHDHxOY1-1lDsRQjkb"
+      'standardEmailPhotoUrl' =>
+      string(119) "https://weforum--R4Dev.cs17.my.salesforce.com/ncsphoto/SUeSU40CninfwsU9XTzKH7QXYLfKcem_O3EAKA1zWHBHHJ_OVOAKJ6D6xaD5sEKe"
+    }
+    'mySubscription' =>
+    NULL
+    'id' =>
+    string(18) "005b0000000ECT5AAO"
+    'motif' =>
+    array(3) {
+      'largeIconUrl' =>
+      string(23) "/img/icon/profile64.png"
+      'mediumIconUrl' =>
+      string(23) "/img/icon/profile32.png"
+      'smallIconUrl' =>
+      string(23) "/img/icon/profile16.png"
+    }
+    'url' =>
+    string(53) "/services/data/v27.0/chatter/users/005b0000000ECT5AAO"
+    'type' =>
+    string(4) "User"
+  }
+  'attachment' =>
+  NULL
+  'originalFeedItem' =>
+  NULL
+  'originalFeedItemActor' =>
+  NULL
+  'preamble' =>
+  array(2) {
+    'text' =>
+    string(13) "Yves Cheneval"
+    'messageSegments' =>
+    array(1) {
+      [0] =>
+      array(4) {
+        ...
+      }
+    }
+  }
+  'topics' =>
+  array(2) {
+    'canAssignTopics' =>
+    bool(true)
+    'topics' =>
+    array(0) {
+    }
+  }
+}
+string(76) "Creating/updating post 0F9g000000001WcCAI,0D5g0000001SgPYCA0,b: Hello world!"
+string(21) "Trying to get entity:"
+string(21) "Trying to get entity:"
+string(16) "Yes, got entity!"
+string(21) "Trying to get entity:"
+string(16) "Yes, got entity!"
+string(75) "Calling "chatter/feed-items/0D5g0000001SgPYCA0/comments", $entity: comments"
+array(14) {
+  'parent' =>
+  array(2) {
+    'id' =>
+    string(18) "0F9g000000001WcCAI"
+    'url' =>
+    string(54) "/services/data/v27.0/chatter/groups/0F9g000000001WcCAI"
+  }
+  'id' =>
+  string(18) "0D7g000000003spCAA"
+  'type' =>
+  string(11) "TextComment"
+  'clientInfo' =>
+  NULL
+  'createdDate' =>
+  string(24) "2013-05-06T12:12:51.000Z"
+  'url' =>
+  string(56) "/services/data/v27.0/chatter/comments/0D7g000000003spCAA"
+  'user' =>
+  array(13) {
+    'isActive' =>
+    bool(true)
+    'name' =>
+    string(13) "Yves Cheneval"
+    'title' =>
+    string(14) "Web Developper"
+    'userType' =>
+    string(8) "Internal"
+    'firstName' =>
+    string(4) "Yves"
+    'lastName' =>
+    string(8) "Cheneval"
+    'companyName' =>
+    string(20) "World Economic Forum"
+    'photo' =>
+    array(6) {
+      'url' =>
+      string(59) "/services/data/v27.0/chatter/users/005b0000000ECT5AAO/photo"
+      'largePhotoUrl' =>
+      string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PLP/F"
+      'photoVersionId' =>
+      string(18) "729g00000008PLPAA2"
+      'smallPhotoUrl' =>
+      string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PLP/T"
+      'fullEmailPhotoUrl' =>
+      string(119) "https://weforum--R4Dev.cs17.my.salesforce.com/ncsphoto/SUeSU40CninfwsU9XTzKH7QXYLfKcem_O3EAKA1zWHCCpPTHDHxOY1-1lDsRQjkb"
+      'standardEmailPhotoUrl' =>
+      string(119) "https://weforum--R4Dev.cs17.my.salesforce.com/ncsphoto/SUeSU40CninfwsU9XTzKH7QXYLfKcem_O3EAKA1zWHBHHJ_OVOAKJ6D6xaD5sEKe"
+    }
+    'mySubscription' =>
+    NULL
+    'id' =>
+    string(18) "005b0000000ECT5AAO"
+    'motif' =>
+    array(3) {
+      'largeIconUrl' =>
+      string(23) "/img/icon/profile64.png"
+      'mediumIconUrl' =>
+      string(23) "/img/icon/profile32.png"
+      'smallIconUrl' =>
+      string(23) "/img/icon/profile16.png"
+    }
+    'url' =>
+    string(53) "/services/data/v27.0/chatter/users/005b0000000ECT5AAO"
+    'type' =>
+    string(4) "User"
+  }
+  'body' =>
+  array(2) {
+    'text' =>
+    string(5) "Cool!"
+    'messageSegments' =>
+    array(1) {
+      [0] =>
+      array(2) {
+        ...
+      }
+    }
+  }
+  'likes' =>
+  array(5) {
+    'total' =>
+    int(0)
+    'likes' =>
+    array(0) {
+    }
+    'currentPageUrl' =>
+    string(62) "/services/data/v27.0/chatter/comments/0D7g000000003spCAA/likes"
+    'nextPageUrl' =>
+    NULL
+    'previousPageUrl' =>
+    NULL
+  }
+  'likesMessage' =>
+  NULL
+  'isDeleteRestricted' =>
+  bool(false)
+  'myLike' =>
+  NULL
+  'attachment' =>
+  NULL
+  'feedItem' =>
+  array(2) {
+    'id' =>
+    string(18) "0D5g0000001SgPYCA0"
+    'url' =>
+    string(58) "/services/data/v27.0/chatter/feed-items/0D5g0000001SgPYCA0"
+  }
+}
+string(56) "Creating/updating comment 31,0D7g000000003spCAA,b: Cool!"
+string(21) "Trying to get entity:"
+string(20) "Creating new comment"
+string(21) "Trying to get entity:"
+string(16) "Yes, got entity!"
+array(14) {
+  'parent' =>
+  array(2) {
+    'id' =>
+    string(18) "0F9g000000001WcCAI"
+    'url' =>
+    string(54) "/services/data/v27.0/chatter/groups/0F9g000000001WcCAI"
+  }
+  'id' =>
+  string(18) "0D7g000000003suCAA"
+  'type' =>
+  string(11) "TextComment"
+  'clientInfo' =>
+  NULL
+  'createdDate' =>
+  string(24) "2013-05-06T14:44:26.000Z"
+  'url' =>
+  string(56) "/services/data/v27.0/chatter/comments/0D7g000000003suCAA"
+  'user' =>
+  array(13) {
+    'isActive' =>
+    bool(true)
+    'name' =>
+    string(13) "Yves Cheneval"
+    'title' =>
+    string(14) "Web Developper"
+    'userType' =>
+    string(8) "Internal"
+    'firstName' =>
+    string(4) "Yves"
+    'lastName' =>
+    string(8) "Cheneval"
+    'companyName' =>
+    string(20) "World Economic Forum"
+    'photo' =>
+    array(6) {
+      'url' =>
+      string(59) "/services/data/v27.0/chatter/users/005b0000000ECT5AAO/photo"
+      'largePhotoUrl' =>
+      string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PLP/F"
+      'photoVersionId' =>
+      string(18) "729g00000008PLPAA2"
+      'smallPhotoUrl' =>
+      string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PLP/T"
+      'fullEmailPhotoUrl' =>
+      string(119) "https://weforum--R4Dev.cs17.my.salesforce.com/ncsphoto/SUeSU40CninfwsU9XTzKH7QXYLfKcem_O3EAKA1zWHCCpPTHDHxOY1-1lDsRQjkb"
+      'standardEmailPhotoUrl' =>
+      string(119) "https://weforum--R4Dev.cs17.my.salesforce.com/ncsphoto/SUeSU40CninfwsU9XTzKH7QXYLfKcem_O3EAKA1zWHBHHJ_OVOAKJ6D6xaD5sEKe"
+    }
+    'mySubscription' =>
+    NULL
+    'id' =>
+    string(18) "005b0000000ECT5AAO"
+    'motif' =>
+    array(3) {
+      'largeIconUrl' =>
+      string(23) "/img/icon/profile64.png"
+      'mediumIconUrl' =>
+      string(23) "/img/icon/profile32.png"
+      'smallIconUrl' =>
+      string(23) "/img/icon/profile16.png"
+    }
+    'url' =>
+    string(53) "/services/data/v27.0/chatter/users/005b0000000ECT5AAO"
+    'type' =>
+    string(4) "User"
+  }
+  'body' =>
+  array(2) {
+    'text' =>
+    string(26) "Comments, where are thou ?"
+    'messageSegments' =>
+    array(1) {
+      [0] =>
+      array(2) {
+        ...
+      }
+    }
+  }
+  'likes' =>
+  array(5) {
+    'total' =>
+    int(0)
+    'likes' =>
+    array(0) {
+    }
+    'currentPageUrl' =>
+    string(62) "/services/data/v27.0/chatter/comments/0D7g000000003suCAA/likes"
+    'nextPageUrl' =>
+    NULL
+    'previousPageUrl' =>
+    NULL
+  }
+  'likesMessage' =>
+  NULL
+  'isDeleteRestricted' =>
+  bool(false)
+  'myLike' =>
+  NULL
+  'attachment' =>
+  NULL
+  'feedItem' =>
+  array(2) {
+    'id' =>
+    string(18) "0D5g0000001SgPYCA0"
+    'url' =>
+    string(58) "/services/data/v27.0/chatter/feed-items/0D5g0000001SgPYCA0"
+  }
+}
+string(77) "Creating/updating comment 31,0D7g000000003suCAA,b: Comments, where are thou ?"
+string(21) "Trying to get entity:"
+string(20) "Creating new comment"
+string(21) "Trying to get entity:"
+string(16) "Yes, got entity!"
+array(14) {
+  'parent' =>
+  array(2) {
+    'id' =>
+    string(18) "0F9g000000001WcCAI"
+    'url' =>
+    string(54) "/services/data/v27.0/chatter/groups/0F9g000000001WcCAI"
+  }
+  'id' =>
+  string(18) "0D7g000000003t9CAA"
+  'type' =>
+  string(11) "TextComment"
+  'clientInfo' =>
+  NULL
+  'createdDate' =>
+  string(24) "2013-05-08T15:01:58.000Z"
+  'url' =>
+  string(56) "/services/data/v27.0/chatter/comments/0D7g000000003t9CAA"
+  'user' =>
+  array(13) {
+    'isActive' =>
+    bool(true)
+    'name' =>
+    string(13) "Yves Cheneval"
+    'title' =>
+    string(14) "Web Developper"
+    'userType' =>
+    string(8) "Internal"
+    'firstName' =>
+    string(4) "Yves"
+    'lastName' =>
+    string(8) "Cheneval"
+    'companyName' =>
+    string(20) "World Economic Forum"
+    'photo' =>
+    array(6) {
+      'url' =>
+      string(59) "/services/data/v27.0/chatter/users/005b0000000ECT5AAO/photo"
+      'largePhotoUrl' =>
+      string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PLP/F"
+      'photoVersionId' =>
+      string(18) "729g00000008PLPAA2"
+      'smallPhotoUrl' =>
+      string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PLP/T"
+      'fullEmailPhotoUrl' =>
+      string(119) "https://weforum--R4Dev.cs17.my.salesforce.com/ncsphoto/SUeSU40CninfwsU9XTzKH7QXYLfKcem_O3EAKA1zWHCCpPTHDHxOY1-1lDsRQjkb"
+      'standardEmailPhotoUrl' =>
+      string(119) "https://weforum--R4Dev.cs17.my.salesforce.com/ncsphoto/SUeSU40CninfwsU9XTzKH7QXYLfKcem_O3EAKA1zWHBHHJ_OVOAKJ6D6xaD5sEKe"
+    }
+    'mySubscription' =>
+    NULL
+    'id' =>
+    string(18) "005b0000000ECT5AAO"
+    'motif' =>
+    array(3) {
+      'largeIconUrl' =>
+      string(23) "/img/icon/profile64.png"
+      'mediumIconUrl' =>
+      string(23) "/img/icon/profile32.png"
+      'smallIconUrl' =>
+      string(23) "/img/icon/profile16.png"
+    }
+    'url' =>
+    string(53) "/services/data/v27.0/chatter/users/005b0000000ECT5AAO"
+    'type' =>
+    string(4) "User"
+  }
+  'body' =>
+  array(2) {
+    'text' =>
+    string(10) "Comment #3"
+    'messageSegments' =>
+    array(1) {
+      [0] =>
+      array(2) {
+        ...
+      }
+    }
+  }
+  'likes' =>
+  array(5) {
+    'total' =>
+    int(0)
+    'likes' =>
+    array(0) {
+    }
+    'currentPageUrl' =>
+    string(62) "/services/data/v27.0/chatter/comments/0D7g000000003t9CAA/likes"
+    'nextPageUrl' =>
+    NULL
+    'previousPageUrl' =>
+    NULL
+  }
+  'likesMessage' =>
+  NULL
+  'isDeleteRestricted' =>
+  bool(false)
+  'myLike' =>
+  NULL
+  'attachment' =>
+  NULL
+  'feedItem' =>
+  array(2) {
+    'id' =>
+    string(18) "0D5g0000001SgPYCA0"
+    'url' =>
+    string(58) "/services/data/v27.0/chatter/feed-items/0D5g0000001SgPYCA0"
+  }
+}
+string(61) "Creating/updating comment 31,0D7g000000003t9CAA,b: Comment #3"
+string(21) "Trying to get entity:"
+string(20) "Creating new comment"
+string(21) "Trying to get entity:"
+string(16) "Yes, got entity!"
+array(14) {
+  'parent' =>
+  array(2) {
+    'id' =>
+    string(18) "0F9g000000001WcCAI"
+    'url' =>
+    string(54) "/services/data/v27.0/chatter/groups/0F9g000000001WcCAI"
+  }
+  'id' =>
+  string(18) "0D7g000000003tECAQ"
+  'type' =>
+  string(11) "TextComment"
+  'clientInfo' =>
+  NULL
+  'createdDate' =>
+  string(24) "2013-05-08T15:02:04.000Z"
+  'url' =>
+  string(56) "/services/data/v27.0/chatter/comments/0D7g000000003tECAQ"
+  'user' =>
+  array(13) {
+    'isActive' =>
+    bool(true)
+    'name' =>
+    string(13) "Yves Cheneval"
+    'title' =>
+    string(14) "Web Developper"
+    'userType' =>
+    string(8) "Internal"
+    'firstName' =>
+    string(4) "Yves"
+    'lastName' =>
+    string(8) "Cheneval"
+    'companyName' =>
+    string(20) "World Economic Forum"
+    'photo' =>
+    array(6) {
+      'url' =>
+      string(59) "/services/data/v27.0/chatter/users/005b0000000ECT5AAO/photo"
+      'largePhotoUrl' =>
+      string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PLP/F"
+      'photoVersionId' =>
+      string(18) "729g00000008PLPAA2"
+      'smallPhotoUrl' =>
+      string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PLP/T"
+      'fullEmailPhotoUrl' =>
+      string(119) "https://weforum--R4Dev.cs17.my.salesforce.com/ncsphoto/SUeSU40CninfwsU9XTzKH7QXYLfKcem_O3EAKA1zWHCCpPTHDHxOY1-1lDsRQjkb"
+      'standardEmailPhotoUrl' =>
+      string(119) "https://weforum--R4Dev.cs17.my.salesforce.com/ncsphoto/SUeSU40CninfwsU9XTzKH7QXYLfKcem_O3EAKA1zWHBHHJ_OVOAKJ6D6xaD5sEKe"
+    }
+    'mySubscription' =>
+    NULL
+    'id' =>
+    string(18) "005b0000000ECT5AAO"
+    'motif' =>
+    array(3) {
+      'largeIconUrl' =>
+      string(23) "/img/icon/profile64.png"
+      'mediumIconUrl' =>
+      string(23) "/img/icon/profile32.png"
+      'smallIconUrl' =>
+      string(23) "/img/icon/profile16.png"
+    }
+    'url' =>
+    string(53) "/services/data/v27.0/chatter/users/005b0000000ECT5AAO"
+    'type' =>
+    string(4) "User"
+  }
+  'body' =>
+  array(2) {
+    'text' =>
+    string(10) "Comment #4"
+    'messageSegments' =>
+    array(1) {
+      [0] =>
+      array(2) {
+        ...
+      }
+    }
+  }
+  'likes' =>
+  array(5) {
+    'total' =>
+    int(0)
+    'likes' =>
+    array(0) {
+    }
+    'currentPageUrl' =>
+    string(62) "/services/data/v27.0/chatter/comments/0D7g000000003tECAQ/likes"
+    'nextPageUrl' =>
+    NULL
+    'previousPageUrl' =>
+    NULL
+  }
+  'likesMessage' =>
+  NULL
+  'isDeleteRestricted' =>
+  bool(false)
+  'myLike' =>
+  NULL
+  'attachment' =>
+  NULL
+  'feedItem' =>
+  array(2) {
+    'id' =>
+    string(18) "0D5g0000001SgPYCA0"
+    'url' =>
+    string(58) "/services/data/v27.0/chatter/feed-items/0D5g0000001SgPYCA0"
+  }
+}
+string(61) "Creating/updating comment 31,0D7g000000003tECAQ,b: Comment #4"
+string(21) "Trying to get entity:"
+string(20) "Creating new comment"
+string(21) "Trying to get entity:"
+string(16) "Yes, got entity!"
+array(14) {
+  'parent' =>
+  array(2) {
+    'id' =>
+    string(18) "0F9g000000001WcCAI"
+    'url' =>
+    string(54) "/services/data/v27.0/chatter/groups/0F9g000000001WcCAI"
+  }
+  'id' =>
+  string(18) "0D7g000000003tJCAQ"
+  'type' =>
+  string(11) "TextComment"
+  'clientInfo' =>
+  NULL
+  'createdDate' =>
+  string(24) "2013-05-08T15:02:12.000Z"
+  'url' =>
+  string(56) "/services/data/v27.0/chatter/comments/0D7g000000003tJCAQ"
+  'user' =>
+  array(13) {
+    'isActive' =>
+    bool(true)
+    'name' =>
+    string(13) "Yves Cheneval"
+    'title' =>
+    string(14) "Web Developper"
+    'userType' =>
+    string(8) "Internal"
+    'firstName' =>
+    string(4) "Yves"
+    'lastName' =>
+    string(8) "Cheneval"
+    'companyName' =>
+    string(20) "World Economic Forum"
+    'photo' =>
+    array(6) {
+      'url' =>
+      string(59) "/services/data/v27.0/chatter/users/005b0000000ECT5AAO/photo"
+      'largePhotoUrl' =>
+      string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PLP/F"
+      'photoVersionId' =>
+      string(18) "729g00000008PLPAA2"
+      'smallPhotoUrl' =>
+      string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PLP/T"
+      'fullEmailPhotoUrl' =>
+      string(119) "https://weforum--R4Dev.cs17.my.salesforce.com/ncsphoto/SUeSU40CninfwsU9XTzKH7QXYLfKcem_O3EAKA1zWHCCpPTHDHxOY1-1lDsRQjkb"
+      'standardEmailPhotoUrl' =>
+      string(119) "https://weforum--R4Dev.cs17.my.salesforce.com/ncsphoto/SUeSU40CninfwsU9XTzKH7QXYLfKcem_O3EAKA1zWHBHHJ_OVOAKJ6D6xaD5sEKe"
+    }
+    'mySubscription' =>
+    NULL
+    'id' =>
+    string(18) "005b0000000ECT5AAO"
+    'motif' =>
+    array(3) {
+      'largeIconUrl' =>
+      string(23) "/img/icon/profile64.png"
+      'mediumIconUrl' =>
+      string(23) "/img/icon/profile32.png"
+      'smallIconUrl' =>
+      string(23) "/img/icon/profile16.png"
+    }
+    'url' =>
+    string(53) "/services/data/v27.0/chatter/users/005b0000000ECT5AAO"
+    'type' =>
+    string(4) "User"
+  }
+  'body' =>
+  array(2) {
+    'text' =>
+    string(10) "Comment #5"
+    'messageSegments' =>
+    array(1) {
+      [0] =>
+      array(2) {
+        ...
+      }
+    }
+  }
+  'likes' =>
+  array(5) {
+    'total' =>
+    int(0)
+    'likes' =>
+    array(0) {
+    }
+    'currentPageUrl' =>
+    string(62) "/services/data/v27.0/chatter/comments/0D7g000000003tJCAQ/likes"
+    'nextPageUrl' =>
+    NULL
+    'previousPageUrl' =>
+    NULL
+  }
+  'likesMessage' =>
+  NULL
+  'isDeleteRestricted' =>
+  bool(false)
+  'myLike' =>
+  NULL
+  'attachment' =>
+  NULL
+  'feedItem' =>
+  array(2) {
+    'id' =>
+    string(18) "0D5g0000001SgPYCA0"
+    'url' =>
+    string(58) "/services/data/v27.0/chatter/feed-items/0D5g0000001SgPYCA0"
+  }
+}
+string(61) "Creating/updating comment 31,0D7g000000003tJCAQ,b: Comment #5"
+string(21) "Trying to get entity:"
+string(20) "Creating new comment"
+string(21) "Trying to get entity:"
+string(16) "Yes, got entity!"
+array(14) {
+  'parent' =>
+  array(2) {
+    'id' =>
+    string(18) "0F9g000000001WcCAI"
+    'url' =>
+    string(54) "/services/data/v27.0/chatter/groups/0F9g000000001WcCAI"
+  }
+  'id' =>
+  string(18) "0D7g000000003tOCAQ"
+  'type' =>
+  string(11) "TextComment"
+  'clientInfo' =>
+  NULL
+  'createdDate' =>
+  string(24) "2013-05-08T15:02:35.000Z"
+  'url' =>
+  string(56) "/services/data/v27.0/chatter/comments/0D7g000000003tOCAQ"
+  'user' =>
+  array(13) {
+    'isActive' =>
+    bool(true)
+    'name' =>
+    string(13) "Yves Cheneval"
+    'title' =>
+    string(14) "Web Developper"
+    'userType' =>
+    string(8) "Internal"
+    'firstName' =>
+    string(4) "Yves"
+    'lastName' =>
+    string(8) "Cheneval"
+    'companyName' =>
+    string(20) "World Economic Forum"
+    'photo' =>
+    array(6) {
+      'url' =>
+      string(59) "/services/data/v27.0/chatter/users/005b0000000ECT5AAO/photo"
+      'largePhotoUrl' =>
+      string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PLP/F"
+      'photoVersionId' =>
+      string(18) "729g00000008PLPAA2"
+      'smallPhotoUrl' =>
+      string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PLP/T"
+      'fullEmailPhotoUrl' =>
+      string(119) "https://weforum--R4Dev.cs17.my.salesforce.com/ncsphoto/SUeSU40CninfwsU9XTzKH7QXYLfKcem_O3EAKA1zWHCCpPTHDHxOY1-1lDsRQjkb"
+      'standardEmailPhotoUrl' =>
+      string(119) "https://weforum--R4Dev.cs17.my.salesforce.com/ncsphoto/SUeSU40CninfwsU9XTzKH7QXYLfKcem_O3EAKA1zWHBHHJ_OVOAKJ6D6xaD5sEKe"
+    }
+    'mySubscription' =>
+    NULL
+    'id' =>
+    string(18) "005b0000000ECT5AAO"
+    'motif' =>
+    array(3) {
+      'largeIconUrl' =>
+      string(23) "/img/icon/profile64.png"
+      'mediumIconUrl' =>
+      string(23) "/img/icon/profile32.png"
+      'smallIconUrl' =>
+      string(23) "/img/icon/profile16.png"
+    }
+    'url' =>
+    string(53) "/services/data/v27.0/chatter/users/005b0000000ECT5AAO"
+    'type' =>
+    string(4) "User"
+  }
+  'body' =>
+  array(2) {
+    'text' =>
+    string(10) "Comment #6"
+    'messageSegments' =>
+    array(1) {
+      [0] =>
+      array(2) {
+        ...
+      }
+    }
+  }
+  'likes' =>
+  array(5) {
+    'total' =>
+    int(0)
+    'likes' =>
+    array(0) {
+    }
+    'currentPageUrl' =>
+    string(62) "/services/data/v27.0/chatter/comments/0D7g000000003tOCAQ/likes"
+    'nextPageUrl' =>
+    NULL
+    'previousPageUrl' =>
+    NULL
+  }
+  'likesMessage' =>
+  NULL
+  'isDeleteRestricted' =>
+  bool(false)
+  'myLike' =>
+  NULL
+  'attachment' =>
+  NULL
+  'feedItem' =>
+  array(2) {
+    'id' =>
+    string(18) "0D5g0000001SgPYCA0"
+    'url' =>
+    string(58) "/services/data/v27.0/chatter/feed-items/0D5g0000001SgPYCA0"
+  }
+}
+string(61) "Creating/updating comment 31,0D7g000000003tOCAQ,b: Comment #6"
+string(21) "Trying to get entity:"
+string(20) "Creating new comment"
+string(21) "Trying to get entity:"
+string(16) "Yes, got entity!"
+array(14) {
+  'parent' =>
+  array(2) {
+    'id' =>
+    string(18) "0F9g000000001WcCAI"
+    'url' =>
+    string(54) "/services/data/v27.0/chatter/groups/0F9g000000001WcCAI"
+  }
+  'id' =>
+  string(18) "0D7g000000003tsCAA"
+  'type' =>
+  string(11) "TextComment"
+  'clientInfo' =>
+  NULL
+  'createdDate' =>
+  string(24) "2013-05-10T09:29:51.000Z"
+  'url' =>
+  string(56) "/services/data/v27.0/chatter/comments/0D7g000000003tsCAA"
+  'user' =>
+  array(13) {
+    'isActive' =>
+    bool(true)
+    'name' =>
+    string(17) "Guillaume Baudoin"
+    'title' =>
+    string(24) "Senior Software Engineer"
+    'userType' =>
+    string(8) "Internal"
+    'firstName' =>
+    string(9) "Guillaume"
+    'lastName' =>
+    string(7) "Baudoin"
+    'companyName' =>
+    string(20) "World Economic Forum"
+    'photo' =>
+    array(6) {
+      'url' =>
+      string(59) "/services/data/v27.0/chatter/users/005b0000000Dy9dAAC/photo"
+      'largePhotoUrl' =>
+      string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PKb/F"
+      'photoVersionId' =>
+      string(18) "729g00000008PKbAAM"
+      'smallPhotoUrl' =>
+      string(79) "https://weforum--R4Dev--c.cs17.content.force.com/profilephoto/729g00000008PKb/T"
+      'fullEmailPhotoUrl' =>
+      string(119) "https://weforum--R4Dev.cs17.my.salesforce.com/ncsphoto/SUeSU40CninfwsU9XTzKH5Zre15WB42BIMUcwU0Il6J77mDBpt9k-BKzMFG2FXr9"
+      'standardEmailPhotoUrl' =>
+      string(119) "https://weforum--R4Dev.cs17.my.salesforce.com/ncsphoto/SUeSU40CninfwsU9XTzKH5Zre15WB42BIMUcwU0Il6IhBC_sf_n3liqjRYpuUa3p"
+    }
+    'mySubscription' =>
+    array(2) {
+      'id' =>
+      string(18) "0E8g00000006TGtCAM"
+      'url' =>
+      string(61) "/services/data/v27.0/chatter/subscriptions/0E8g00000006TGtCAM"
+    }
+    'id' =>
+    string(18) "005b0000000Dy9dAAC"
+    'motif' =>
+    array(3) {
+      'largeIconUrl' =>
+      string(23) "/img/icon/profile64.png"
+      'mediumIconUrl' =>
+      string(23) "/img/icon/profile32.png"
+      'smallIconUrl' =>
+      string(23) "/img/icon/profile16.png"
+    }
+    'url' =>
+    string(53) "/services/data/v27.0/chatter/users/005b0000000Dy9dAAC"
+    'type' =>
+    string(4) "User"
+  }
+  'body' =>
+  array(2) {
+    'text' =>
+    string(9) "Bonjour !"
+    'messageSegments' =>
+    array(1) {
+      [0] =>
+      array(2) {
+        ...
+      }
+    }
+  }
+  'likes' =>
+  array(5) {
+    'total' =>
+    int(0)
+    'likes' =>
+    array(0) {
+    }
+    'currentPageUrl' =>
+    string(62) "/services/data/v27.0/chatter/comments/0D7g000000003tsCAA/likes"
+    'nextPageUrl' =>
+    NULL
+    'previousPageUrl' =>
+    NULL
+  }
+  'likesMessage' =>
+  NULL
+  'isDeleteRestricted' =>
+  bool(false)
+  'myLike' =>
+  NULL
+  'attachment' =>
+  NULL
+  'feedItem' =>
+  array(2) {
+    'id' =>
+    string(18) "0D5g0000001SgPYCA0"
+    'url' =>
+    string(58) "/services/data/v27.0/chatter/feed-items/0D5g0000001SgPYCA0"
+  }
+}
+string(60) "Creating/updating comment 31,0D7g000000003tsCAA,b: Bonjour !"
+string(21) "Trying to get entity:"
+string(20) "Creating new comment"
+string(21) "Trying to get entity:"
+string(16) "Yes, got entity!"
+string(14) "Found 2 items."

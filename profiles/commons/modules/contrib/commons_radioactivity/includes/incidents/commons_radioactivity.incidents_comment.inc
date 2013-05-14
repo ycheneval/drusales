@@ -42,9 +42,11 @@ function commons_radioactivity_comment_delete($comment) {
 function commons_radioactivity_comment_update($comment) {
   // $comment_change will be equal to 1 if we're changing the publishing status
   // of the comment.
-  $comment_change = $comment->status + $original->status;
+//  $comment_change = $comment->status + $original->status;
+     // YCH Change, $original is not defined
+     // $comment_change = $comment->status;    
   // Is this comment's published status changing?
-  if ($comment_change == 1) {
+//  if ($comment_change == 1) {
     $node = node_load($comment->nid);
     switch ($comment->status) {
       // The comment is being unpublished.
@@ -56,5 +58,5 @@ function commons_radioactivity_comment_update($comment) {
         commons_radioactivity_comment_insert($comment);
         break;
     }
-  }
+//  }
 }

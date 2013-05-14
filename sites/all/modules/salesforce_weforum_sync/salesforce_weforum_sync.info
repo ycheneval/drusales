@@ -1,0 +1,10 @@
+name = Salesforce WEForum Sync
+description = Sync Salesforce for the WEForum Proof of concept.
+package = Salesforce
+core = 7.x
+version = 0.1
+
+configure = admin/salesforce/salesforce_weforum_sync
+
+dependencies[] = salesforce
+dependencies[] = entity
