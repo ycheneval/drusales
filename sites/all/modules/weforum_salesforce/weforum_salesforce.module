@@ -1,0 +1,296 @@
+<?php
+/**
+ * @file
+ * Hooks and helper functions for the WEForum salesforce module.
+ */
+
+
+/**
+ * Worker for the weforum_salesforce_queue queue
+ *
+ * @param array $item
+ */
+function weforum_salesforce_queue_worker($item) {
+  module_load_include('inc', 'weforum_salesforce', '/includes/weforum_salesforce.batch');
+  return weforum_salesforce_update_line($item);
+}
+
+/**
+ * Implements hook_cron_queue_info()
+ *
+ * @return array
+ */
+function weforum_salesforce_cron_queue_info() {
+  $queues['weforum_salesforce_queue'] = array(
+    'worker callback' => 'weforum_salesforce_queue_worker',
+    'time' => '120',
+  );
+  return $queues;
+}
+
+/**
+ * Prepare a salesforce batch job and put it in a queue.
+ *
+ * @return array
+ *  batch array that is ready to be processed.
+ */
+function weforum_salesforce_create_queue() {
+  // Queue that will be populated
+  $queue = DrupalQueue::get('weforum_salesforce_queue');
+
+  //Get groups
+  $response = weforum_salesforce_get_results();
+  // Get salesforce hubs
+  $query = new weforum_salesforce_query();
+  $sql = "SELECT+Id,+Name,+LastModifiedDate+FROM+ForumCommunity__c+WHERE+ParentGroupId__c+='". variable_get('weforum_salesforce_main_shapers_group', 0). "'";
+  $query->setQuery($sql);
+  $results = weforum_salesforce_query($query);
+  $hubs = weforum_salesforce_synchronize($results, 'node', 'hub');
+
+  // Create groups
+  foreach ($hubs['create'] as $key => $item) {
+    $hub = entity_create('node', array('type' => 'hub'));
+    $hub_wrapper = entity_metadata_wrapper('node', $hub);
+    try {
+      $hub_wrapper->title->set($item['Name']);
+      $hub_wrapper->field_salesforce_id->set($item['Id']);
+      $hub_wrapper->created->set(strtotime($item['LastModifiedDate']));
+    } catch (EntityMetadataWrapperException $e) {
+      watchdog('weforum_salesforce', $e->getMessage(), array(), WATCHDOG_ALERT);
+      return TRUE;
+    }
+    watchdog('weforum_salesforce', "Hub %hub created", array('%hub' => $item['Name']), WATCHDOG_ALERT);
+    $hub_wrapper->save();
+  }
+  // Delete groups
+  foreach($hubs['delete'] as $key => $item) {
+    $node = node_load($item['nid']);
+    node_unpublish_action($node);
+    node_save($node);
+  }
+
+  // Update groups
+  if($response AND $response['totalSize'] > 0) {
+    foreach ($response['records'] as $line) {
+      $queue->createItem($line);
+    }
+  }
+  else {
+    watchdog('weforum_salesforce', 'No groups received', array(), WATCHDOG_INFO);
+  }
+  return TRUE;
+}
+
+class weforum_salesforce_query extends SalesforceSelectQuery {
+  private $query = '';
+
+  public function setQuery($query) {
+    $this->query = ($query);
+  }
+
+  public function __toString() {
+    return ($this->query);
+  }
+}
+
+/**
+ * Implements hook_menu().
+ *
+ */
+function weforum_salesforce_menu() {
+  $items['admin/config/salesforce/weforum_salesforce'] = array(
+    'title' => 'Global Shapers SalesForce Synchronization',
+    'description' => 'Configure the details of the synchronization',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('weforum_salesforce_admin'),
+    'access arguments' => array('administer salesforce'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+
+/**
+ * Admin page
+ *
+ * @return array
+ */
+function weforum_salesforce_admin() {
+  $form = array();
+  $form['weforum_salesforce_main_shapers_group'] = array(
+    '#type' => 'select',
+    '#title' => t('Parent community of the Hubs'),
+    '#options' => array(0 => 'None') + weforum_salesforce_get_parent_communities(),
+    '#default_value' => variable_get('weforum_salesforce_main_shapers_group', 0),
+    '#description' => t('Select the Forum Community holding the Hubs'),
+  );
+
+  $form['weforum_salesforce_update_timeframe'] = array(
+    '#type' => 'textfield',
+    '#title' => t('How old should a change be in order to be synchronized, in days'),
+    '#default_value' => variable_get('weforum_salesforce_update_timeframe', 7),
+    '#element_validate' => array('element_validate_integer_positive'),
+    '#size' => 2,
+    '#maxlength' => 2,
+  );
+  return system_settings_form($form);
+}
+
+/**
+ * Performs a SOQL Query on the SF Instance
+ *
+ * @param $query
+ * @return array
+ */
+function weforum_salesforce_query($query) {
+  $instance = salesforce_get_api();
+  $results = $instance->query($query);
+  return $results;
+}
+
+/**
+ * Validates a Salesforce ID
+ *
+ * @param $id
+ */
+function weforum_salesforce_validate_sf_id(&$id) {
+  if (!preg_match('/^[a-zA-Z0-9]+$/', $id)) {
+    watchdog('shapers_salesforce', 'Not a valid id format: %string', array('%string' => $id), WATCHDOG_ALERT);
+    $id = ''; // Kill it
+  }
+}
+
+function weforum_salesforce_get_parent_communities() {
+  $query = new weforum_salesforce_query();
+  $query->setQuery("SELECT+GroupId__c,+Name+FROM+ForumCommunity__c+WHERE+GroupId__c+!=NULL");
+  $results = weforum_salesforce_query($query);
+  $output = array();
+  if ($results['done'] AND ($results['totalSize'] > 0)) {
+    foreach ($results['records'] as $item) {
+      $output[$item['GroupId__c']] = $item['Name'];
+    }
+  }
+  return $output;
+}
+
+/**
+ * Gets results in the form of a line = a shaper, his relationship, his hub
+ *
+ * @return array
+ */
+function weforum_salesforce_get_results() {
+  $parent_group_id = variable_get('weforum_salesforce_main_shapers_group', 0);
+  $query = new weforum_salesforce_query();
+  $sql = "SELECT+Community__c,+CreatedDate,+CurrentOrganization__c,";
+  $sql .= "+CurrentOrganizationRegion__c,+CurrentOrganizationSegment__c,+CurrentPosition__c,";
+  $sql .= "+IsDeleted,+ForumNetwork__c,+GS_About_Me__c,+GS_Current_Work__c,+GS_Expertise__c,+GS_Inspiration__c,+GS_Interests__c,";
+  $sql .= "+GS_Local_Challenges__c,+GS_Member_Role__c,+LastModifiedDate,";
+  $sql .= "+Main_Industry_Sector__c,+Main_Regional_Area_Of_Operation__c,+Name,+MemberName__c,";
+  $sql .= "+PrimaryOrganization__c,+PrimaryPosition__c,+Id,+RecordTypeId,+Member_Status__c,";
+  $sql .= "+MembershipType__c,+UserId__c,+MemberName__r.LastName,+MemberName__r.Description,";
+  $sql .= "+MemberName__r.Id,+MemberName__r.Name,+MemberName__r.Type,";
+  $sql .= "+MemberName__r.ShippingCity,+MemberName__r.City1__c,+MemberName__r.Cluster__c,+MemberName__r.CompanyName__c,";
+  $sql .= "+MemberName__r.Corporate_Name__c,+MemberName__r.Country__c,+MemberName__r.Country1__c,";
+  $sql .= "+MemberName__r.CreatedDate,+MemberName__r.IsDeleted,";
+  $sql .= "+MemberName__r.EducationandWorkExperience__c,+MemberName__r.PersonEmail,";
+  $sql .= "+MemberName__r.Expertises__c,+MemberName__r.Expertise__c,+MemberName__r.Extension__c,+MemberName__r.FirstName,";
+  $sql .= "+MemberName__r.Picture__c,+MemberName__r.Handle__c,+MemberName__r.Industry,";
+  $sql .= "+MemberName__r.Initials__c,+MemberName__r.InterestsHobbiesSports__c,";
+  $sql .= "+MemberName__r.IsPersonAccount,+MemberName__r.LastModifiedDate,+MemberName__r.City__c,";
+  $sql .= "+MemberName__r.Main_Industry_Sector__c,+MemberName__r.Main_Regional_Area_of_Operation__c,";
+  $sql .= "+MemberName__r.MasterRecordId,+MemberName__r.Membership_Type__c,+MemberName__r.NR_Email__c,";
+  $sql .= "+MemberName__r.Nickname__c,+MemberName__r.PersonOtherCity,";
+  $sql .= "+MemberName__r.Ownership_Type__c,+MemberName__r.ParentId,+MemberName__r.PhoneticName__c,+MemberName__r.Position__c,";
+  $sql .= "+MemberName__r.Primary_Organisation__c,+MemberName__r.Primary_Organization_Region__c,";
+  $sql .= "+MemberName__r.Primary_Organization_Segment__c,+MemberName__r.Primary_Position__c,+";
+  $sql .= "+MemberName__r.Profile__c,+MemberName__r.ProfileCompleteness__c,";
+  $sql .= "+MemberName__r.RecordTypeId,+MemberName__r.Regional_Area_Of__c,+MemberName__r.Salutation,+MemberName__r.Sectors__c,";
+  $sql .= "+MemberName__r.Segment__c,+MemberName__r.State__c,+MemberName__r.Status__c,+MemberName__r.SystemModstamp,";
+  $sql .= "+MemberName__r.Team__c,+MemberName__r.PersonTitle,+MemberName__r.Title1__c,";
+  $sql .= "+MemberName__r.Title2__c,+MemberName__r.Title3__c,+MemberName__r.ViewSocialProfile__c,+MemberName__r.Website,";
+  $sql .= "+Community__r.AutoShare_Group_Ref__c,+Community__r.Chatter_Group_ID__c,+MemberName__r.TECH_SalesforceUser__c,";
+  $sql .= "+Community__r.Chatter_Group_Name__c,+Community__r.Chatter_Group_Provisioning__c,+Community__r.Chatter_Group_Type__c,";
+  $sql .= "+Community__r.CreatedDate,+Community__r.CuratorStatus__c,+Community__r.IsDeleted,+Community__r.Description__c,";
+  $sql .= "+Community__r.DiversityStatus__c,+Community__r.EmailAddress__c,+Community__r.FacebookFeedURL__c,";
+  $sql .= "+Community__r.FacebookURL__c,+Community__r.ForumNetwork__c,+Community__r.Forum_Network__c,+Community__r.GroupId__c,";
+  $sql .= "+Community__r.GroupName__c,";
+  $sql .= "+Community__r.HostCity__c,+Community__r.HostCountry__c,+Community__r.HostCountryHDI__c,+Community__r.Id__c,";
+  $sql .= "+Community__r.LastModifiedById,+Community__r.LastModifiedDate,+Community__r.Latitude__c,";
+  $sql .= "+Community__r.Link_to_AutoShare_Group__c,+Community__r.Link_to_Chatter_Group__c,+Community__r.Longitude__c,";
+  $sql .= "+Community__r.Main_Community__c,+Community__r.Name,";
+  $sql .= "+Community__r.Number_Of_Active_Members__c,+Community__r.NumberOfMembers__c,";
+  $sql .= "+Community__r.ParentGroupId__c,+Community__r.Picture__c,";
+  $sql .= "+Community__r.Id,+Community__r.RecordTypeId,+Community__r.Region__c,+Community__r.Regions__c,";
+  $sql .= "+Community__r.SecondaryRegion__c,+Community__r.Short_Description__c,";
+  $sql .= "+Community__r.CommunityStatus__c,+Community__r.SystemModstamp,+Community__r.TwitterURL__c,";
+  $sql .= "+Community__r.Web_Access__c,+Community__r.AdditionalWebsite__c,+Community__r.Region__r.Region_Code__c,+Community__r.Region__r.Id";
+  $sql .= "+FROM+Membership__c+WHERE+Community__r.ParentGroupId__c+='$parent_group_id'";
+  $query->setQuery($sql);
+  $results = weforum_salesforce_query($query);
+  return $results;
+}
+
+/**
+ * Process a shaper from the queue.
+ *
+ * @param $shaper
+ * @param $force
+ * @return boolean
+ */
+function weforum_salesforce_process_shaper($shaper, $force = FALSE) {
+
+  // add picture
+  $sfinstance = salesforce_get_api();
+  $string = 'chatter/users/' . $shaper['MemberName__r']['TECH_SalesforceUser__c'] . '/photo';
+  try {
+    $photo = $sfinstance->apiCall('chatter/users/' . $shaper['MemberName__r']['TECH_SalesforceUser__c'] . '/photo');
+  } catch (exception $e) {
+    $photo = FALSE;
+  }
+  //var_dump($info);
+
+  // fields mapping
+  $picture = $photo['largePhotoUrl'];
+}
+
+
+function weforum_salesforce_synchronize($records, $entity_type, $bundle) {
+  // Get all entity bundles
+  $query = db_select('field_data_field_salesforce_id', 'fds');
+  $query->addField('fds', 'deleted');
+  $query->addField('fds', 'entity_id');
+  $query->addField('fds', 'field_salesforce_id_value');
+  $results = $query
+    ->condition('fds.entity_type', $entity_type)
+    ->condition('fds.bundle', $bundle)
+    ->execute()
+    ->fetchAllAssoc('entity_id');
+  $drupal = array();
+  foreach ($results as $entity_id => $entity) {
+    $drupal[$entity->field_salesforce_id_value] = (array) $entity;
+    $drupal[$entity->field_salesforce_id_value]['nid'] = $entity_id;
+  }
+
+  $salesforce = array();
+  foreach ($records['records'] as $item) {
+    $salesforce[$item['Id']] = $item;
+    if(isset($drupal[$item['Id']['nid']])) {
+      $salesforce[$item['Id']]['nid'] = $drupal[$item['Id']['nid']];
+    }
+  }
+
+  //What is in salesforce that is not in Drupal ?
+  $notindrupal = array_diff_key($salesforce, $drupal);
+
+
+  //What is in Drupal that is not in Salesforce
+  $notinsalesforce = array_diff_key($drupal, $salesforce);
+
+  $inboth = array_intersect_key($salesforce, $drupal);
+
+  $out = array(
+    'create' => $notindrupal,
+    'delete' => $notinsalesforce,
+    'update' => $inboth,
+  );
+  return $out;
+}

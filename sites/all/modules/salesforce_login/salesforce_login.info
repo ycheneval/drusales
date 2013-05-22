@@ -1,0 +1,5 @@
+name = Salesforce Login
+description = Authenticate the user to Salesforce
+core = 7.x
+package = Salesforce
+dependencies[] = salesforce

@@ -1,0 +1,8 @@
+name = Weforum Salesforce
+description = Imports Hub and User data from Salesforce.
+core = 7.x
+package = Salesforce
+dependencies[] = salesforce
+
+configure = admin/config/salesforce/weforum_salesforce
+

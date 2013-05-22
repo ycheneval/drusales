@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * Implementation of hook_menu
+ *
+ * @return array
+ */
+function salesforce_outbound_messaging_menu() {
+  $items['salesforceoutboundmessaging'] = array(
+    'title' => 'Salesforce outbound messaging',
+    'page callback' => 'salesforce_outbound_messaging_server',
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+
+class notificationsResponse {
+  public $Ack;
+}
+//@todo Put this in a class and use setClass for the server
+function notifications($params = FALSE) {
+  $response = new notificationsResponse();
+  $response->Ack = TRUE;
+  return $response;
+}
+
+/**
+ * Creates the SOAP Server
+ *
+ * @param $wsdl
+ */
+function salesforce_outbound_messaging_server($wsdl) {
+  $server = new SoapServer('wsdl');
+
+  try {
+    $server->AddFunction('notifications');
+    $server->handle();
+  } catch (Exception $e) {
+    watchdog('salesforce_outbound_messaging', $e->getMessage(), array(), WATCHDOG_ALERT);
+  }
+
+  exit;
+}

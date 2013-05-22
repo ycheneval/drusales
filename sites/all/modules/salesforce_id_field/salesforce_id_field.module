@@ -1,0 +1,195 @@
+<?php
+/**
+ * Implements hook_field_info()
+ *
+ * @return array
+ */
+function salesforce_id_field_field_info() {
+  return array(
+    'salesforce_id' => array(
+      'label' => t('Salesforce Id'),
+      'description' => t('This field stores a Salesforce Id.'),
+      'default_widget' => 'salesforce_id_field_widget',
+      'default_formatter' => 'salesforce_id_field_formatter',
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_widget_info()
+ * @return array
+ */
+function salesforce_id_field_field_widget_info(){
+  return array (
+    'salesforce_id_field_widget' => array(
+      'label' => t('Salesforce Id form'),
+      'field types' => array('salesforce_id'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_info()
+ */
+function salesforce_id_field_field_formatter_info() {
+  return array(
+    'salesforce_id_field_formatter' => array(
+      'label' => t('Default'),
+      'field types' => array('salesforce_id'),
+    ),
+  );
+}
+
+
+/**
+ * Implements hook_field_formatter_view()
+ */
+
+function salesforce_id_field_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+
+  switch ($display['type']) {
+    case 'salesforce_id_field_formatter':
+      foreach ($items as $delta => $item) {
+        $element[$delta]['#markup'] = strip_tags($item['salesforce_id']);
+      }
+      break;
+  }
+  return $element;
+}
+
+/**
+ * Implements hook_field_validate()
+ *
+ */
+function salesforce_id_field_field_validate($entity_type, $entity, $field, $instance, $langcode, $items, &$serrors) {
+  foreach ($items as $delta => $item) {
+    if (!empty($item['salesforce_id'])) {
+      if (! preg_match('@^[0-9a-zA-Z]{15}$@', $item['salesforce_id'])) {
+        $errors[$field['field_name']][$langcode][$delta][] = array(
+          'error' => 'salesforce_id_field_invalid',
+          'message' => t('Salesforce Id invalid'),
+        );
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_field_widget_error()
+ *
+ * @param $element
+ * @param $error
+ * @param $form
+ * @param $form_state
+ */
+function salesforce_id_field_field_widget_error($element, $error, $form, &$form_state) {
+  switch ($error['error']) {
+    case 'salesforce_id_field_invalid' :
+      form_error($element, $error['message']);
+      break;
+  }
+}
+
+/**
+ * Implements hook_field_is_empty()
+ *
+ */
+function salesforce_id_field_field_is_empty($item, $field) {
+  return empty($item['salesforce_id']);
+}
+
+/**
+ * Implements hook_field_widget_form
+ *
+ * @param $form
+ * @param $form_state
+ * @param $field
+ * @param $instance
+ * @param $langcode
+ * @param $items
+ * @param $delta
+ * @param $element
+ * @return array
+ */
+function salesforce_id_field_field_widget_form(&$form, &$form_state, $field, $instance, $langcode, $items, $delta, $element ) {
+  $widget = $element;
+  $widget['#delta'] = $delta;
+  if ($instance['widget']['type'] == 'salesforce_id_field_widget') {
+    $widget += array (
+      '#type' => 'textfield',
+      '#default_value' => isset($items[$delta]['salesforce_id']) ? $items[$delta]['salesforce_id'] : NULL,
+      '#size' => 20,
+      '#maxlength' => 20,
+    );
+  }
+  $element['salesforce_id'] = $widget;
+  return $element;
+}
+
+/**
+ * Implements hook_theme
+ *
+ * @param $existing
+ * @param $type
+ * @param $theme
+ * @param $path
+ * @return array
+ */
+function salesforce_id_field_theme($existing, $type, $theme, $path) {
+  return array(
+    'salesforce_id_field_field_formatter_default' => array(
+      'variables' => array('item' => NULL),
+    ),
+  );
+}
+
+/**
+ * Themeing
+ *
+ * @param $item
+ * @return string
+ */
+function theme_salesforce_id_field_field_formatter_default($item) {
+  return '';
+}
+
+/**
+ * Returns an array of entities whose
+ * salesforce id begin with the $salesforce_id
+ *
+ * @param $salesforce_id
+ * @return array
+ */
+function salesforce_id_field_get_entities($salesforce_id) {
+  $map = salesforce_id_field_get_field();
+  $results = array();
+  foreach ($map as $item) {
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', $item['entity'])
+      ->entityCondition('bundle', $item['bundle'])
+      ->fieldCondition($item['field'], 'salesforce_id', $salesforce_id . '%', 'LIKE');
+    $results += $query->execute();
+  }
+  return $results;
+}
+
+/**
+ * Returns an array with the field name, entity and bundle
+ * containing a specific field
+ *
+ * @param string $field
+ * @return array
+ * @todo add caching
+ */
+function salesforce_id_field_get_field($field = 'salesforce_id') {
+  $query = db_query('SELECT fc.type, fci.field_name, fci.entity_type, fci.bundle FROM {field_config_instance} fci INNER JOIN {field_config} fc ON fc.id = fci.field_id WHERE fc.active = 1 AND fc.storage_active = 1 AND fc.deleted = 0 AND fci.deleted = 0 AND fc.type = :field', array(':field' => $field));
+  foreach ($query as $row) {
+    $map[]= array (
+      'field' => $row->field_name,
+      'entity' => $row->entity_type,
+      'bundle' => $row->bundle
+    );
+  }
+  return $map;
+}

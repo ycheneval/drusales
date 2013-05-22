@@ -1,0 +1,5 @@
+name = Salesforce Outbound Messaging
+description = Creates endpoints to receive Salesforce outbound messages.
+core = 7.x
+package = Salesforce
+dependencies[] = salesforce

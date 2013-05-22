@@ -1,0 +1,7 @@
+name = Salesforce Id
+description = Creates a field that will store a Salesforce Id
+core = 7.x
+package = Salesforce
+dependencies[] = field_ui
+
+

@@ -8,3 +8,12 @@ configure = admin/salesforce/salesforce_weforum_sync
 
 dependencies[] = salesforce
 dependencies[] = entity
+
+dependencies[] = features
+dependencies[] = text
+features[features_api][] = api:1
+features[field_base][] = field_sfid
+features[field_instance][] = comment-comment_node_post-field_sfid
+features[field_instance][] = node-group-field_sfid
+features[field_instance][] = node-post-field_sfid
+features[field_instance][] = user-user-field_sfid

@@ -3,6 +3,8 @@
  * Implements hook_menu().
  *
  */
+$_isDenied = false;
+
 function salesforce_weforum_sync_menu() {
   $items['salesforce_weforum_sync'] = array(
     'title' => 'Page Example',
@@ -11,6 +13,26 @@ function salesforce_weforum_sync_menu() {
   );
   return $items;
 }
+
+//function salesforce_weforum_sync_action_info() {
+//    $actions = array(
+//        'sforce_insert_action' => array(
+//            'type' => 'system',
+//            'label' => t('Insert object in SForce and link it to Drupal through sfId'),
+//            'configurable' => FALSE,
+//            'triggers' => array ('node_insert'),
+//        ),
+//    );
+//    return $actions;
+//}
+//
+//function sforce_insert_action($object, $context)
+//{
+//    drupal_set_message('Hello trigger');
+//    $node = $context['node'];
+//    insert_and_sfpost($node, 'node', 'post'); 
+//        
+//}
 
 /**
  * Callback for salesforce_weforum_sync in salesforce_weforum_sync_menu
@@ -62,6 +84,15 @@ function getUnixTS($sfDateTime)
     return $result;
 }
 
+function isDeniedSync($isDenied = NULL)
+{
+    global $_isDenied;
+    
+    if ($isDenied !== NULL) {
+       $_isDenied = $isDenied; 
+    }
+    return $_isDenied;
+}
 ////////////////////////////////////////////////////////////////////////////////
 // Salesforce Helper functions
 ////////////////////////////////////////////////////////////////////////////////
@@ -128,7 +159,7 @@ function salesforce_weforum_sync_call($query, $params = array(), $method = 'GET'
     if ($instance = getSfApi()) {
         var_dump('Calling "'.$query.'"');
         $results = $instance->apiCall($query, $params, $method);
-        var_dump($results);
+//        var_dump($results);
     }
     return $results;
 }
@@ -142,7 +173,7 @@ function salesforce_weforum_sync_call($query, $params = array(), $method = 'GET'
 function getSfUser($sfUserId)
 {
     $results = salesforce_weforum_sync_call('chatter/users/' . $sfUserId);
-    var_dump($results);
+//    var_dump($results);
 //    foreach ($results as $key => $item) {
 //          var_dump($item);
 //    }
@@ -160,24 +191,35 @@ function getSfUser($sfUserId)
  *
  */
 
-function dpal_getEntity($bundle, $field, $condition, $entity_type = 'node')
+function dpal_getEntity($bundle, $field_condition, $property_condition = NULL, $entity_type = 'node')
 {
-        // Check if post node already exists
+    // Check if post node already exists
     $result = new EntityFieldQuery();
     $result->entityCondition('entity_type', $entity_type);
     if (!empty($bundle)) {
         $result->entityCondition('bundle', $bundle);
     }
-    if (!empty($field) && !empty($condition)) {
-        $result->fieldCondition($field, 'value', $condition);
+    if (!empty($field_condition)) {
+        $result->fieldCondition($field_condition[0], $field_condition[1], $field_condition[2]);
     }
-    var_dump("Trying to get entity:");
+
+    if (!empty($property_condition)) {
+        $result->propertyCondition($property_condition[0], $property_condition[1]);
+    }
+
+//    var_dump("Trying to get entity:");
     
-    $result->execute();
+    try {
+        $result->execute();
+    } catch (Exception $e) {
+        var_dump($e);
+        die();
+    }
                    
+//    var_dump("Execute ok");
     $entity = NULL;
     if (!empty($result->ordered_results)) {
-        var_dump('Yes, got entity!');
+//        var_dump('Yes, got entity!');
         switch ($entity_type)
         {
             case 'comment':
@@ -200,6 +242,142 @@ function dpal_getEntity($bundle, $field, $condition, $entity_type = 'node')
 
 }
 
+function myentity_delete($entity_id, $entity_type)
+{
+    switch ($entity_type)
+    {
+        case 'comment':
+            $entity = comment_delete($entity_id);
+            break;
+
+        case 'user':
+            $entity = user_delete($entity_id);
+            break;
+
+        case 'node':
+        default:
+            $entity = node_delete($entity_id);
+            break;
+    }
+    return $entity;    
+}
+
+function myentity_load($entity_id, $entity_type)
+{
+    $entity = NULL;
+    switch ($entity_type)
+    {
+        case 'comment':
+            $entity = comment_load($entity_id);
+            break;
+
+        case 'user':
+            $entity = user_load($entity_id);
+            break;
+
+        case 'node':
+        default:
+            $entity = node_load($entity_id);
+            break;
+
+    }
+    return $entity;
+}
+/**
+ * Look for entities in Drupal that match $field and $condition
+ *
+ * @param $field
+ * @param $condition
+ * @param [$entity_type]  restricts search to these entity_types
+ * @return array
+ */
+
+function dpal_searchEntity($field_Condition, $entity_types = array(), $bundles = array())
+{
+    $result = array();
+    // Check if post node already exists
+    $query = new EntityFieldQuery();
+    if (!empty($entity_types)) {
+//        $query->entityCondition('entity_type', array('user', 'node', 'comment'));
+        $query->entityCondition('entity_type', $entity_types);
+    }
+    if (!empty($bundles)) {
+        $query->entityCondition('bundle', $bundles);        
+    }
+    if (!empty($field_Condition)) {
+        if (strcmp($field_Condition[2], 'NOT_EMPTY') == 0) {
+            // In this case, does not specify a condition here, but instead do the filter after
+            $query->fieldCondition($field_Condition[0], $field_Condition[1], '', '!=');
+        } else {
+            $query->fieldCondition($field_Condition[0], $field_Condition[1], $field_Condition[2], '=');
+        }
+//        dpm($query);
+        $query->execute();
+
+        if (!empty($query->ordered_results)) {
+//            dpm($query->ordered_results);
+            foreach ($query->ordered_results as $value) {
+                $anEntity = array();
+                $anEntity['entity_id'] = $value->entity_id;
+                $anEntity['entity_type'] = $value->entity_type;
+                $anEntity['bundle'] = $value->bundle;
+                $result[] = $anEntity;
+            }
+        } 
+    }
+    return $result;
+    
+}
+
+function dpl_getSyncComments($postId)
+{
+    $result = array();
+
+    $query = new EntityFieldQuery();
+//    $query->entityCondition('entity_type', 'comment');
+//    $query->entityCondition('bundle', 'comment_node_post');
+//    $query->entityCondition('nid', $postId);
+    $query->fieldCondition('field_sfid', 'value', '', '!=');
+    $query->execute();
+
+    if (!empty($query->ordered_results)) {
+//            dpm($query->ordered_results);
+        foreach ($query->ordered_results as $value) {
+            $anEntity = array();
+            $anEntity['entity_id'] = $value->entity_id;
+            $anEntity['entity_type'] = $value->entity_type;
+            $anEntity['bundle'] = $value->bundle;
+            $result[] = $anEntity;
+        }
+    } 
+
+    return $result;
+}
+
+function dpl_getSyncPosts($groupId)
+{
+    $result = array();
+
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node');
+    $query->entityCondition('bundle', 'post');
+    $query->fieldCondition('field_sfid', 'value', '', '!=');
+    $query->fieldCondition('og_group_ref', 'target_id', $groupId, '=');
+    $query->execute();
+
+    if (!empty($query->ordered_results)) {
+            dpm($query->ordered_results);
+        foreach ($query->ordered_results as $value) {
+            $anEntity = array();
+            $anEntity['entity_id'] = $value->entity_id;
+            $anEntity['entity_type'] = $value->entity_type;
+            $anEntity['bundle'] = $value->bundle;
+            $result[] = $anEntity;
+        }
+    } 
+
+    return $result;
+}
 /**
  * Gets Drupal user (or creates one if not found in Drupal) from Salesforce sfUserId
  *
@@ -209,30 +387,51 @@ function dpal_getEntity($bundle, $field, $condition, $entity_type = 'node')
 
 function getorCreateUserFromSfId($sfUserId)
 {
-    if (!($account = dpal_getEntity(NULL, 'field_sfid', $sfUserId, 'user'))) {
-        // In this case, create a new user
+    var_dump('looking for user '.$sfUserId);
+    if (!($account = dpal_getEntity(NULL, array('field_sfid', 'salesforce_id', $sfUserId), NULL, 'user'))) {
+        
         // First get full user data from chatter
+        var_dump('Account not found with sfId '.$sfUserId.', trying to fetch it in Salesforce');
         $sfUser = getSfUser($sfUserId);
-        $newUser = new StdClass();
-        $newUser->is_new = TRUE;
-        $options = array(
+//        dpm($sfUser);
+//        var_dump($sfUser);
+        // In this case, check if have a user with this name
+        if (!key_exists('name', $sfUser) || !($account = dpal_getEntity(NULL, NULL, array('name', $sfUser['name']), 'user'))) {
+            $newUser = new StdClass();
+            $newUser->is_new = TRUE;
+            $options = array(
                       'status' => 1
-                    , 'mail' => $sfUser['email']
                     , 'pass' => 'Hello001'
-                    , 'field_sfid' => array(LANGUAGE_NONE => array(array('value' => $sfUserId)))
-        );
-        if (key_exists('name', $sfUser)) {
-            $options['name'] = $sfUser['name'];
-        }
-        if (key_exists('email', $sfUser)) {
-            $options['mail'] = $sfUser['email'];
+                    , 'field_sfid' => array(LANGUAGE_NONE => array(array('salesforce_id' => $sfUserId)))
+            );
+            if (key_exists('name', $sfUser)) {
+                $options['name'] = $sfUser['name'];
+            }
+            if (key_exists('email', $sfUser)) {
+                $options['mail'] = $sfUser['email'];
+            }
+            $account = user_save($newUser, $options); 
+        } else {
+            // Update $sfId 
+            var_dump('Trying to update sfId of account '.$account->uid.' ('.$sfUser['name'].')');
+            $options = array(
+                    'field_sfid' => array(LANGUAGE_NONE => array(array('salesforce_id' => $sfUserId)))
+            );
+            try {
+//                unset($account->pass);
+                user_save($account, $options); 
+            } catch (Exception $e) {
+                var_dump($e);
+                die();
+            }
         }
 
-        $account = user_save($newUser, $options); 
         $txt = 'Asked to create an account with sfUserId='.$sfUserId.', result is '.(empty($account) ? 'NOT OK' : 'Ok');
         var_dump($txt);
-        var_dump($account);
+//        var_dump($account);
     } else {
+        var_dump('found user '.$account->name);
+
 //        var_dump($account);
     }
     return $account;
@@ -260,7 +459,7 @@ function getDplfromSfId($type, $sfId)
 //            $node_wrapper = entity_metadata_wrapper('user', $dplAccount);
 //            $usersfId = $node_wrapper->sfId->value();
 //            or
-//            $usersfId = $dplAccount->field_sfId['und']['0']['value'];
+//            $usersfId = $dplAccount->field_sfId['und']['0']['salesforce_id'];
             break;
         
         default:
@@ -277,10 +476,106 @@ function getDplfromSfId($type, $sfId)
  * Implements hook_entity_insert().
  */
 function salesforce_weforum_sync_entity_insert($entity, $type) {
-  drupal_set_message('salesforce_weforum_sync_entity_insert called');
-  list($entity_id, , $bundle) = entity_extract_ids($type, $entity);
-//  $entity = entity_load_single($type, $entity_id);
-  
+    list($entity_id, , $bundle) = entity_extract_ids($type, $entity);
+    if (isDeniedSync()) {
+        return;
+    }
+//    drupal_set_message('salesforce_weforum_sync_entity_presave called');
+//    var_dump('salesforce_weforum_sync_entity_presave called');
+    insert_and_sfpost($entity, $type, $bundle);
+}
+
+function insert_and_sfpost($entity, $type, $bundle) {
+    if ($sfApi = getSfApi()) {
+//        drupal_set_message($entity_id.' '.$bundle);
+        switch ($type) {
+            case 'comment':
+                // Insert into sf
+                dpm($entity);
+                $body = html_entity_decode(strip_tags(str_replace('&nbsp;', ' ', $entity->comment_body['und'][0]['value'])), ENT_QUOTES);
+                // Load the referring node
+                $node_post = node_load($entity->nid);
+                switch ($node_post->type) {
+                    case 'post':
+                        // Commenting a post, post it on SF
+                        $params = array(
+                            'body' => array(
+                                'messageSegments' => array(
+                                    array(
+                                        'type' => 'Text',
+                                        'text' => $body,
+                                    ),
+                                ),
+                            ),
+                        );
+                        $sfFeedItemId = $node_post->field_sfid['und'][0]['salesforce_id'];
+                        $result = salesforce_weforum_sync_call('chatter/feed-items/' . $sfFeedItemId . '/comments', $params, 'POST');
+//                        dpm($result);
+//                        drupal_set_message($result['id']);
+                        $entity->field_sfid['und'][0] = array();
+                        $entity->field_sfid['und'][0]['salesforce_id'] = $result['id'];
+                        // Need to set the original property to avoid errors.
+                        $entity->original = isset($entity->original) ? $entity->original : NULL;
+                        field_attach_update($type, $entity);
+                        break;
+
+                    case 'group':
+                        // In this case, do nothing as SF prevents commenting a group, only posts
+                        dpm('SF forbids to comment groups');
+                        break;
+                }
+
+                break;
+
+            case 'node':
+                switch ($bundle) {
+                    case 'post':
+                        // Update sf
+                        dpm($entity);
+                        $body = html_entity_decode(strip_tags(str_replace('&nbsp;', ' ', $entity->body['und'][0]['value'])), ENT_QUOTES);
+                        dpm($body);
+                        $node_group = node_load((int) $entity->og_group_ref['und'][0]['target_id']);
+                        $sfGroupId = $node_group->field_sfid['und'][0]['salesforce_id'];
+//                        drupal_set_message('Creating a new post with sfGroupId: '.$sfGroupId);
+
+                        if (!empty($sfGroupId)) {
+                            $params = array(
+                                'body' => array(
+                                    'messageSegments' => array(
+                                        array(
+                                            'type' => 'Text',
+                                            'text' => $body,
+                                        ),
+                                    ),
+                                )
+                            );
+                            $postAsComment = true;
+                            if ($postAsComment) {
+                                $params['attachment'] = array(
+                                    'attachmentType' => 'Link',
+                                    'url' => 'http://' . $_SERVER['SERVER_NAME'] . '/node/'.$entity->nid,
+                                    'urlName' => 'Link on Drupal',
+                                );
+                            }
+                            $result = salesforce_weforum_sync_call('chatter/feeds/record/' . $sfGroupId . '/feed-items', $params, 'POST');
+                            $entity->field_sfid['und'][0] = array();
+                            $entity->field_sfid['und'][0]['salesforce_id'] = $result['id'];
+//                          drupal_set_message($result['id']);
+//                          dpm($entity);
+                            // Need to set the original property to avoid errors.
+                            $entity->original = isset($entity->original) ? $entity->original : NULL;
+                            field_attach_update($type, $entity);
+                        }
+                        break;
+                }
+                break;
+
+            case 'user':
+            default:
+                break;
+        }
+    }
+
 //  var_dump($entity);
 //  salesforce_push_entity_crud($type, $entity, SALESFORCE_MAPPING_SYNC_DRUPAL_CREATE);
 }
@@ -289,39 +584,95 @@ function salesforce_weforum_sync_entity_insert($entity, $type) {
  * Implements hook_entity_update().
  */
 function salesforce_weforum_sync_entity_update($entity, $type) {
-    drupal_set_message('salesforce_weforum_sync_entity_update called');
-    if ($sfApi = getSfApi() && false) {
-        list($entity_id, , $bundle) = entity_extract_ids($type, $entity);
-        drupal_set_message($entity_id.' '.$bundle);
-        if ($entity = entity_load($bundle, NULL, NULL, $type)) {
+    if ($sfApi = getSfApi() && !isDeniedSync()) {
+        drupal_set_message('salesforce_weforum_sync_entity_update called');
+        var_dump('salesforce_weforum_sync_entity_update called');
+//        dpm($entity);
+//        dpm($type);
+        list($entity_id,, $bundle) = entity_extract_ids($type, $entity);
+//        drupal_set_message($entity_id . ' ' . $bundle);
+        switch ($type) {
+            case 'comment':
+                // Update sf
+                // Impossible to update a comment in SF 
+                break;
+
+            case 'node':
+                switch ($bundle) {
+                    case 'post':
+//                        global $user;
+//                        dpm($user);
+
+                        // Update sf
+                        // Impossible to update posts in SF
+//                        $sfId = $entity->field_sfid['und'][0]['salesforce_id'];
+//                        if (!empty($sfId)) {
+//                            dpm(dpal_searchEntity('field_sfid', $sfId));
+//                            $body = html_entity_decode(strip_tags($entity->body['und'][0]['value']), ENT_QUOTES);
+////                            drupal_set_message('Updating an old post with $sfId: ' . $sfId . ', new body: '.$body);
+//
+//                            $params = array(
+//                                'body' => array(
+//                                    'messageSegments' => array(
+//                                        array(
+//                                            'type' => 'Text',
+//                                            'text' => $body,
+//                                        ),
+//                                    ),
+//                                ),
+//                            );
+//                            dpm($params);
+//                            $result = salesforce_weforum_sync_call('chatter/feed-items/' . $sfId, $params, 'PATCH');
+//                            dpm($result);
+//                        }
+                        break;
+                }
+                break;
+
+            case 'user':
+            default:
+                break;
+        }
+    }
+
+//  salesforce_push_entity_crud($type, $entity, SALESFORCE_MAPPING_SYNC_DRUPAL_UPDATE);
+}
+
+/**
+ * Implements hook_entity_delete().
+ */
+function salesforce_weforum_sync_entity_delete($entity, $type) {
+//    drupal_set_message('salesforce_weforum_sync_entity_delete called');
+    if (isDeniedSync()) {
+        return;
+    }
+    var_dump('salesforce_weforum_sync_entity_delete called');
+    try {
+        if ($sfApi = getSfApi()) {
+            list($entity_id,, $bundle) = entity_extract_ids($type, $entity);
+    //        drupal_set_message($entity_id . ' ' . $bundle);
             switch ($type) {
                 case 'comment':
-                    // Update sf
+                    // Delete from sf
+//                    dpm($entity);
+                    if (is_array($entity->field_sfid) && key_exists('und', $entity->field_sfid)) {
+                        $sfCommentItemId = $entity->field_sfid['und'][0]['salesforce_id'];
+                        if (!empty($sfCommentItemId)) {
+                            $result = salesforce_weforum_sync_call('chatter/comments/'.$sfCommentItemId, array(), 'DELETE');
+                        }
+                    }
                     break;
 
                 case 'node':
+//                    dpm($entity);
                     switch ($bundle) {
                         case 'post':
-                            // Update sf
-                            $sfId = $entity->field_sfid['und'][0]['value'];
-                            if (!empty($sfId)) {
-                                $body = $entity->body['und'][0]['value'];
-
-                                $params = array(
-                                  'body' => array(
-                                    'messageSegments' => array(
-                                      array(
-                                        'type' => 'Text',
-                                        'text' => $body,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                                var_dump('Trying to update sf');
-                                var_dump($sfId);
-                                var_dump($body);
-//                                salesforce_weforum_sync_call('chatter/feeds/record/' . $group['id'] . '/feed-items', $message, 'POST');
-//                                $sfApi->objectUpdate('', $sfId, $params);
+                            // Delete in sf
+                            if (is_array($entity->field_sfid)) {
+                                $sfPostId = $entity->field_sfid['und'][0]['salesforce_id'];
+                                if (!empty($sfPostId)) {
+                                    $result = salesforce_weforum_sync_call('chatter/feed-items/'.$sfPostId, array(), 'DELETE');
+                                }
                             }
                             break;
                     }
@@ -332,25 +683,72 @@ function salesforce_weforum_sync_entity_update($entity, $type) {
                     break;
             }
         }
+    } catch (Exception $e) {
         
     }
-          
-//  salesforce_push_entity_crud($type, $entity, SALESFORCE_MAPPING_SYNC_DRUPAL_UPDATE);
+
 }
 
-/**
- * Implements hook_entity_delete().
- */
-function salesforce_weforum_sync_entity_delete($entity, $type) {
-  drupal_set_message('salesforce_weforum_sync_entity_delete called');
-//  salesforce_push_entity_crud($type, $entity, SALESFORCE_MAPPING_SYNC_DRUPAL_DELETE);
+function salesforce_weforum_sync_user_login(&$edit, $account) {
+//  watchdog('salesforce_weforum_sync', 'hello world', array(), WATCHDOG_INFO);
+//  dpm($edit['values']);
+//  dpm($account);
+//    if (empty($account->field_sfid['und'][0]['salesforce_id'])) {
+//         In this case, try to auth to Salesforce and get the sfId
+        if (key_exists('values', $edit)) {
+            if (key_exists('email', $edit['values']) && key_exists('pass', $edit['values'])) {
+                $params = array('name' => $edit['values']['email'], 'pass' => $edit['values']['pass']);
+                $result = salesforce_login_authenticate($params);
+//                dpm($result);
+                if (!empty($result)) {
+                    if (empty($account->field_sfid['und'][0]['salesforce_id'])) {
+                        $account->field_sfid = array(LANGUAGE_NONE => array(array('value' => $result['user_id'])));
+                        user_save($account);
+                    }
+                }
+            }
+        } else {
+//            drupal_set_message('Impossible to get user/pass from form', 'warning');
+            dpm($edit['values']);
+            dpm($account);
+        }
+//    }
+//    $result = salesforce_weforum_sync_authenticate();
+//    if (!empty($result)) {
+//        $account->field_sfid = array(LANGUAGE_NONE => array(array('value' => $result['user_id'])));
+//        user_save($account);
+//    }
+  
 }
-
-
 ////////////////////////////////////////////////////////////////////////////////
 // Common functions
 ////////////////////////////////////////////////////////////////////////////////
 
+
+/**
+ * Compare sfIds from SForce with those of Drupal. If no errors, removes the orphaned
+ * nodes in Drupal.
+ *
+ * @param $sfIds_salesforce that have been gathered through SForce sync
+ * @return N/A
+ */
+
+function fullSync($sfIds_salesforce)
+{
+//    dpm($sfIds_salesforce);
+    if (!in_array('CONNECTION_ERROR', $sfIds_salesforce)) {
+        $sfIds_drupal = salesforce_weforum_sync_get_allSfIds();
+        $array_todelete = array_diff($sfIds_drupal, $sfIds_salesforce);
+//        dpm($array_todelete);                            
+        foreach ($array_todelete as $sfId) {
+            $foundentity = dpal_searchEntity(array('field_sfid', 'salesforce_id', $sfId), array('node', 'comment'));
+            if (!empty($foundentity)) {
+                dpm('Deleting entity '.$foundentity[0]['entity_id'].', '.$foundentity[0]['entity_type'].', '.$sfId);
+                myentity_delete($foundentity[0]['entity_id'], $foundentity[0]['entity_type']);
+            }
+        }
+    }
+}
 
 /**
  * Creates a Drupal Group from a Salesforce Group
@@ -360,7 +758,7 @@ function salesforce_weforum_sync_entity_delete($entity, $type) {
  * @return int
  */
 
-function dpal_og_create_or_update($sfGroup)
+function dpal_group_create_or_update($sfGroup, $sftype = 'group')
 {
     $dplOwnerId = getDplfromSfId('user', $sfGroup['OwnerId']);
     if (!empty($dplOwnerId)) {
@@ -371,7 +769,7 @@ function dpal_og_create_or_update($sfGroup)
     $sfId = $sfGroup['Id'];
 
     // Check if node already exists, if not create it
-    if (!($node = dpal_getEntity('group', 'field_sfid', $sfId))) {
+    if (!($node = dpal_getEntity('group', array('field_sfid', 'salesforce_id', $sfId)))) {
         $node = new stdClass();
         $node->type = 'group';
         node_object_prepare($node);
@@ -381,16 +779,26 @@ function dpal_og_create_or_update($sfGroup)
     $node->language = 'und';
     $node->comment = 2;     // 0 = no, 1 = closed (read only), 2 = open (read/write)
     $node->uid = $owner_uid;
-    $node->field_sfid['und'][0]['value'] = $sfId;
+    $node->field_sfid['und'][0]['salesforce_id'] = $sfId;
+    $node->field_sftype['und'][0]['value'] = $sftype;
     $node->title = $sfGroup['Name'];
-    $node->body['und'][0]['value'] = $sfGroup['Description'];
+    
+    if (key_exists('Description', $sfGroup)) {
+        $node->body['und'][0]['value'] = $sfGroup['Description'];
+    } else if (key_exists('Project_Title__c', $sfGroup)){
+        $node->body['und'][0]['value'] = $sfGroup['Project_Title__c'];        
+    }
 //    $node->og_roles_permissions['und'][0]['value'] = 1; // Override default role and permissions
     $node->og_roles_permissions['und'][0]['value'] = 0;
-    if (strcmp($sfGroup['CollaborationType'], 'Public') == 0) {
+    if (strcmp($sftype, 'group') == 0) {
+        if (strcmp($sfGroup['CollaborationType'], 'Public') == 0) {
+            $node->group_access['und'][0]['value'] = 0;     // Public
+        }
+        else {
+            $node->group_access['und'][0]['value'] = 1;     // Private
+        }
+    } else {
         $node->group_access['und'][0]['value'] = 0;     // Public
-    }
-    else {
-        $node->group_access['und'][0]['value'] = 1;     // Private
     }
     $node->field_radioactivity['und'][0]['value'] = 8;
     
@@ -418,15 +826,15 @@ function dpal_ogcomment_create_or_update($dplFeedPostNid, $sfCommentId, $fullIte
 {
     var_dump("Creating/updating comment ".$dplFeedPostNid.','.$sfCommentId.',b: '.$fullItem['body']['text']);
     $owner_uid = 1;
-//    if (!($node = dpal_getEntity(NULL, 'field_sfid', $sfCommentId, 'comment'))) {
-    if (!($comment = dpal_getEntity('comment_node_post', 'field_sfid', $sfCommentId, 'comment'))) {
+//    if (!($node = dpal_getEntity(NULL, 'field_sfid', 'salesforce_id', $sfCommentId, 'comment'))) {
+    if (!($comment = dpal_getEntity('comment_node_post', array('field_sfid', 'salesforce_id', $sfCommentId), NULL, 'comment'))) {
         var_dump('Creating new comment');
         $comment = new stdClass();
         $comment->nid = $dplFeedPostNid;    // Feed post of the comment
         $comment->cid = NULL;               // CREATE NEW
         $comment->pid = 0;                  // cid of the parent comment, 0 if no parent
         $comment->status = COMMENT_PUBLISHED;
-        $comment->field_sfid['und'][0]['value'] = $sfCommentId;
+        $comment->field_sfid['und'][0]['salesforce_id'] = $sfCommentId;
         $comment->language = LANGUAGE_NONE;
 //        $comment->field_radioactivity['und'][0]['value'] = 8;
         // Set correct owner if we have the information
@@ -439,13 +847,12 @@ function dpal_ogcomment_create_or_update($dplFeedPostNid, $sfCommentId, $fullIte
             $owner_uid = 1;        
         }
         $comment->uid = $owner_uid;
+        $comment->comment_body = array(LANGUAGE_NONE => array(array('value' => '')));
     }
     $decodedBody = html_entity_decode($fullItem['body']['text'], ENT_QUOTES);
-    var_dump($fullItem['body']['text']);
-    var_dump($decodedBody);
-    if (strcmp($comment->subject, $decodedBody) != 0) {
-        $comment->subject = $decodedBody;
-        $comment->comment_body[LANGUAGE_NONE][0]['value'] = 'Body: '.$decodedBody;
+    if (strcmp($comment->comment_body[LANGUAGE_NONE][0]['value'], $decodedBody) != 0) {
+//        $comment->subject = $decodedBody;
+        $comment->comment_body[LANGUAGE_NONE][0]['value'] = $decodedBody;
         $comment->hostname = ip_address();
         comment_save($comment);
     }
@@ -482,17 +889,76 @@ function salesforce_weforum_sync_post_group($group, $text) {
  * @return int
  */
 
+function dpal_ogprojectpost_create_or_update($sfGroupid, $sfFeedPostId, $fullItem)
+{
+    $owner_uid = 1;
+    
+    var_dump("Creating/updating post ".$sfGroupid.','.$sfFeedPostId.',b: '.$fullItem['Body']);
+    // Check if post node already exists
+    if (!($node = dpal_getEntity('post', array('field_sfid', 'salesforce_id', $sfFeedPostId)))) {
+        $node = new stdClass();
+        $node->type = 'post';
+        node_object_prepare($node);
+        $node->field_sfid['und'][0]['salesforce_id'] = $sfFeedPostId;
+        $node->language = 'und';
+        // Get created timestamp
+        // For now, don't take author into account
+//        var_dump($fullItem);
+        $node->created = getUnixTS($fullItem['CreatedDate']);
+//            $node->changed = getUnixTS($fullItem['modifiedDate']);
+        $dplOwnerId = getDplfromSfId('user', $fullItem['CreatedById']);
+        if (!empty($dplOwnerId)) {
+            $owner_uid = $dplOwnerId->uid;
+        } else {
+            $owner_uid = 1;        
+        }
+//        var_dump('Found $owned_id='.$owner_uid);
+        $node->uid = $owner_uid;
+    }
+    
+    // get Group for this groupId
+    if ($nodeGroup = dpal_getEntity('group', array('field_sfid', 'salesforce_id', $sfGroupid))) {
+        // Group found
+        $node->status = 1;
+        $decodedBody = html_entity_decode($fullItem['Body'], ENT_QUOTES);
+        $node->title = substr($decodedBody, 0, 20);   // There is no title in SF for a post
+        $node->body['und'][0]['value'] = $decodedBody;
+        $node->field_radioactivity['und'][0]['value'] = 8;
+
+        // Link post with group
+        $node->og_group_ref['und'][0]['target_id'] = $nodeGroup->nid;
+
+        node_save($node);
+
+        if ($node->nid) {
+            $result = true;
+        } else {
+            dpm('OG Project Post creation failed :(');
+        }
+    }
+
+    return $node->nid;
+}
+
+/**
+ * Creates a Drupal Post from a Salesforce Post
+ * Returns the nid of the node if successfull
+ *
+ * @param $sfGroupid
+ * @return int
+ */
+
 function dpal_ogpost_create_or_update($sfGroupid, $sfFeedPostId, $fullItem)
 {
     $owner_uid = 1;
     
     var_dump("Creating/updating post ".$sfGroupid.','.$sfFeedPostId.',b: '.$fullItem['body']['text']);
     // Check if post node already exists
-    if (!($node = dpal_getEntity('post', 'field_sfid', $sfFeedPostId))) {
+    if (!($node = dpal_getEntity('post', array('field_sfid', 'salesforce_id', $sfFeedPostId)))) {
         $node = new stdClass();
         $node->type = 'post';
         node_object_prepare($node);
-        $node->field_sfid['und'][0]['value'] = $sfFeedPostId;
+        $node->field_sfid['und'][0]['salesforce_id'] = $sfFeedPostId;
         $node->language = 'und';
         // Get created timestamp
         // For now, don't take author into account
@@ -509,7 +975,7 @@ function dpal_ogpost_create_or_update($sfGroupid, $sfFeedPostId, $fullItem)
     }
     
     // get Group for this groupId
-    if ($nodeGroup = dpal_getEntity('group', 'field_sfid', $sfGroupid)) {
+    if ($nodeGroup = dpal_getEntity('group', array('field_sfid', 'salesforce_id', $sfGroupid))) {
         // Group found
         $node->status = 1;
         $decodedBody = html_entity_decode($fullItem['body']['text'], ENT_QUOTES);
@@ -535,30 +1001,42 @@ function dpal_ogpost_create_or_update($sfGroupid, $sfFeedPostId, $fullItem)
 
 
 /**
- * Get project feeds from a projectId, then get the FeedItem itself
+ * Get project feeds from a projectId, then get the FeedItem itself. Return
  *
  * @param $projectId
  * @param $doSync
- * @return boolean
+ * @return array
  */
-
-function salesforce_weforum_sync_getProjectFeeds($projectId, $doSync = false) 
+function salesforce_weforum_sync_get_projectfeeds($projectId, $doSync = false) 
 {
-    $result = false;
+    $sfIds = array();
+    $i = 0;
     if ($api = getSfApi()) {
         $query = new SalesforceSelectQuery("Project__Feed");    // Project Feeds Table
         $query->fields = array('CreatedById', 'CreatedDate', 'IsDeleted', 'Id', 'Type', 'ParentId', 'SystemModstamp');
         $query->addCondition('ParentId', "'".$projectId."'");
-        $results = $api->query($query);
-        //    var_dump($results);
-        foreach ($results['records'] as $aProjectFeed) {
-            var_dump($aProjectFeed);
-            // Now get the FeedItem itself
-            salesforce_weforum_sync_call(substr($aProjectFeed['attributes']['url'], 21));
+        try {
+            $results = $api->query($query);
+            //    var_dump($results);
+            foreach ($results['records'] as $aProjectFeed) {
+                // Now get the FeedItem itself
+                $item = salesforce_weforum_sync_call(substr($aProjectFeed['attributes']['url'], 21));
+//                var_dump($item);
+                $sfFeedPostId = $item['Id'];
+                if ($doSync && !empty($sfFeedPostId)) {
+                    $dplNid = dpal_ogprojectpost_create_or_update($projectId, $sfFeedPostId, $item);
+                    // Now sync the comments of this post
+                    $sfIds[$i] = array();
+                    $sfIds[$i]['sfId'] = $sfFeedPostId;
+                    $sfIds[$i]['comments'] = salesforce_weforum_sync_soc_commentfeeds($dplNid, $sfFeedPostId, $doSync);
+                }
+                $i++;
+            }
+        } catch (Exception $e) {
+            $sfIds[0] = 'CONNECTION_ERROR';            
         }
-        $result = true;
     }
-    return $result;
+    return $sfIds;
 }
 
 /**
@@ -569,23 +1047,35 @@ function salesforce_weforum_sync_getProjectFeeds($projectId, $doSync = false)
  * @return boolean
  */
         
-function salesforce_weforum_sync_getProjects($doSync = false) 
+function salesforce_weforum_sync_get_projects($doSync = false) 
 {
+    $sfIds = array();
     if ($api = getSfApi()) {
         $query = new SalesforceSelectQuery("Project__c");    // Project Table
         $query->fields = array('Am_I_The_Project_Manager__c', 'Am_I_The_Project_Sponsor__c', 'CreatedById', 'CreatedDate', 'CurrencyIsoCode', 'IsDeleted', 'Description__c', 'End_Date__c', 'Governance_Status__c', 'Health__c', 'Health_Comments__c', 'Health_Indicator__c', 'LastActivityDate', 'Last_Governance_Status_Update_Date__c', 'LastModifiedById', 'LastModifiedDate', 'Logo__c', 'Number_Of_Project_Governance__c', 'Objectives__c', 'OwnerId', 'Name', 'Project_Manager__c', 'Project_Sponsor__c', 'Project_Title__c', 'Id', 'Start_Date__c', 'Status__c', 'SystemModstamp', 'TECH_NbOfManager__c', 'TECH_NbOfSponsor__c', 'TECH_ProjectManagerId__c', 'TECH_ProjectSponsorId__c', 'Type__c');
         $query->addCondition('CreatedDate', "2013-05-01T00:00:00Z", '>');
-        $results = $api->query($query);
-    //    var_dump($results);
-        $i = 0;
-        foreach ($results['records'] as $aProject) {
-    //        var_dump($aProject);
-    //        var_dump($i++);
-            if (is_array($aProject) && key_exists('Id', $aProject)) {
-                salesforce_weforum_sync_getProjectFeeds($aProject['Id'], $doSync);
+        try {
+            $results = $api->query($query);
+        //    var_dump($results);
+            $i = 0;
+            foreach ($results['records'] as $aProject) {
+    //            var_dump($aProject);
+                $sfIds[$i] = array();
+                if ($doSync) {
+                    dpal_group_create_or_update($aProject, 'project');
+                }
+        //        var_dump($i++);
+                if (is_array($aProject) && key_exists('Id', $aProject)) {
+                    $sfIds[$i]['sfId'] = $aProject['Id'];
+                    $sfIds[$i]['posts'] = salesforce_weforum_sync_get_projectfeeds($aProject['Id'], $doSync);
+                }
+                $i++;
             }
+        } catch (Exception $e) {
+            $sfIds[0] = 'CONNECTION_ERROR';
         }
     }
+    return ($sfIds);
 }
         
 /**
@@ -601,19 +1091,25 @@ function salesforce_weforum_sync_getProjects($doSync = false)
 
 function salesforce_weforum_sync_soc_commentfeeds($dplNid, $sfFeedId, $doSync = false) 
 {
-    $results = salesforce_weforum_sync_paginated_call('chatter/feed-items/' . $sfFeedId . '/comments', 'comments');
+    $commentIds = array();
+    try {
+        $results = salesforce_weforum_sync_paginated_call('chatter/feed-items/' . $sfFeedId . '/comments', 'comments');
 //    var_dump($results);
-    foreach ($results as $key => $item) {
-        if (strcmp($item['type'], 'TextComment') == 0) {
-            // For now, take only text comments, will need to be expanded
-//          var_dump($item);
-            $sfCommentId = $item['id'];
-            if ($doSync) {
-                dpal_ogcomment_create_or_update($dplNid, $sfCommentId, $item);
+        foreach ($results as $key => $item) {
+    //        var_dump($item);
+            if (strcmp($item['type'], 'TextComment') == 0) {
+                // For now, take only text comments, will need to be expanded
+                $sfCommentId = $item['id'];
+                $commentIds[] = $sfCommentId;
+                if ($doSync) {
+                    dpal_ogcomment_create_or_update($dplNid, $sfCommentId, $item);
+                }
             }
         }
+    } catch (Exception $e) {
+        $commentIds[0] = 'CONNECTION_ERROR';
     }
-    
+    return $commentIds;
 }
 
 /**
@@ -623,48 +1119,48 @@ function salesforce_weforum_sync_soc_commentfeeds($dplNid, $sfFeedId, $doSync = 
  *
  * @param $sfGroupId
  * @param $doSync
- * @return boolean
+ * @return array
  */
 
 function salesforce_weforum_sync_get_groupfeeds($sfGroupId, $doSync = false) {
-    $result = salesforce_weforum_sync_paginated_call('chatter/feeds/record/' . $sfGroupId . '/feed-items', 'items');
-    foreach ($result as $key => $item) {
-        if (strcmp($item['type'], 'TextPost') == 0) {
-            // For now, take only text posts, will need to be expanded
-//        var_dump($item);
-            $sfFeedPostId = $item['id'];
-            if ($doSync) {
-                $dplNid = dpal_ogpost_create_or_update($sfGroupId, $sfFeedPostId, $item);
-                // Now sync the comments of this post
-                salesforce_weforum_sync_soc_commentfeeds($dplNid, $sfFeedPostId, $doSync);
+    $feedIds = array();
+    try {
+        $result = salesforce_weforum_sync_paginated_call('chatter/feeds/record/' . $sfGroupId . '/feed-items', 'items');
+        $i = 0;
+        foreach ($result as $key => $item) {
+//            var_dump($item);
+            if (strcmp($item['type'], 'TextPost') == 0) {
+                // For now, take only text posts, will need to be expanded
+    //        var_dump($item);
+                $sfFeedPostId = $item['id'];
+                $feedIds[$i] = array();
+                $feedIds[$i]['sfId'] = $sfFeedPostId;
+                if ($doSync) {
+                    $dplNid = dpal_ogpost_create_or_update($sfGroupId, $sfFeedPostId, $item);
+                    // Now sync the comments of this post
+                    $feedIds[$i]['comments'] = salesforce_weforum_sync_soc_commentfeeds($dplNid, $sfFeedPostId, $doSync);
+                }
+                $i++;
             }
         }
+    } catch (Exception $e) {
+        $feedIds[0] = 'CONNECTION_ERROR';
     }
-//  var_dump($elements);
-//    $query = new SalesforceSelectQuery("CollaborationGroupFeed");    // Chatter Groups
-//    $query->fields = array('CreatedById', 'CreatedDate', 'IsDeleted', 'Id', 'Type', 'FeedPostId__c', 'ParentId', 'SystemModstamp');
-//    $query->addCondition('ParentId', "'".$groupId."'");
-//    $query->addCondition('Type', "'TextPost'");     
-//    $api = getSfApi();
-//    $results = $api->query($query);
-//    $i = 0;
-//    foreach ($results['records'] as $aPost) {
-//        var_dump($aPost);
-//        $feedId = $aPost['FeedPostId'];
-//        // Get the post data
-//        $postData = $salesforce_weforum_sync_paginated_call('/chatter/feeds/record/'.$feedId, 'items');
-//        var_dump($postData);
-//        if ($doSync) {
-////            dpal_ogpost_create_or_update($groupId, $feedId, $postData);
-//        }
-//        $i++;
-////        $members = salesforce_weforum_sync_get_group_members($aGroup['Id']);
-////        var_dump($members);
-////        $comment = salesforce_weforum_sync_paginated_call(substr($aRecord['attributes']['url'], 21), 'attributes');   
-//        if ($i > 100) { break; }
-//    }
-//    var_dump('Found '.count($results['records']).' items.');
-    return true;
+
+    return $feedIds;
+}
+
+function myarray_recursive_flatten($array)
+{
+    $result = array();
+    foreach ($array as $value) {
+        if (is_array($value)) {
+            $result = array_merge($result, myarray_recursive_flatten($value));
+        } else {
+            $result[] = $value;
+        }
+    }
+    return $result;
 }
 
 /**
@@ -672,26 +1168,41 @@ function salesforce_weforum_sync_get_groupfeeds($sfGroupId, $doSync = false) {
  *
  * @param $doSync
  */
-function salesforce_weforum_sync_get_groups($doSync = false) {
+function salesforce_weforum_sync_get_groups($doSync = false, $groupList = array()) {
+    $sfIds = array();
     if ($api = getSfApi()) {
         $query = new SalesforceSelectQuery("CollaborationGroup");    // Chatter Groups
         $query->fields = array('Id', 'CreatedById', 'CreatedDate', 'Description', 'CollaborationType', 'LastModifiedById', 'LastModifiedDate', 'Name', 'OwnerId', 'SystemModstamp');
-        $results = $api->query($query);
-        $i = 0;
-        foreach ($results['records'] as $aGroup) {
-    //        var_dump($aGroup);
-            if ($doSync) {
-                dpal_og_create_or_update($aGroup);
+        try {
+            $results = $api->query($query);
+            $i = 0;
+            foreach ($results['records'] as $aGroup) {
+//                var_dump($aGroup);
+                if ($doSync) {
+                    if (empty($groupList) || (!empty($groupList) && in_array($aGroup['Id'], $groupList))) {
+                        dpal_group_create_or_update($aGroup);
+                    }
+                }
+                $sfIds[$i] = array();
+                $sfIds[$i]['sfId'] = $aGroup['Id'];
+                $sfIds[$i]['posts'] = salesforce_weforum_sync_get_groupfeeds($aGroup['Id'], $doSync);
+        //        $members = salesforce_weforum_sync_get_group_members($aGroup['Id']);
+        //        var_dump($members);
+        //        $comment = salesforce_weforum_sync_paginated_call(substr($aRecord['attributes']['url'], 21), 'attributes');   
+    //            if ($i > 100) { break; }
+                $i++;
             }
-            $i++;
-            salesforce_weforum_sync_get_groupfeeds($aGroup['Id'], $doSync);
-    //        $members = salesforce_weforum_sync_get_group_members($aGroup['Id']);
-    //        var_dump($members);
-    //        $comment = salesforce_weforum_sync_paginated_call(substr($aRecord['attributes']['url'], 21), 'attributes');   
-//            if ($i > 100) { break; }
+        } catch (Exception $e) {
+            $sfIds[0] = 'CONNECTION_ERROR';
         }
-        var_dump('Found '.count($results['records']).' items.');
+//        var_dump('Found '.count($results['records']).' items.');
+//        var_dump($sfIds);
     }
+    else {
+        dpm('Error contacting SF');
+    }
+    return ($sfIds);
+//    return $sfIds;
 }
 
 /**
@@ -708,9 +1219,77 @@ function salesforce_weforum_sync_get_group_members($sfGroupId) {
         $query->addCondition('GroupId', "'".$sfGroupId."'");
         $results = $api->query($query);
         foreach ($results['records'] as $item) {
-            var_dump($item);
+//            var_dump($item);
         }
     }
     return $results;
 }
 
+
+
+function salesforce_weforum_sync_get_dplCommentStructure($postId)
+{
+    $sfIds = array();
+
+    $comments = dpl_getSyncComments($postId);
+    dpm($comments);
+    foreach ($comments as $aComment) {
+        $entity = myentity_load($aComment['entity_id'], $aComment['entity_type']);
+        $sfIds['commentId'] = $entity->field_sfid['und'][0]['salesforce_id'];
+    }
+    return $sfIds;    
+}
+
+function salesforce_weforum_sync_get_dplPostStructure($groupId)
+{
+    $sfIds = array();
+
+    $i = 0;
+    $posts = dpl_getSyncPosts($groupId);
+    dpm($posts);
+    foreach ($posts as $aPost) {
+        $sfIds[$i] = array();
+        $entity = myentity_load($aPost['entity_id'], $aPost['entity_type']);
+        $sfIds[$i]['feedId'] = $entity->field_sfid['und'][0]['salesforce_id'];
+//        $sfId['posts'] 
+        $sfIds[$i]['comments'] = salesforce_weforum_sync_get_dplCommentStructure($aPost['entity_id']);
+        $i++;
+    }
+    return $sfIds;    
+}
+
+function salesforce_weforum_sync_get_dplGroupStructure()
+{
+    $sfIds = array();
+    $grps = dpal_searchEntity(array('field_sfid', 'salesforce_id', 'NOT_EMPTY'), array('node'), array('group'));
+    $i = 0;
+    dpm($grps);
+    foreach ($grps as $aGroup) {
+        $sfIds[$i] = array();
+        $entity = myentity_load($aGroup['entity_id'], $aGroup['entity_type']);
+        $sfIds[$i]['grpId'] = $entity->field_sfid['und'][0]['salesforce_id'];
+        $sfIds[$i]['posts'] = salesforce_weforum_sync_get_dplPostStructure($aGroup['entity_id']);
+        $i++;
+    }
+    return $sfIds;
+}
+
+function salesforce_weforum_sync_get_allSfIds()
+{
+    $sfIds = array();
+    $results = db_query("SELECT sf.field_sfid_salesforce_id as sfId from {field_data_field_sfid} sf WHERE sf.field_sfid_salesforce_id <> :sfValue AND bundle NOT IN ('group', 'user')", array(':sfValue' => ''));
+    foreach ($results as $result) {
+        $sfIds[] = $result->sfId;
+    }
+//    $grps = dpal_searchEntity(array('field_sfid', 'salesforce_id', 'NOT_EMPTY'), array('node'), array('group'));
+//    $i = 0;
+//    dpm($grps);
+//    foreach ($grps as $aGroup) {
+//        $sfIds[$i] = array();
+//        $entity = myentity_load($aGroup['entity_id'], $aGroup['entity_type']);
+//        $sfIds[$i]['grpId'] = $entity->field_sfid['und'][0]['salesforce_id'];
+//        $sfIds[$i]['posts'] = salesforce_weforum_sync_get_dplPostStructure($aGroup['entity_id']);
+//        $i++;
+//    }
+    return $sfIds;
+}

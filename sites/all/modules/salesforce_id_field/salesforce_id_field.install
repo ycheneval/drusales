@@ -1,0 +1,22 @@
+<?php
+
+function salesforce_id_field_field_schema($field) {
+  if($field['type'] == 'salesforce_id') {
+    $columns = array(
+      'salesforce_id' => array(
+        'type' => 'varchar',
+        'length' => 20,
+        'not null' => FALSE,
+      ),
+    );
+
+    $indexes = array(
+      'salesforce_id' => array('salesforce_id'),
+    );
+
+    return array(
+      'columns' => $columns,
+      'indexes' => $indexes,
+    );
+  }
+}
